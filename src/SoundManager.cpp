@@ -8,38 +8,12 @@
 #include "ofMain.h"
 
 #include "SoundManager.h"
+#include "SoundObject.h"
 #include "AppManager.h"
+#include "EventManager.h"
+#include "Event.h"
 #include "SoundEffects.h"
 
-
-SoundObject::SoundObject(std::string name): m_name(name), m_volume(1.0)
-{
-    m_soundPlayer = new ofSoundPlayer();
-}
-
-SoundObject::~SoundObject()
-{
-    delete m_soundPlayer;
-    m_soundPlayer = new ofSoundPlayer();
-}
-
-void SoundObject::setVolume(float volume)
-{
-    
-    if (volume<0.0 || volume>1.0) 
-    {
-        std::cout << "SoundObject::setVolume -> volume out of range for sample " << m_name << std::endl ;
-        return;
-    }
-        
-    m_volume = volume;
-    m_soundPlayer->setVolume(m_volume);
-}
-
-
-//==========================================
-//              Sound Manager
-//==========================================
     
 SoundManager::SoundManager(): m_tube(NULL), m_isSamplerPlaying(false), m_currentSample(NULL),
     m_season("Summer"), m_weatherConditions("Day_Dry")
@@ -154,8 +128,7 @@ void SoundManager::playRandomSample()
     if(m_sampleNames.empty())
     {
         this->stopSamples();
-        ofxUIToggle *toggle = (ofxUIToggle *) AppManager::getInstance().getGUI().getWidget("EndSampler");
-        toggle->setValue(true); //EVENT-> END_SAMPLES
+        AppManager::getInstance().getEventManager().setEvent(Event("End")); 
         m_currentSample = NULL;
         return;
     }
@@ -191,29 +164,29 @@ void SoundManager::update(double dt)
     }
 }
 
-void SoundManager::guiEvent(ofxUIEventArgs &e)
-{
-    string name = e.widget->getName(); 
-	int kind = e.widget->getKind(); 
-	cout << "got event from: " << name << endl; 
-    
-    if(name == "Winter" || name == "Summer" || name == "Spring" || name == "Autumn")
-	{
-        m_season = name;
-        this->loadSamples();
-        ofxUIToggle * toggle = (ofxUIToggle *) AppManager::getInstance().getGUI().getWidget("EndSampler");
-        toggle->setValue(true); 
-	}
-    
-    else if(name == "Day_Dry" || name == "Night_Dry" || name == "Day_Rain" || name == "Night_Rain")
-	{
-        m_weatherConditions = name;
-        this->loadSamples();
-        ofxUIToggle * toggle = (ofxUIToggle *) AppManager::getInstance().getGUI().getWidget("EndSampler");
-        toggle->setValue(true); 
-	}
-    
-}
+//void SoundManager::guiEvent(ofxUIEventArgs &e)
+//{
+//    string name = e.widget->getName(); 
+//	int kind = e.widget->getKind(); 
+//	cout << "got event from: " << name << endl; 
+//    
+//    if(name == "Winter" || name == "Summer" || name == "Spring" || name == "Autumn")
+//	{
+//        m_season = name;
+//        this->loadSamples();
+//        ofxUIToggle * toggle = (ofxUIToggle *) AppManager::getInstance().getGUI().getWidget("EndSampler");
+//    
+//	}
+//    
+//    else if(name == "Day_Dry" || name == "Night_Dry" || name == "Day_Rain" || name == "Night_Rain")
+//	{
+//        m_weatherConditions = name;
+//        this->loadSamples();
+//        ofxUIToggle * toggle = (ofxUIToggle *) AppManager::getInstance().getGUI().getWidget("EndSampler");
+//        toggle->setValue(true); 
+//	}
+//    
+//}
 
 
 void  SoundManager::fadeTube(float volume, float fadeTime)

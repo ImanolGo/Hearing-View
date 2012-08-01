@@ -6,11 +6,12 @@
 //
 
 #include "ofxXmlSettings.h"
-#include "ofxUI.h"
 #include "DateManager.h"
+#include "Event.h"
 
 #include "WeatherManager.h"
 #include "AppManager.h"
+#include "EventManager.h"
 
 
 WeatherManager::WeatherManager()
@@ -71,8 +72,7 @@ void WeatherManager::eventHandler()
     if (m_dayTime_Weather!=dayTime_Weather) //create weather conditions event
     {
         m_dayTime_Weather = dayTime_Weather;
-        ofxUIRadio *radio = (ofxUIRadio *) AppManager::getInstance().getGUI().getWidget("WEATHER CONDITIONS");
-        radio->activateToggle(m_dayTime_Weather);
+        AppManager::getInstance().getEventManager().setEvent(Event(m_dayTime_Weather));
     }
        
 }

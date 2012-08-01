@@ -11,9 +11,9 @@
 #define __VISUAL_EFFECTS_MANAGER_H__
 
 #include <vector>
-#include "ofMain.h"
 
 class VisualEffect;
+class Visual;
 
 
 //========================== class VisualEffectsManager ==============================
@@ -45,7 +45,7 @@ public:
 	void removeVisualEffect(VisualEffect& visualEffect);
     
 	//! Removes all visual effects for the specified image
-	void removeAllVisualEffects(const ofImage& image);    
+	void removeAllVisualEffects(const Visual& visual);    
     
     //==========================================================================
     

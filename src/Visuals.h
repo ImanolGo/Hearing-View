@@ -14,6 +14,7 @@
 
 #include "ofMain.h"
 
+
 //========================== class Visual ==============================
 //============================================================================
 /** \class Visual Visuals.h
@@ -26,7 +27,7 @@ class Visual
 public:
     
     //! Constructor
-    Visual(ofVec2f pos, float width, float height): m_position(pos), m_width(1.0), m_height(1.0), m_alpha(1.0) {}
+    Visual(ofPoint pos, float width, float height): m_position(pos), m_width(1.0), m_height(1.0), m_alpha(1.0) {}
     
     //! Destructor
     virtual ~Visual() {}
@@ -35,7 +36,7 @@ public:
 	virtual void draw() const = 0;
     
     //! Changes the alpha channel.
-	virtual void setAlpha(double alpha) { m_alpha = alpha;}
+	void setAlpha(double alpha) { m_alpha = alpha;}
     
 	//! gets the alpha channel.
 	const double& getAlpha() const { return m_alpha;}
@@ -43,9 +44,9 @@ public:
     //! Sets the color of the visual
     void setColor(const ofColor& color) {m_color = color;}
     
-private:
+protected:
     
-    ofVec2f         m_position;		///< defines the position of the visual
+    ofPoint         m_position;		///< defines the position of the visual
 	double			m_alpha;		///< current alpha value of the visual
 	double			m_width;		///< the width of the visual
 	double			m_height;		///< the height of the visual
@@ -66,16 +67,16 @@ class TextVisual: public Visual
 public:
     
     //! Constructor
-    TextVisual(ofVec2f pos, float width, float height): Visual(pos, width, height), m_font(NULL) {}
+    TextVisual(ofPoint pos, float width, float height): Visual(pos, width, height), m_font(NULL) {}
     
     //! Destructor
     virtual ~TextVisual();
     
 	//! Draws the text visual
-	virtual void draw();
+	virtual void draw() const;
     
     //! Sets the text to be drawn
-    void setText();
+    void setText(std::string text,int fontSize);
     
 private:
     
@@ -98,13 +99,13 @@ class ImageVisual: public Visual
 public:
     
     //! Constructor
-    ImageVisual(ofVec2f pos, float width, float height): Visual(pos, width, height), m_image(NULL) {}
+    ImageVisual(ofPoint pos, float width, float height);
     
     //! Destructor
     virtual ~ImageVisual();
     
 	//! Draws the text visual
-	virtual void draw();
+	virtual void draw() const;
     
     //! Sets the text to be drawn
     void setImage(std::string path);
@@ -131,16 +132,14 @@ class CircleVisual: public Visual
 public:
     
     //! Constructor
-    CircleVisual(ofVec2f pos, float width, float height): Visual(pos, width, height), m_image(NULL) {}
+    CircleVisual(ofPoint pos, float width, float height): Visual(pos,width,height) {}
     
     //! Destructor
-    virtual ~CircleVisual();
+    virtual ~CircleVisual(){}
     
 	//! Draws the text visual
-	virtual void draw();
-    
-private:
-    
-    ofCircle*        m_circle;		///< pointer to the ofCircle class
+	virtual void draw() const;
     
 };
+
+#endif

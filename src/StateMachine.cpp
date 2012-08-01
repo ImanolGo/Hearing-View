@@ -9,6 +9,7 @@
 #include <iostream>
 #include "StateMachine.h"
 #include "States.h"
+#include "Event.h"
 
 
 StateMachine::StateMachine():m_currentState(NULL)
@@ -64,7 +65,7 @@ bool StateMachine::addTransition(const Transition* transition)
 	return true;
 }
 
-void StateMachine::createTransition(std::string postState, std::string event)
+void StateMachine::createTransition(std::string postState, const Event& event)
 {
 	// check if a state with specified postState name exist
 	const State* toState = getState(postState);
@@ -78,7 +79,7 @@ void StateMachine::createTransition(std::string postState, std::string event)
 
 }
 
-void StateMachine::createTransition(std::string preState, std::string postState, std::string event)
+void StateMachine::createTransition(std::string preState, std::string postState, const Event& event)
 {
 	// check if states with specified names exist
 	const State* fromState = getState(preState);
@@ -115,17 +116,17 @@ void StateMachine::switchStateTo(const State& newState)
 	if(m_currentState) {
 		m_currentState->onExit();
 	}
-	setCurrentState(newState.getName());
+	this->setCurrentState(newState.getName());
 }
 
-void StateMachine::handleEvent(const std::string& event) 
+void StateMachine::handleEvent(const Event& event) 
 {
 	for(unsigned int i = 0; i < m_transitions.size(); ++i) {
-		if(m_transitions[i]->getEventType() == event) {
+		if(m_transitions[i]->getEvent() == event) {
 			// switch if there is a transition from the current state to a new state 
 			// OR if there is a NO-PreState transition (all states are potential PreStates)
 			if(m_transitions[i]->getPreState() == m_currentState || m_transitions[i]->getPreState() == NULL) {
-				switchStateTo(*m_transitions[i]->getPostState());
+				this->switchStateTo(*m_transitions[i]->getPostState());
 				return;
 			}
 		}

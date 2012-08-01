@@ -14,6 +14,8 @@
 #include <map>
 #include <string>
 
+class Event;
+
 class StateMachine;
 class ofxUIEventArgs;
 
@@ -38,11 +40,9 @@ public:
     //! Setups the state machine
     void setup();
     
+    //! handles the events
+    void handleEvent(const Event& event);
     
-private:
-    
-    //! interface with the GUI events
-    void guiEvent(ofxUIEventArgs &e);
     
 private:
     

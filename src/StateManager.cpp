@@ -11,6 +11,8 @@
 #include "StateManager.h"
 #include "AppManager.h"
 #include "ofxUI.h"
+#include "Event.h"
+#include "ofMain.h"
 
 
 StateManager::StateManager(): m_stateMachine(NULL)
@@ -29,22 +31,23 @@ void StateManager::setup()
 {
     
      //Add to state machine and create transition
-    
-    IdleState* idleState = new IdleState("IdleState");
-
+    IdleState* idleState = new IdleState("IdleState",ofPoint(600,200));
+    idleState->initialize();
     m_stateMachine->addState(idleState);
     
-    SamplerState* samplerState = new SamplerState("SamplerState");
+    SamplerState* samplerState = new SamplerState("SamplerState",ofPoint(400,400));
+    samplerState->initialize();
     m_stateMachine->addState(samplerState);
     
-    AmbienceState* ambienceState = new AmbienceState("AmbienceState");
+    AmbienceState* ambienceState = new AmbienceState("AmbienceState",ofPoint(800,400));
+    ambienceState->initialize();
     m_stateMachine->addState(ambienceState);
    
-    m_stateMachine->createTransition("IdleState", "AmbienceState", "SensorON");
-    m_stateMachine->createTransition("AmbienceState", "IdleState", "SensorOFF");
-    m_stateMachine->createTransition("AmbienceState", "SamplerState", "TimeOut");
-    m_stateMachine->createTransition("SamplerState", "AmbienceState", "EndSampler");
-    m_stateMachine->createTransition("SamplerState", "IdleState", "SensorOFF");
+    m_stateMachine->createTransition("IdleState", "AmbienceState",Event("SensorON"));
+    m_stateMachine->createTransition("AmbienceState", "IdleState",Event("SensorOFF"));
+    m_stateMachine->createTransition("AmbienceState", "SamplerState",Event("TimeOut"));
+    m_stateMachine->createTransition("SamplerState", "AmbienceState", Event("EndSampler"));
+    m_stateMachine->createTransition("SamplerState", "IdleState", Event("SensorOFF"));
     
     m_stateMachine->setCurrentState("IdleState");
     
@@ -52,33 +55,14 @@ void StateManager::setup()
 }
 
 
-void StateManager::guiEvent(ofxUIEventArgs &e)
+void StateManager::handleEvent(const Event& event)
 {
-    string name = e.widget->getName(); 
-	int kind = e.widget->getKind(); 
-	cout << "got event from: " << name << endl; 
-    
-    if(name == "EndSampler")
-	{
-		m_stateMachine->handleEvent(name);
-	}
-    
-    else if(name == "Sensor")
-	{
-		ofxUIToggle *toggle = (ofxUIToggle *) e.widget; 
-        
-        if(toggle->getValue() == true)
-        {
-            m_stateMachine->handleEvent("SensorON");
-        }
-        else
-        {
-            m_stateMachine->handleEvent("SensorOFF");
-        }
-        
-	}
-    
+    m_stateMachine->handleEvent(event);
 }
+
+
+
+
 
 
 

@@ -35,7 +35,7 @@ void testApp::keyPressed(int key)
     {            
         case ' ':
         {
-            m_appManager->getGUI().toggleVisible(); 
+            //m_appManager->getGUI().toggleVisible(); 
         }
             break; 
         default:

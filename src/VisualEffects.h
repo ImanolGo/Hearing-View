@@ -14,6 +14,8 @@
 
 #include "ofMain.h"
 
+class Visual;
+
 //==============================================================================
 /** \class VisualEffect VisualEffect.h
  *	\brief Base class for all the visual effects.
@@ -27,7 +29,7 @@ class VisualEffect
 public:
     
 	//! Constructor
-	VisualEffect(ofImage& image);
+	VisualEffect(Visual& visual);
     
 	//! Destructor
 	virtual ~VisualEffect(){}
@@ -42,11 +44,11 @@ public:
 	virtual void stop();
     
 	//! Returns the image this animation is associated with
-	const ofImage& getImage() { return m_image; }
+	const Visual& getVisual() { return m_visual; }
     
 protected:
     
-	ofImage&    m_image;		///< defines a image const reference
+	Visual&     m_visual;		///< defines a visual reference
 	double		m_elapsedTime;	///< elapsed time
     bool        m_isActive;		///< determines whether a sound effect is currently updated or not
     
@@ -66,7 +68,7 @@ class FadeVisual: public VisualEffect
 public:
     
 	//! Constructor
-	FadeVisual(ofImage& image);
+	FadeVisual(Visual& visual);
     
     
     //========================= Fade Interface ================================

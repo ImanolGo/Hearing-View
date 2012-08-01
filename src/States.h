@@ -15,8 +15,12 @@
 #include <map>
 #include <string>
 
+#include "ofMain.h"
+
 class ofSoundPlayer;
 class ofxUICanvas;
+class CircleVisual;
+class TextVisual;
 
 //========================== class State =======================================
 //==============================================================================
@@ -29,12 +33,12 @@ class State
 {
 public:
     //! Constructor
-    State(const std::string& name): m_name(name) {}
+    State(const std::string& name,const ofPoint& pos);
     //! Destructor
-    virtual ~State() {}
+    virtual ~State();
     
     //! Do the state initialization stuff here
-    virtual void initialize() {}
+    virtual void initialize();
     //! Called when the state is entered
     virtual void onEnter() = 0;
     //! Called before the state is left
@@ -47,6 +51,9 @@ public:
 protected:
     
     std::string      m_name;  ///< unique identifier of this state
+    ofPoint          m_pos;   ///< position of the State
+    CircleVisual*    m_circleState; ///< circle representing the state
+    TextVisual*      m_textState; ///< text representing the state
     
 };
 
@@ -62,17 +69,16 @@ class IdleState: public State
 {
 public:
     //! Constructor
-    IdleState(const std::string& name): State(name) {}
+    IdleState(const std::string& name,const ofPoint& pos): State(name,pos) {}
     //! Destructor
     virtual ~IdleState() {}
-    
     //! Do the state initialization stuff here
-    virtual void initialize() {}
+    //virtual void initialize();
     //! Called when the state is entered
     virtual void onEnter();
     //! Called before the state is left
     virtual void onExit();
-    
+ 
 };
 
 
@@ -88,12 +94,11 @@ class AmbienceState: public State
 {
 public:
     //! Constructor
-    AmbienceState(const std::string& name): State(name){}
+    AmbienceState(const std::string& name,const ofPoint& pos): State(name,pos){}
     //! Destructor
     virtual ~AmbienceState() {}
-    
     //! Do the state initialization stuff here
-    virtual void initialize() {}
+    //virtual void initialize();
     //! Called when the state is entered
     virtual void onEnter();
     //! Called before the state is left
@@ -114,12 +119,11 @@ class SamplerState: public State
 {
 public:
     //! Constructor 
-    SamplerState(const std::string& name): State(name){}
+    SamplerState(const std::string& name,const ofPoint& pos): State(name,pos){}
     //! Destructor
     virtual ~SamplerState() {}
-    
     //! Do the state initialization stuff here
-    virtual void initialize() {}
+    //virtual void initialize();
     //! Called when the state is entered
     virtual void onEnter();
     //! Called before the state is left

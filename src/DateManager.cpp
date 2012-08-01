@@ -7,8 +7,10 @@
 
 #include "ofxXmlSettings.h"
 #include "ofxDate.h"
-#include "ofxUI.h"
+#include "Event.h"
 #include "AppManager.h"
+#include "EventManager.h"
+#include "ofxUI.h"
 
 #include "DateManager.h"
 
@@ -206,8 +208,7 @@ void DateManager::updateSeason()
     if(m_season!=season)
     {
         m_season = season;
-        ofxUIRadio *radio = (ofxUIRadio *) AppManager::getInstance().getGUI().getWidget("SEASONS");
-        radio->activateToggle(m_season);
+        AppManager::getInstance().getEventManager().setEvent(Event(m_season));
         
     }
     

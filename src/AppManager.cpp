@@ -12,7 +12,7 @@
 #include "StateManager.h"
 #include "WeatherManager.h"
 #include "DateManager.h"
-#include "ofxUI.h"
+#include "EventManager.h"
 #include "SoundEffectsManager.h"
 #include "VisualEffectsManager.h"
 
@@ -30,14 +30,10 @@ AppManager& AppManager::getInstance()
 }
 
 
-AppManager::AppManager(): m_gui(NULL), m_stateManager(NULL), m_viewManager(NULL), m_soundManager(NULL),
+AppManager::AppManager(): m_eventManager(NULL), m_stateManager(NULL), m_viewManager(NULL), m_soundManager(NULL),
 m_dateManager(NULL),m_weatherManager(NULL), m_soundEffectsManager(NULL),m_visualEffectsManager(NULL)
 {
-    float dim = 32; 
-	float xInit = OFX_UI_GLOBAL_WIDGET_SPACING; 
-    float length = 320-xInit; 
-    
-    m_gui = new ofxUICanvas(0,0,length+xInit*2.0,ofGetHeight());
+    m_eventManager = new EventManager();
     m_stateManager = new StateManager();
     m_viewManager = new ViewManager();
     m_soundManager = new SoundManager();
@@ -51,7 +47,7 @@ m_dateManager(NULL),m_weatherManager(NULL), m_soundEffectsManager(NULL),m_visual
 
 AppManager::~AppManager()
 {
-    delete m_gui;
+    delete m_eventManager;
     delete m_stateManager;
     delete m_viewManager;
     delete m_soundManager;
@@ -64,7 +60,7 @@ AppManager::~AppManager()
 
 void AppManager::setup()
 {
-    this->setupGUI();
+    m_eventManager->setup();
     m_viewManager->setup();
     m_dateManager->setup();
     m_weatherManager->setup();
@@ -74,35 +70,12 @@ void AppManager::setup()
     
 }
 
-void AppManager::setupGUI()
-{
-    float dim = 32; 
-    m_gui->addWidgetDown(new ofxUILabel("HEARING VIEW", OFX_UI_FONT_LARGE)); 
-    m_gui->addWidgetDown(new ofxUIToggle(dim, dim, false, "SENSOR"));
-    vector<string> vnames; vnames.push_back("Day_Dry"); vnames.push_back("Night_Dry"); vnames.push_back("Day_Rain");
-    vnames.push_back("Night_Rain");
-    ofxUIRadio *radio = (ofxUIRadio *) m_gui->addWidgetDown(new ofxUIRadio(dim, dim, "WEATHER CONDITIONS", vnames, OFX_UI_ORIENTATION_VERTICAL)); 
-    radio->activateToggle("Day_Dry"); 
-    
-    vnames.clear();
-    vnames.push_back("Summer"); vnames.push_back("Autumn"); vnames.push_back("Winter");
-    vnames.push_back("Spring");
-    ofxUIRadio *radio2 = (ofxUIRadio *) m_gui->addWidgetDown(new ofxUIRadio(dim, dim, "SEASONS", vnames, OFX_UI_ORIENTATION_VERTICAL)); 
-    radio->activateToggle("Summer");
-    
-     m_gui->addWidgetDown(new ofxUIToggle(dim, dim, false, "End Samples"));
-    
-    //ofAddListener(m_gui->newGUIEvent, this, &AppManager::guiEvent);
-
-}
-
-//--------------------------------------------------------------
 void AppManager::update(double dt)
 {
-    m_viewManager->update(dt);
     m_soundManager->update(dt);
     m_soundEffectsManager->update(dt);
     m_visualEffectsManager->update(dt);
+    m_eventManager->update(dt);
 }
 
 

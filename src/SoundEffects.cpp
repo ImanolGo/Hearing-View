@@ -9,6 +9,7 @@
 
 #include "AppManager.h"
 #include "SoundManager.h"
+#include "SoundObject.h"
 #include "SoundEffectsManager.h"
 #include "SoundEffects.h"
 

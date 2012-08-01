@@ -10,13 +10,14 @@
 #include "AppManager.h"
 #include "VisualEffectsManager.h"
 #include "VisualEffects.h"
+#include "Visuals.h"
 
 //==============================================================================
 //========================= VISUAL EFFECT ==================================
 //==============================================================================
 
 
-VisualEffect::VisualEffect(ofImage& image):m_image(image),m_elapsedTime(0.0),m_isActive(false)
+VisualEffect::VisualEffect(Visual& visual):m_visual(visual),m_elapsedTime(0.0),m_isActive(false)
 {
 	// intentionally left empty
 }
@@ -40,7 +41,7 @@ void VisualEffect::stop()
 //================================  FADE VISUAL ================================
 //==============================================================================
 
-FadeVisual::FadeVisual(ofImage& image): VisualEffect(image),
+FadeVisual::FadeVisual(Visual& visual): VisualEffect(visual),
     m_elapsedTime(0),
     m_from(0),
     m_to(1),

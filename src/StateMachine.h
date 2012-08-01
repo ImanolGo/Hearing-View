@@ -15,6 +15,8 @@
 #include <map>
 #include <string>
 
+#include "Event.h"
+
 class State;
 
 //========================== class Transition ==============================
@@ -29,26 +31,26 @@ class Transition
 public:
     
     //! Constructor
-    Transition(const State& from, const State& to, const std::string& event): 
-    m_preState(&from), m_postState(&to), m_eventType(event) {}
+    Transition(const State& from, const State& to, const Event& event): 
+    m_preState(&from), m_postState(&to), m_event(event) {}
     
     //! Constructor NO-PreState transition (all states are potential PreStates)
-    Transition(const State& to, const std::string& event): 
-    m_preState(NULL), m_postState(&to), m_eventType(event) {}
+    Transition(const State& to, const Event& event): 
+    m_preState(NULL), m_postState(&to), m_event(event) {}
     
     //! Destructor
     ~Transition() { m_preState = NULL; m_postState = NULL; }
     
     //! Compares two transition objects
     bool operator==(const Transition& rhs) const { return rhs.m_preState == this->m_preState && 
-        rhs.m_postState == this->m_postState && rhs.m_eventType == this->m_eventType; }
+        rhs.m_postState == this->m_postState && rhs.m_event == this->m_event; }
     
     //! Returns the associated source state
     const State* getPreState() const { return m_preState; }
     //! Returns the associated target state
     const State* getPostState() const { return m_postState; }
     //! Returns the associated event type
-    const std::string& getEventType() const { return m_eventType; }
+    const Event& getEvent() const { return m_event; }
     
     //==========================================================================
     
@@ -56,7 +58,7 @@ private:
     
     const State*	m_preState;	 ///< the source state
     const State*	m_postState; ///< the target state
-    std::string		m_eventType; ///< if an event of type 'eventType' is fired and the state machine is  
+    Event           m_event;     ///< if an event of type 'eventType' is fired and the state machine is  
     ///< currently in the 'preState' the current state is switched to 'postState'
 };
 
@@ -81,7 +83,7 @@ public:
     //=================== EventListener Interface ==========================
     
     //! Handles all transition events
-    virtual void handleEvent(const std::string& event);
+    void handleEvent(const Event& event);
     
     //======================================================================
     
@@ -95,9 +97,9 @@ public:
     const State* getState(std::string name) const;
     
     //! Adds a new transition with the specified parameters if there is no such transition
-    void createTransition(std::string preState, std::string postState, std::string event);
+    void createTransition(std::string preState, std::string postState, const Event& event);
     //! Adds a new NO-PreState transition (all states are potential PreStates)
-    void createTransition(std::string postState, std::string event);
+    void createTransition(std::string postState, const Event& event);
     
     
 private:

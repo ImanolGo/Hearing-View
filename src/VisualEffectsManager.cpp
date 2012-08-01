@@ -8,6 +8,7 @@
 
 #include "VisualEffectsManager.h"
 #include "VisualEffects.h"
+#include "Visuals.h"
 
 VisualEffectsManager::VisualEffectsManager()
 {
@@ -51,10 +52,10 @@ void VisualEffectsManager::removeVisualEffect(VisualEffect& visualEffect)
 	}
 }
 
-void VisualEffectsManager::removeAllVisualEffects(const ofImage& image) 
+void VisualEffectsManager::removeAllVisualEffects(const Visual& visual) 
 {
 	for(VisualEffectVector::iterator it = m_visualEffects.begin(); it != m_visualEffects.end();) {
-		if(&(*it)->getImage() == &image) {
+		if(&(*it)->getVisual() == &visual) {
 			delete * it; 
 			it = m_visualEffects.erase(it);	
 		}

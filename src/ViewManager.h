@@ -14,7 +14,7 @@
 #include <map>
 #include <string>
 
-
+class Visual;
 
 //========================== class ViewManager ==============================
 //============================================================================
@@ -29,22 +29,31 @@ public:
     
     //! Constructor
     ViewManager();
+    
     //! Destructor
     ~ViewManager();
     
     //! Setups the logic
     void setup();
     
-    //! updates the graphics
-    void update(double dt);
-    
     //! renders all the graphics
-    void draw();
+    void draw() const;
+    
+    //! Adds a visual to the list of elements that are rendered
+	void addVisual(const Visual& visual);
+    
+	//! Removes a visual to the list of elements that are rendered
+	void removeVisual(const Visual& visual);
+    
+
     
     //==========================================================================
     
 private:
     
+    typedef std::list<const Visual*>		VisualList;		///< list for storing all visual
+    
+    VisualList		m_visuals;	///< list of all visuals that are rendered each frame
     
 };
 

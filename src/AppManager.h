@@ -15,7 +15,7 @@
 #include <string>
 
 
-class ofxUICanvas;
+class EventManager;
 class StateManager;
 class ViewManager;
 class SoundManager;
@@ -53,14 +53,20 @@ public:
     //! calls the view manager to draw
     void draw();
     
-    //! Returns the gui
-    ofxUICanvas& getGUI() { return *m_gui; }
+    //! Returns the event manager
+    EventManager& getEventManager() { return *m_eventManager; }
     
     //! Returns the soundEffectsManager
     SoundEffectsManager& getSoundEffectsManager() { return *m_soundEffectsManager; }
     
     //! Returns the soundEffectsManager
     VisualEffectsManager& getVisualEffectsManager() { return *m_visualEffectsManager; }
+    
+    //! Returns the view manager
+    ViewManager& getViewManager() { return *m_viewManager; }
+    
+    //! Returns  a reference to the StateManager
+    StateManager& getStateManager() const { return *m_stateManager; }
     
     //! Returns  a reference to the sound manager
     SoundManager& getSoundManager() const { return *m_soundManager; }
@@ -82,12 +88,9 @@ private:
     //! Prevent operator= being generated.
     const AppManager& operator=(const AppManager&);
 
-    //!  Setups the GUI
-    void setupGUI();
-    
     static AppManager*      m_instance;             ///< singleton instance
     
-    ofxUICanvas*            m_gui;                  ///< the gui and event manager
+    EventManager*           m_eventManager;         ///< the gui and event manager
     StateManager*           m_stateManager;         ///< the state machine under the logic
     ViewManager*            m_viewManager;          ///< manages and renders all visuals
     SoundManager*           m_soundManager;         ///< manages and plays all sounds
