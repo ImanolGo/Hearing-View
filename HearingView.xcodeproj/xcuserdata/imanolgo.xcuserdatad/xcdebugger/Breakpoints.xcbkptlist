@@ -38,7 +38,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "82"
          endingLineNumber = "82"
-         landmarkName = "DateManager::returnSeason()"
+         landmarkName = "DateManager::readURL()"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -342,6 +342,20 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "21"
          endingLineNumber = "21">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "src/DateManager.cpp"
+         timestampString = "366905517.47269"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "215"
+         endingLineNumber = "215"
+         landmarkName = "DateManager::updateSeason()"
+         landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
