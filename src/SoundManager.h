@@ -59,6 +59,12 @@ public:
     //! fades the current sample to a specific level
     void  fadeSample(float volume,float fadeTime);
     
+    //! set to the current season and the corresponding sample list 
+    void setSeason(const std::string& season);
+    
+     //! set to the current weather conditions and the corresponding sample list 
+    void setConditions(const std::string& conditions);
+    
        
 private:
     
@@ -71,8 +77,8 @@ private:
     //! loads the samples into the list
     void loadSamples();
     
-    //! sets the volume of a sample
-    void setVolume(const std::string& sampleName, float volume);
+    //! sets the sample list to be played
+    void setCurrentSamples(std::string sampleListName);
     
     //! returns the sample name given its path
     std::string getSampleName(const std::string& path);
@@ -80,16 +86,18 @@ private:
     
 private:
     
-    typedef std::map <std::string, SoundObject*>   SamplesMap;   ///< defines a map of SoundObjects sorted by its name
+    typedef std::vector <SoundObject*>   SamplesList;            ///< defines a list of SoundObjects
+    typedef std::map <std::string, SamplesList>   SamplesMap;   ///< defines a map of SamplesList sorted by the category name
     
     SoundObject*                     m_tube;              ///< tube sound
     SamplesMap                       m_samples;           ///< list of the sounds to be play
-    std::vector <std::string>        m_sampleNames;       ///< list of names of the samples to play
+    SamplesList                      m_currentSampleList; ///< current sample list to be played
     SoundObject*                     m_currentSample;     ///< current playback sample
     bool                             m_isSamplerPlaying;  ///< it tells wether the sampler is finished or not
     
-    std::string                      m_season;            ///< saves the current year's season
-    std::string                      m_weatherConditions; ///< saves the current weather conditions
+    std::string                      m_season;            ///< saves the current season
+    std::string                      m_conditions;        ///< saves the current weather conditions
+    std::vector<int>                 m_indexList;         ////< list with the current sample list indexes
     
 };
 

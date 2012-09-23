@@ -25,6 +25,7 @@ void TextVisual::setText(std::string text, int fontSize)
 
 void TextVisual::draw() const
 {
+    ofPushStyle();  // push the current style for use later
     ofEnableAlphaBlending();
     ofSetColor(m_color);
     if (m_font) 
@@ -32,6 +33,7 @@ void TextVisual::draw() const
         m_font->drawString(m_text,m_position.x,m_position.y);
     }
     ofDisableAlphaBlending();
+    ofPopStyle();   // recall the pushed style
 }
 
 ImageVisual::ImageVisual(ofPoint pos, float width, float height): 
@@ -56,6 +58,7 @@ void ImageVisual::setImage(std::string path)
 
 void ImageVisual::draw() const
 {
+    ofPushStyle();  // push the current style for use later
     ofEnableAlphaBlending();
     ofSetColor(m_color);
     if (m_image) 
@@ -63,14 +66,20 @@ void ImageVisual::draw() const
         m_image->draw(m_position.x,m_position.y);
     }
     ofDisableAlphaBlending();
+    ofPopStyle();   // recall the pushed style
     
 }
 
 
 void CircleVisual::draw() const
 {
+    ofPushStyle();  // push the current style for use later
     ofEnableAlphaBlending();
     ofSetColor(m_color);
-    ofEllipse(m_position,m_width,m_height);
+    ofFill();
+    //ofEllipse(m_position,m_width,m_height);
+    ofSetCircleResolution(100);
+    ofCircle(m_position,m_width/2);
     ofDisableAlphaBlending();
+    ofPopStyle();   // recall the pushed style
 }

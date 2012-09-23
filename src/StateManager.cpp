@@ -51,6 +51,7 @@ void StateManager::setup()
     
     m_stateMachine->setCurrentState("IdleState");
     
+    std::cout<< "StateManager-> initialized "<<std::endl;
     
 }
 

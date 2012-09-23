@@ -39,19 +39,21 @@ public:
     //! renders all the graphics
     void draw() const;
     
-    //! Adds a visual to the list of elements that are rendered
-	void addVisual(const Visual& visual);
+    //! Adds a visual as an overlay with the specified z-ordering.
+	//! \details The scene is responsible for deleting overlay objects.
+	void addVisual(const Visual& visual,  int zOrder = 0);
     
 	//! Removes a visual to the list of elements that are rendered
+	//! \details The scene is no longer responsible for deleting this visual object.
 	void removeVisual(const Visual& visual);
     
-
     
     //==========================================================================
     
 private:
     
-    typedef std::list<const Visual*>		VisualList;		///< list for storing all visual
+    typedef std::pair<int,const Visual*>	Overlay;		///< pair<zOrder,Visual*> defines an overlay elemet
+	typedef std::list<Overlay>				VisualList;     ///< list of overlay elements
     
     VisualList		m_visuals;	///< list of all visuals that are rendered each frame
     

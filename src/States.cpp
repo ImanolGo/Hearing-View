@@ -48,28 +48,32 @@ State::~State()
 
 void State::initialize()
 {
+    std::cout<<"State-> " << m_name << ": initialized." <<std::endl;
     m_circleState = new CircleVisual(m_pos,100,100);
     m_circleState->setColor(ofColor(255,255,255,100));
     m_textState = new TextVisual(m_pos,20,20);
     m_textState->setColor(ofColor(0,0,0,100));
     m_textState->setText(this->getName(),20);
     AppManager::getInstance().getViewManager().addVisual(*m_textState);
-    AppManager::getInstance().getViewManager().addVisual(*m_circleState);
+    AppManager::getInstance().getViewManager().addVisual(*m_circleState,1);
 
     
 }
 
 void IdleState::onEnter()
 {
+    std::cout<<"IdleState-> OnEnter." <<std::endl;
     AppManager::getInstance().getSoundManager().fadeTube(0.7,10.0);
     AppManager::getInstance().getEventManager().removeAllTimedEvents();
     m_circleState->setColor(ofColor(255,255,255,255));
     m_textState->setColor(ofColor(0,0,0,255));
     
+    
 }
 
 void IdleState::onExit()
 {
+    std::cout<<"IdleState-> OnExit." <<std::endl;
     m_circleState->setColor(ofColor(255,255,255,100));
     m_textState->setColor(ofColor(0,0,0,100));
 }
@@ -77,6 +81,7 @@ void IdleState::onExit()
 
 void AmbienceState::onEnter()
 {
+    std::cout<<"AmbienceState-> OnEnter." <<std::endl;
     AppManager::getInstance().getSoundManager().fadeTube(1.0,5.0);
     AppManager::getInstance().getEventManager().setTimedEvent("TimeOut", 20); //3 min timed event
     m_circleState->setColor(ofColor(255,255,255,255));
@@ -86,6 +91,7 @@ void AmbienceState::onEnter()
 
 void AmbienceState::onExit()
 {
+    std::cout<<"AmbienceState-> OnExit." <<std::endl;
     m_circleState->setColor(ofColor(255,255,255,100));
     m_textState->setColor(ofColor(0,0,0,100));
     
@@ -93,6 +99,7 @@ void AmbienceState::onExit()
 
 void SamplerState::onEnter()
 {
+    std::cout<<"SamplerState-> OnEnter." <<std::endl;
     AppManager::getInstance().getSoundManager().fadeTube(0.0,5.0);
     AppManager::getInstance().getSoundManager().playSamples();
     m_circleState->setColor(ofColor(255,255,255,255));
@@ -102,6 +109,7 @@ void SamplerState::onEnter()
 
 void SamplerState::onExit()
 {
+    std::cout<<"SamplerState-> OnExit." <<std::endl;
     AppManager::getInstance().getSoundManager().fadeSample(0.0, 5.0);
     m_circleState->setColor(ofColor(255,255,255,100));
     m_textState->setColor(ofColor(0,0,0,100));

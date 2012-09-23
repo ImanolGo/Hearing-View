@@ -27,7 +27,7 @@ class Visual
 public:
     
     //! Constructor
-    Visual(ofPoint pos, float width, float height): m_position(pos), m_width(1.0), m_height(1.0), m_alpha(1.0) {}
+    Visual(ofPoint pos, float width, float height): m_position(pos), m_width(width), m_height(height), m_alpha(1.0){}
     
     //! Destructor
     virtual ~Visual() {}

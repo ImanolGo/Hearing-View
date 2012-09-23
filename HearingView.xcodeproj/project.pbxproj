@@ -209,7 +209,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		082F95F51595DA8A006214D2 /* src */ = {
+		082F95F51595DA8A006214D2 /* ofxUI */ = {
 			isa = PBXGroup;
 			children = (
 				082F95F61595DA8A006214D2 /* ofxUI.h */,
@@ -252,7 +252,7 @@
 				082F961B1595DA8A006214D2 /* ofxUIWidget.h */,
 				082F961C1595DA8A006214D2 /* ofxUIWidgetWithLabel.h */,
 			);
-			name = src;
+			name = ofxUI;
 			path = ../../../addons/ofxUI/src;
 			sourceTree = "<group>";
 		};
@@ -398,7 +398,7 @@
 				082F96D2159907AD006214D2 /* ofxFileLoader */,
 				082F968515971EC6006214D2 /* ofxDate */,
 				082F966B15966A08006214D2 /* ofxXmlSettings */,
-				082F95F51595DA8A006214D2 /* src */,
+				082F95F51595DA8A006214D2 /* ofxUI */,
 			);
 			name = addons;
 			sourceTree = "<group>";

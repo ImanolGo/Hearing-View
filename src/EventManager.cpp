@@ -54,6 +54,9 @@ void EventManager::setup()
     
     ofAddListener(m_gui->newGUIEvent, this, &EventManager::guiEvent);
     m_stateManager = &AppManager::getInstance().getStateManager();
+    
+    //std::cout<< "EventManager-> GUI initialized "<<std::endl;
+    std::cout<< "EventManager-> initialized "<<std::endl;
 }
 
 
@@ -75,6 +78,7 @@ void EventManager::setEvent(Event event)
 
 void EventManager::setTimedEvent(const std::string& name, double delay)
 {
+    std::cout << "EventManager-> setTimedEvent: " << name <<", delay "<<delay<<std::endl;
    m_timeEvents.push_back(new TimedEvent(name,delay));
 	
 }

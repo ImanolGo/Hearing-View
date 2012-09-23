@@ -15,7 +15,19 @@
 #include "DateManager.h"
 
 
-DateManager::DateManager(): m_currentDay(0),m_currentMonth(0),m_currentYear(0)
+const double DateManager::REFRESHING_TIME = 5*60;
+
+DateManager::DateManager(): 
+    m_day(1),
+    m_month(1),
+    m_year(1900),
+    m_latitude(0.0),
+    m_longitude(0.0),
+    m_timezone(0),
+    m_sunrise(6),
+    m_sunset(19),
+    m_elapsedTime(0.0),
+    m_EST(0)
 {
     m_Date = new ofxDate();
     
@@ -28,91 +40,225 @@ DateManager::~DateManager()
 
 void DateManager::setup()
 {
-    m_url = "http://weather.yahooapis.com/forecastrss?w=12814970&u=c";
-    m_sunrise = "07:00 am";
-    m_sunset = "07:00 pm";
+    //location: Linz
+    m_latitude = 48.303056;
+    m_longitude = 14.290556;
+    m_timezone = 1;
+    
+    m_day = m_Date->getDay();
+    m_month = m_Date->getMonth();
+    m_year = m_Date->getYear();
+
+    this->calcSunEqs();
+    this->calcSeason();
+    this->calcDayTime();
+    this->displayDate();
+    std::cout<< "DateManager-> initialized "<<std::endl;
     
 }
 
-bool DateManager::readURL()
+void DateManager::displayDate()
 {
-    std::string xmlFromServer = m_loader.loadFromUrl(m_url);  
-    m_XML.loadFromBuffer(xmlFromServer);
+    std::cout<< "DateManager-> Date:  "<< m_day<< "/"<<m_month<<"/"<<m_year<<std::endl;
+    std::cout<< "DateManager-> Season:  "<< m_season<< std::endl;
+    std::cout<< "DateManager-> Status:  "<< m_dayTime<< std::endl;
+    
+        
+    std::cout<< "DateManager-> Sunrise:  ";
+    
+    int hourSunrise = (int) m_sunrise;
+    int minSunrise =(m_sunrise - (double) hourSunrise)*60;
+    
+    if (hourSunrise < 10) cout << '0';
+    cout << hourSunrise << ':';
+    if (minSunrise < 10) cout << '0';
+    cout << minSunrise << std::endl;
 
+    std::cout<< "DateManager-> Sunset:  ";
+    int hourSunset = (int) m_sunset;
+    int minSunset = (m_sunset - (double) hourSunset)*60;
+    if (hourSunset < 10) cout << '0';
+    cout << hourSunset << ':';
+    if (minSunset < 10) cout << '0';
+    cout << minSunset << std::endl;
     
-    //lets see how many <rss> </rss> tags there are in the xml file
-	int numTags = m_XML.getNumTags("rss");
-    
-	//if there is at least one <rss> tag we can read the list of points
-	//and then try and draw it as a line on the screen
-	if(numTags == 0){
-        
-        std::cout<< "DateManager-> readURL: no rss Tag found" << std::endl;
-        return false;
-    }
-        
-    //we push into the first rss tag this temporarirly treats the tag as the document root.
-    m_XML.pushTag("rss", 1);
-        
-    //we see how many points we have stored in <channel> tags
-    numTags = m_XML.getNumTags("channel");
-    
-    if(numTags == 0){
-        
-        std::cout<< "DateManager-> readURL: no channel Tag found" << std::endl;
-        return false;
-    }
-    
-    //we push into the first rss tag this temporarirly treats the tag as the document root.
-    m_XML.pushTag("channel", 1);
-    
-    //we see how many points we have stored in <yweather:astronomy> tags
-    numTags = m_XML.getNumTags("yweather:astronomy");  
-    
-    if(numTags == 0){
-        
-        std::cout<< "DateManager-> readURL: no yweather:astronomy Tag found" << std::endl;
-        return false;
-    }
-    
-    //we push into the first rss tag this temporarirly treats the tag as the document root.
-    m_XML.pushTag("yweather:astronomy", 1);
-    
-    m_sunrise = m_XML.getValue("sunrise","07:00 am");
-    m_sunrise = ofSplitString(m_sunrise, " ")[0]; //get rid of am
-    
-    m_sunset =  m_XML.getValue("sunset","07:00 pm");
-    m_sunset = ofSplitString(m_sunset, " ")[0];  //get rid of pm
-    
-    std::cout<< "DateManager-> sunrise = " << m_sunrise << "sunset = "<< m_sunset <<std::endl;
             
-    //m_XML.popTag();
-    
-    return true;
+}
 
+void DateManager::calcEST() {
+    
+    int month_begin = 3; // European Summer Time begins in march
+    int month_end = 10; // European Summer Time ends in October
+    
+    //November, December, January and February are not ETS
+    if (m_month < month_begin || m_month > month_end) { 
+        m_EST = 0;
+        return ; 
+    }
+    
+    //April to September are ETS
+    if (m_month > month_begin && m_month < month_end) { 
+        m_EST = 1;
+        return; 
+    }
+    
+    //In march, European Summer Time could start
+    if (m_month == month_begin) { 
+    	int dayBegin = 31 - ((((5 * m_year) / 4) + 4) % 7);
+    	if (m_day<dayBegin) {
+    		m_EST = 0;
+            return;
+    	}
+    	else
+    	{
+            m_EST = 1;
+    		return;
+    	}
+    }
+    
+    //In October, European Summer Time could start
+    if (m_month == month_end) { 
+    	int dayEnd = 31 - ((((5 * m_year) / 4) + 1) % 7);
+    	if (m_day<dayEnd) {
+            m_EST = 1;
+    		return;
+    	}
+    	else
+    	{
+            m_EST = 0;
+    		return;
+    	}
+    }
+}
+
+double DateManager::FNday () 
+{
+    int h = 12;   //h is UT in decimal hours
+    long int luku = - 7 * (m_year + (m_month + 9)/12)/4 + 275*m_month/9 + m_day;
+    
+    // Typecasting needed for TClite on PC DOS at least, to avoid product overflow
+    luku+= (long int)m_year*367;
+    
+    return (double)luku - 730531.5 + h/24.0;
+}
+
+double DateManager::FNrange (double x) 
+{
+    double b = x / (2*pi);
+    double a = 2*pi * (b - (long)(b));
+    if (a < 0) a = 2*pi + a;
+    return a;
+}
+
+double DateManager::f0(double lat, double declin)
+{    
+    double SunDia = 0.53;  // Sunradius degrees
+    double AirRefr = 34.0/60.0; // athmospheric refraction degrees 
+    double rads = pi/180.0;
+    
+    double fo,dfo;
+    // Correction: different sign at S HS
+    dfo = rads*(0.5*SunDia + AirRefr); if (lat < 0.0) dfo = -dfo;
+    fo = tan(declin + dfo) * tan(lat*rads);
+    
+    if (fo > 0.99999) fo=1.0; // to avoid overflow //
+    fo = asin(fo) + pi/2.0;
+    return fo;
+}
+
+double DateManager::f1(double lat, double declin) 
+{
+    double rads = pi/180.0;
+    double fi,df1;
+    // Correction: different sign at S HS
+    df1 = rads * 6.0; if (lat < 0.0) df1 = -df1;
+    fi = tan(declin + df1) * tan(lat*rads);
+    
+    if (fi > 0.99999) fi=1.0; // to avoid overflow //
+    fi = asin(fi) + pi/2.0;
+    return fi;
+}
+
+void DateManager::FNsun (double d,double& L, double& g, double& lambda) {
+    
+    double rads = pi/180.0;
+    // mean longitude of the Sun
+    L = FNrange(280.461 * rads + .9856474 * rads * d);
+    // mean anomaly of the Sun
+    g = FNrange(357.528 * rads + .9856003 * rads * d);
+    // Ecliptic longitude of the Sun
+    lambda =  FNrange(L + 1.915 * rads * sin(g) + .02 * rads * sin(2 * g));
+}
+
+void DateManager::calcSunEqs()
+{
+    double degs = 180.0/pi;
+    double rads = pi/180.0;
+    double lambda = 0.0; // ecliptic longitude of the Sun
+    double L = 0.0; // mean longitude of the Sun
+    double g = 0.0; // mean anomaly of the Sun
+    
+    double d = this->FNday();
+    
+    // Use FNsun to find the ecliptic longitude of the Sun
+    this->FNsun(d,L,g,lambda);
+    
+    // Obliquity of the ecliptic
+    
+    double obliq = 23.439 * rads - .0000004 * rads * d;
+    
+    // Find the RA and DEC of the Sun
+    
+    double alpha = atan2(cos(obliq) * sin(lambda), cos(lambda));
+    double delta = asin(sin(obliq) * sin(lambda));
+    
+    
+    // Find the Equation of Time in minutes
+    // Correction suggested by David Smith
+    
+    double LL = L - alpha;
+    if (L < pi) LL += 2*pi;
+    double equation = 1440.0 * (1.0 - LL / (2*pi));
+    std::cout<< LL;
+    
+    double ha = f0(m_latitude,delta);
+    double hb = f1(m_latitude,delta);
+    double twx = hb - ha;   // length of twilight in radians
+    twx = 12.0*twx/pi;      // length of twilight in degrees
+    // Conversion of angle to hours and minutes //
+    double daylen = degs * ha / 7.5;
+    if (daylen<0.0001) {daylen = 0.0;}
+    // arctic winter   //
+    
+    this->calcEST(); //calculate the European Summer Time offset
+    m_sunrise = 12.0 - 12.0 * ha/pi + (m_timezone+ m_EST) - m_longitude/15.0 + equation/60.0;
+    m_sunset = 12.0 + 12.0 * ha/pi + (m_timezone+ m_EST) - m_longitude/15.0 + equation/60.0;
 }
 
 void DateManager::update(double dt)
 {
-    int day   = m_Date->getDay();
-    int month = m_Date->getMonth();
-    int year = m_Date->getYear();
-    
-    if(m_currentDay != day || m_currentMonth!= month|| m_currentYear!= year)
+    m_elapsedTime+=dt;
+    if(m_elapsedTime>= REFRESHING_TIME)
     {
-        m_currentDay = m_Date->getDay();
-        m_currentMonth = m_Date->getMonth();
-        m_currentYear = m_Date->getYear();
-        this->readURL();
-        this->updateSeason();
+        m_elapsedTime = 0;
+        this->calcDayTime();
+        
+        int day = m_Date->getDay(); // if we change day
+        if(m_day != day)
+        {
+            m_day = day;
+            m_month = m_Date->getMonth();
+            m_year = m_Date->getYear();
+            this->calcSunEqs();
+            this->calcSeason();
+        }
+
     }
-    
-    this->updateDayTime();
     
 }
 
 
-void DateManager::updateDayTime()
+void DateManager::calcDayTime()
 {
     time_t now;
     struct tm *current;
@@ -122,59 +268,74 @@ void DateManager::updateDayTime()
     int currentHour = current->tm_hour;
     int currentMin = current->tm_min;
     
-    cout << "hour: " << current->tm_hour << endl;
-    cout << "mins: " << current->tm_min << endl;
-    cout << "sec: " << current->tm_sec << endl;
+    int hourSunrise = (int) m_sunrise;
+    int minSunrise =(m_sunrise - (double) hourSunrise)*60;
     
-    int hourSunrise = atoi(ofSplitString(m_sunrise, ":")[0].c_str());
-    int minSunrise = atoi(ofSplitString(m_sunrise, ":")[1].c_str());
+    int hourSunset = (int) m_sunset;
+    int minSunset = (m_sunset - (double) hourSunset)*60;
     
-    int hourSunset = atoi(ofSplitString(m_sunset, ":")[0].c_str()) + 12; // 24 hour 
-    int minSunset = atoi(ofSplitString(m_sunset, ":")[1].c_str());
+    if (currentHour == hourSunrise) {
+        if (currentMin>=minSunrise) {
+            m_dayTime = "Day";
+            return;
+        }
+        else{
+            m_dayTime = "Night";
+            return;
+        }
+    }
     
+    if (currentHour == hourSunset) {
+        if (currentMin < minSunset) {
+            m_dayTime = "Day";
+            return;
+        }
+        else{
+            m_dayTime = "Night";
+            return;
+        }
+    }
+
     
-    if(hourSunrise<=currentHour<=hourSunset && minSunrise<=currentMin<=minSunset)
+    if(currentHour > hourSunrise && currentHour<hourSunset)
     {
         m_dayTime = "Day";
     }
     
     else
     {
-         m_dayTime = "Night";
+        m_dayTime = "Night";
     }
-
-
+    
 }
 
-void DateManager::updateSeason()
+void DateManager::calcSeason()
 {
     
     std::string season;
     
-    std::cout << "DateManager -> Date: " << m_currentDay << "/"<<m_currentMonth << "/" << m_currentYear << std::endl;
-    
-    if(1 <= m_currentMonth && m_currentMonth <=3)
+    if(1 <= m_month && m_month <=3)
     {
         season = "Winter";
     }
     
-    else if (4 <= m_currentMonth && m_currentMonth <=6)
+    else if (4 <= m_month && m_month <=6)
     {
         season = "Spring";
     }
     
-    else if (7 <=m_currentMonth && m_currentMonth <=9)
+    else if (7 <=m_month && m_month <=9)
     {
         season = "Summer";
     }
     
-    else if (10 <= m_currentMonth && m_currentMonth <= 12)
+    else if (10 <= m_month && m_month <= 12)
     {
         season = "Autumn";
     }
     
     
-    if ( (m_currentMonth % 3 == 0) && (m_currentDay >= 21))
+    if ( (m_month % 3 == 0) && (m_day >= 21))
     {
         if (season=="Winter")
         {
@@ -202,8 +363,7 @@ void DateManager::updateSeason()
             season = "Winter";
         }    			
     }
-        
-    std::cout << "DateManager -> Season: " << m_season <<std::endl;
+    
     
     if(m_season!=season)
     {
