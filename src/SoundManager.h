@@ -18,6 +18,7 @@
 #include "ofxUI.h"
 
 class SoundObject;
+class Event;
 
 //========================== class SoundManager ==============================
 //============================================================================
@@ -59,12 +60,8 @@ public:
     //! fades the current sample to a specific level
     void  fadeSample(float volume,float fadeTime);
     
-    //! set to the current season and the corresponding sample list 
-    void setSeason(const std::string& season);
-    
-     //! set to the current weather conditions and the corresponding sample list 
-    void setConditions(const std::string& conditions);
-    
+    //! handles the events
+    void handleEvent(const Event& event);
        
 private:
     
@@ -97,6 +94,7 @@ private:
     
     std::string                      m_season;            ///< saves the current season
     std::string                      m_conditions;        ///< saves the current weather conditions
+    std::string                      m_dayTime;           ///< saves if it is day or night
     std::vector<int>                 m_indexList;         ////< list with the current sample list indexes
     
 };

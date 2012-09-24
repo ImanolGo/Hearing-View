@@ -17,6 +17,7 @@
 
 class ofxXmlSettings;
 class ofxDate;
+class Event;
 
 //========================== class DateManager =======================================
 //==============================================================================
@@ -30,14 +31,9 @@ class DateManager
     
     static const double   REFRESHING_TIME; //determines the time ro refresh the calculations (s)
     
-public:
-    
-    enum DayCycle {
-        Day,
-        Night
-    } ;
         
 public:
+    
     //! Constructor
     DateManager();
     //! Destructor
@@ -54,6 +50,11 @@ public:
     
     //! updates the date manager
     void update(double dt);
+    
+    //! handles the events
+    void handleEvent(const Event& event);
+    
+
     
 private:
     
@@ -87,7 +88,7 @@ private:
     // Displays the current date, season, day time and sunset and sunrise information
     void displayDate();
     
-    
+        
 private:
     
     ofxDate*                m_Date;         ///< current date and time

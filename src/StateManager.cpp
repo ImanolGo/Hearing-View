@@ -43,11 +43,11 @@ void StateManager::setup()
     ambienceState->initialize();
     m_stateMachine->addState(ambienceState);
    
-    m_stateMachine->createTransition("IdleState", "AmbienceState",Event("SensorON"));
-    m_stateMachine->createTransition("AmbienceState", "IdleState",Event("SensorOFF"));
+    m_stateMachine->createTransition("IdleState", "AmbienceState",Event("Sensor",1));
+    m_stateMachine->createTransition("AmbienceState", "IdleState",Event("Sensor",0));
     m_stateMachine->createTransition("AmbienceState", "SamplerState",Event("TimeOut"));
     m_stateMachine->createTransition("SamplerState", "AmbienceState", Event("EndSampler"));
-    m_stateMachine->createTransition("SamplerState", "IdleState", Event("SensorOFF"));
+    m_stateMachine->createTransition("SamplerState", "IdleState", Event("Sensor",0));
     
     m_stateMachine->setCurrentState("IdleState");
     

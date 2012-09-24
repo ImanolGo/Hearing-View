@@ -20,7 +20,8 @@ SoundManager::SoundManager():
     m_isSamplerPlaying(false), 
     m_currentSample(NULL),
     m_season("Summer"),
-    m_conditions("Day_Dry")
+    m_conditions("Dry"),
+    m_dayTime("Day")
 {
 }
 
@@ -66,36 +67,42 @@ void SoundManager::loadSamples()
     //some path, may be absolute or relative to bin/data
 
     std::string seasons[4] = {"Summer","Autumn","Winter","Spring"};
-    std::string conditions[4] = {"Day_Dry","Day_Rain","Night_Dry","Night_Rain"};
+    std::string conditions[2] = {"Dry","Rain"};
+    std::string dayTime[2] = {"Day","Night"};
     
-    for (int i=0; i<4; i++) {
-         for (int j=0; j<4; j++) {
-             
-             std::string samplesPath = "sounds/" + seasons[i] + "/" + conditions[j];
-             std::cout<< "SoundManager-> loadSamples: loading sampels from \""<<samplesPath<<"\"..."<<std::endl;
-             ofDirectory dir(samplesPath);
-             //only show wav and aiff files
-             dir.allowExt("wav");
-             dir.allowExt("aiff");
-             dir.allowExt("aif");
-             //populate the directory object
-             if(dir.listDir()==0)
-             {
-                 std::cout <<"SoundManager-> loadSamples: No samples found in \""<< samplesPath <<"\"" << std::endl;
-                 break;
-             }
-             
-             SamplesList sampleList;
-             //go through and print out all the paths
-             for(int n = 0; n < dir.numFiles(); n++)
-             {
-                 std::string sampleName = this->getSampleName(dir.getPath(n));
-                 SoundObject* sample = new SoundObject(sampleName);
-                 sample->loadSound(dir.getPath(n));
-                 sampleList.push_back(sample);
-                 std::cout <<"SoundManager-> loaded sample \""<< sampleName <<"\"" << std::endl;
-             }
-              m_samples[seasons[i] + "/" + conditions[j]] = sampleList;
+    
+    for (int i=0; i<4; i++) 
+    {
+        for (int j=0; j<2; j++) 
+        {
+            for (int k=0; k<2; k++) 
+            {
+                std::string samplesPath = "sounds/" + seasons[i] + "/" + dayTime[j] +"/" + conditions[k];
+                std::cout<< "SoundManager-> loadSamples: loading sampels from \""<<samplesPath<<"\"..."<<std::endl;
+                ofDirectory dir(samplesPath);
+                //only show wav and aiff files
+                dir.allowExt("wav");
+                dir.allowExt("aiff");
+                dir.allowExt("aif");
+                //populate the directory object
+                if(dir.listDir()==0)
+                {
+                    std::cout <<"SoundManager-> loadSamples: No samples found in \""<< samplesPath <<"\"" << std::endl;
+                    break;
+                }
+                
+                SamplesList sampleList;
+                //go through and print out all the paths
+                for(int n = 0; n < dir.numFiles(); n++)
+                {
+                    std::string sampleName = this->getSampleName(dir.getPath(n));
+                    SoundObject* sample = new SoundObject(sampleName);
+                    sample->loadSound(dir.getPath(n));
+                    sampleList.push_back(sample);
+                    std::cout <<"SoundManager-> loaded sample \""<< sampleName <<"\"" << std::endl;
+                }
+                m_samples[seasons[i] + "/" + dayTime[j] +"/" + conditions[k]] = sampleList;
+            }
          }
     }
     
@@ -123,24 +130,6 @@ void SoundManager::setCurrentSamples(std::string sampleListName)
     
     m_currentSampleList = m_samples[sampleListName];
 
-}
-
-void SoundManager::setSeason(const std::string& season)
-{
-    if(m_season!=season)
-    {
-        m_season = season;
-        this->setCurrentSamples(m_season+"/"+m_conditions);
-    }
-}
-
-void SoundManager::setConditions(const std::string& conditions)
-{
-    if(m_conditions!=conditions)
-    {
-        m_conditions = conditions;
-        this->setCurrentSamples(m_season+"/"+m_conditions);
-    }
 }
 
 void SoundManager::playSamples()
@@ -221,6 +210,55 @@ void  SoundManager::fadeSample(float volume, float fadeTime)
     fadeExp->setParameters(currentVolume, volume, fadeTime);
     fadeExp->start();
     
+}
+
+void SoundManager::handleEvent(const Event& event)
+{
+    std::string name = event.getName();
+    
+    if(name=="TUBE VOLUME")
+    {
+        m_tube->setVolume((float) event.getValue());
+    }
+    
+    else if(name=="SAMPLER VOLUME")
+    {
+        if(!m_currentSample)
+        {
+            m_currentSample->setVolume((float) event.getValue());
+        }
+    }
+    
+    else if(name=="Winter" || name=="Summer" ||name=="Autumn" ||name=="Spring")
+    {
+        if(m_season!=name)
+        {
+            m_season = name;
+            this->setCurrentSamples(m_season+"/"+ m_dayTime+"/"+ m_conditions);
+        }
+    }
+    
+    else if(name== "Day" || name=="Night" )
+    {
+        if(m_dayTime!=name)
+        {
+            m_dayTime = name;
+            this->setCurrentSamples(m_season+"/"+ m_dayTime+"/"+ m_conditions);
+        }
+        
+    }
+    
+    else if(name== "Dry" || name=="Rain" )
+    {
+        if(m_conditions!=name)
+        {
+            m_conditions = name;
+            this->setCurrentSamples(m_season+"/"+ m_dayTime+"/"+ m_conditions);
+        }
+        
+    }
+
+
 }
 
 

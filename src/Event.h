@@ -17,10 +17,10 @@ class Event{
 public:
     
     //! Constructor
-    Event(const std::string& name): m_name(name) { }
+    Event(const std::string& name, double value= 0.0): m_name(name), m_value(value) { }
     
     //! Compares two event types by their names
-    bool operator==(const Event& rhs) const { return m_name == rhs.m_name; }
+    bool operator==(const Event& rhs) const { return ((m_name == rhs.m_name) && (m_value == rhs.m_value)); }
     //! Compares two event types lexicographically by their names
     bool operator<(const Event& rhs) const { return (m_name.compare(rhs.m_name) < 0); }
     
@@ -29,18 +29,21 @@ public:
     //< Get Event name
     const std::string& getName() const { return m_name; }
     
-    
+    //! return the value
+    const double&  getValue() const {return m_value;}
+	
     
 private:
     
     std::string	m_name;
+    double		m_value;        //< the value of the event
     
 };
 
 
 //==============================================================================
 /** \class TimedEvent Event.h
- *	\brief Base class for all events.
+ *	\brief Event set after a delay time
  */
 //==============================================================================
 
@@ -62,8 +65,10 @@ public:
     
 private:
     
-	double		m_delay;        //< the that the event shoul be delayed
+	double		m_delay;        //< the time the event shoul be delayed
     double      m_elapsedTime;  //< the time since the event was created
 };
+
+
 
 #endif

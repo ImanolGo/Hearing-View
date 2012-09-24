@@ -16,6 +16,7 @@
 
 
 class EventManager;
+class GuiManager;
 class StateManager;
 class ViewManager;
 class SoundManager;
@@ -56,6 +57,9 @@ public:
     //! Returns the event manager
     EventManager& getEventManager() { return *m_eventManager; }
     
+    //! Returns the gui manager
+    GuiManager& getGuiManager() { return *m_guiManager; }
+    
     //! Returns the soundEffectsManager
     SoundEffectsManager& getSoundEffectsManager() { return *m_soundEffectsManager; }
     
@@ -90,7 +94,8 @@ private:
 
     static AppManager*      m_instance;             ///< singleton instance
     
-    EventManager*           m_eventManager;         ///< the gui and event manager
+    EventManager*           m_eventManager;         ///< manages all the events
+    GuiManager*             m_guiManager;           ///< manages the GUI
     StateManager*           m_stateManager;         ///< the state machine under the logic
     ViewManager*            m_viewManager;          ///< manages and renders all visuals
     SoundManager*           m_soundManager;         ///< manages and plays all sounds

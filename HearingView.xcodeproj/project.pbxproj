@@ -21,6 +21,7 @@
 		0840EAF115B4BDE900782650 /* Visuals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0840EAEF15B4BDE900782650 /* Visuals.cpp */; };
 		0841A3FE159BC05F00DBAB03 /* SoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0841A3FD159BC05F00DBAB03 /* SoundManager.cpp */; };
 		084826A8159B87C800502B1E /* States.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 084826A7159B87C800502B1E /* States.cpp */; };
+		0861F28E160F4CDD007BD5A5 /* GuiManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0861F28D160F4CDD007BD5A5 /* GuiManager.cpp */; };
 		086C982015AA055200CBC0CB /* SoundObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 086C981F15AA055200CBC0CB /* SoundObject.cpp */; };
 		08A630EA15A5596B00FB52D1 /* ViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08A630E915A5596B00FB52D1 /* ViewManager.cpp */; };
 		08BEF3F115A9C38B000F0471 /* EventManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08BEF3F015A9C38B000F0471 /* EventManager.cpp */; };
@@ -144,6 +145,8 @@
 		0841A3FC159BBA7900DBAB03 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
 		0841A3FD159BC05F00DBAB03 /* SoundManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundManager.cpp; sourceTree = "<group>"; };
 		084826A7159B87C800502B1E /* States.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = States.cpp; sourceTree = "<group>"; };
+		0861F28D160F4CDD007BD5A5 /* GuiManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuiManager.cpp; sourceTree = "<group>"; };
+		0861F28F160F4CEC007BD5A5 /* GuiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; path = GuiManager.h; sourceTree = "<group>"; };
 		086C981E15AA047B00CBC0CB /* SoundObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundObject.h; sourceTree = "<group>"; };
 		086C981F15AA055200CBC0CB /* SoundObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundObject.cpp; sourceTree = "<group>"; };
 		089BA5B0159C32E60085DD7C /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
@@ -321,6 +324,8 @@
 				08BEF3F015A9C38B000F0471 /* EventManager.cpp */,
 				083125AE15AB89DC00C4827E /* Event.h */,
 				083125AF15AB8A9E00C4827E /* Event.cpp */,
+				0861F28D160F4CDD007BD5A5 /* GuiManager.cpp */,
+				0861F28F160F4CEC007BD5A5 /* GuiManager.h */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -590,6 +595,7 @@
 				086C982015AA055200CBC0CB /* SoundObject.cpp in Sources */,
 				083125B015AB8A9E00C4827E /* Event.cpp in Sources */,
 				0840EAF115B4BDE900782650 /* Visuals.cpp in Sources */,
+				0861F28E160F4CDD007BD5A5 /* GuiManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

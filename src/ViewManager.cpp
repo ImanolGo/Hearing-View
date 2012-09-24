@@ -33,7 +33,7 @@ ViewManager::~ViewManager()
 
 void ViewManager::setup()
 {
-     std::cout<< "StateManager-> initialized "<<std::endl;
+     std::cout<< "ViewManager-> initialized "<<std::endl;
 }
 
 

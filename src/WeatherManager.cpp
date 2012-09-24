@@ -30,8 +30,6 @@ void WeatherManager::update(double dt)
     std::string xmlFromServer = m_loader.loadFromUrl(m_url);  
     m_XML.loadFromBuffer(xmlFromServer);
     
-    m_dayTime = AppManager::getInstance().getDateManager().getDayTime();
-    
     if(this->parseXML())
     {
         this->eventHandler();
@@ -41,38 +39,37 @@ void WeatherManager::update(double dt)
 
 void WeatherManager::eventHandler()
 {
-    std::string dayTime_Weather;
-    if(ofIsStringInString(m_condition,"storm"))
+    std::string currentConditions;
+    if(ofIsStringInString(m_conditions,"storm"))
     {
-        dayTime_Weather = m_dayTime + "_" + "Rain";
+       currentConditions=  "Rain";
            
     }
-       
-    else if (ofIsStringInString(m_condition,"drizzle"))
+    else if (ofIsStringInString(m_conditions,"drizzle"))
     {
-        dayTime_Weather = m_dayTime + "_" + "Rain";         
+        currentConditions =  "Rain";         
     }
     
-    else if (ofIsStringInString(m_condition,"rain"))
+    else if (ofIsStringInString(m_conditions,"rain"))
     {
-        dayTime_Weather = m_dayTime + "_" + "Rain";         
+       currentConditions =  "Rain";      
     }
     
-    else if (ofIsStringInString(m_condition,"shower"))
+    else if (ofIsStringInString(m_conditions,"shower"))
     {
-        dayTime_Weather = m_dayTime + "_" + "Rain";         
+       currentConditions =  "Rain";         
     }
     
     else
     {
-        dayTime_Weather = m_dayTime + "_" + "Rain";
+        currentConditions =  "Dry"; 
     }
     
     
-    if (m_dayTime_Weather!=dayTime_Weather) //create weather conditions event
+    if (m_conditions!=currentConditions) //create weather conditions event
     {
-        m_dayTime_Weather = dayTime_Weather;
-        AppManager::getInstance().getEventManager().setEvent(Event(m_dayTime_Weather));
+        m_conditions = currentConditions;
+        AppManager::getInstance().getEventManager().setEvent(Event(m_conditions));
     }
        
 }
@@ -122,5 +119,16 @@ bool WeatherManager::parseXML()
     std::string m_condition = m_XML.getValue("text"," ");
     
 }
+
+void WeatherManager::handleEvent(const Event& event)
+{
+    std::string name = event.getName();
+    if(name=="Dry" || name=="Rain")
+    {
+        m_conditions = name;
+    }
+    
+}
+
 
 

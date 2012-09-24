@@ -219,7 +219,6 @@ void DateManager::calcSunEqs()
     double LL = L - alpha;
     if (L < pi) LL += 2*pi;
     double equation = 1440.0 * (1.0 - LL / (2*pi));
-    std::cout<< LL;
     
     double ha = f0(m_latitude,delta);
     double hb = f1(m_latitude,delta);
@@ -373,3 +372,19 @@ void DateManager::calcSeason()
     }
     
 }
+
+void DateManager::handleEvent(const Event& event)
+{
+    std::string name = event.getName();
+    if(name=="Winter" || name=="Summer" ||name=="Autumn" ||name=="Spring")
+    {
+        m_season = name;
+    }
+    
+    else if(name== "Day" || name=="Night" )
+    {
+        m_dayTime = name;
+    }
+    
+}
+

@@ -14,9 +14,8 @@
 
 #include <string>
 #include "ofxFileLoader.h"
+#include "ofxXmlSettings.h"
 
-
-class ofxXmlSettings;
 
 //========================== class WeatherManager =======================================
 //==============================================================================
@@ -43,6 +42,9 @@ public:
     //! setups the class
     void update(double dt);
     
+    //! handles the events
+    void handleEvent(const Event& event);
+    
 protected:
     
     //! reads and parses the information from Yahoo's weather API
@@ -57,10 +59,7 @@ protected:
     std::string           m_url;                ///< stores the url to send the request
     ofxFileLoader         m_loader;             ///< loads file given an url
     ofxXmlSettings        m_XML;                ///< it saves the url xml information
-    std::string           m_condition;          ///< stores the current weather conditions
-    std::string           m_dayTime;            ///< stores the current day time
-    std::string           m_dayTime_Weather;    ///< stores the current day time and weather conditions
-    
+    std::string           m_conditions;          ///< stores the current weather conditions
     
 };
 
