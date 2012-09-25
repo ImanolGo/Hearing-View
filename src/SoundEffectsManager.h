@@ -34,16 +34,16 @@ public:
     //! Destructor
     ~SoundEffectsManager();
     
-    //! Updates all the visual effects
+    //! Updates all the sound effects
 	void update(double dt);
     
-	//! Adds a certain visual effect
+	//! Adds a certain sound effect
 	void addSoundEffect(SoundEffect& soundEffect);
     
-	//! Removes a certain visual effect
+	//! Removes a certain sound effect
 	void removeSoundEffect(SoundEffect& soundEffect);
     
-	//! Removes all visual effects for the specified sound 
+	//! Removes all sound effects for the specified sound 
 	void removeAllSoundEffects(const SoundObject& sound);    
     
     //==========================================================================

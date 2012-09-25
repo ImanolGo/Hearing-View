@@ -146,7 +146,7 @@
 		0841A3FD159BC05F00DBAB03 /* SoundManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundManager.cpp; sourceTree = "<group>"; };
 		084826A7159B87C800502B1E /* States.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = States.cpp; sourceTree = "<group>"; };
 		0861F28D160F4CDD007BD5A5 /* GuiManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuiManager.cpp; sourceTree = "<group>"; };
-		0861F28F160F4CEC007BD5A5 /* GuiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; path = GuiManager.h; sourceTree = "<group>"; };
+		0861F28F160F4CEC007BD5A5 /* GuiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuiManager.h; sourceTree = "<group>"; };
 		086C981E15AA047B00CBC0CB /* SoundObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundObject.h; sourceTree = "<group>"; };
 		086C981F15AA055200CBC0CB /* SoundObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundObject.cpp; sourceTree = "<group>"; };
 		089BA5B0159C32E60085DD7C /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };

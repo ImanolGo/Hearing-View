@@ -69,14 +69,19 @@ void GuiManager::handleEvent(const Event& event)
 	{
         widget = m_gui->getWidget(name);
         ofxUIToggle *toggle = (ofxUIToggle *) widget;
-        toggle->setValue((bool) value);
+        if(value!=toggle->getValue()){
+             toggle->setValue(value);
+        }
+       
     }
     
     else if(name == "TUBE VOLUME" || name == "SAMPLER VOLUME")
 	{
         widget = m_gui->getWidget(name);
         ofxUISlider *slider = (ofxUISlider *) widget;
-        slider->setValue(value);
+        if(value!=slider->getValue()){
+            slider->setValue(value);
+        }
     }
     
     else if(name == "Winter" || name == "Summer" || name == "Spring" || name == "Autumn")
@@ -111,22 +116,22 @@ void GuiManager::guiEvent(ofxUIEventArgs &e)
     if(name =="SENSOR")
     {
 	    ofxUIToggle *toggle = (ofxUIToggle*) e.widget; 
-        std::cout << name << "\t value: " << toggle->getValue() << std::endl; 
+        std::cout << "GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue() << std::endl; 
         m_eventManager->setEvent(Event(name,(double)toggle->getValue()));
     }
 
     
-    if(name =="TUBE VOLUME" || name == "SAMPLE VOLUME")
+    else if(name =="TUBE VOLUME" || name == "SAMPLE VOLUME")
     {
 	    ofxUISlider *slider = (ofxUISlider*) e.widget; 
-        std::cout << name << "\t value: " << slider->getValue() << std::endl; 
+        std::cout << "GuiManager-> guiEvent: "<< name << ", "<< slider->getValue() << std::endl; 
         m_eventManager->setEvent(Event(name,slider->getValue()));
     }
     
     else
     {
         ofxUIToggle *toggle = (ofxUIToggle *) e.widget; 
-        std::cout << name << "\t value: " << toggle->getValue() << std::endl; 
+        std::cout << "GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue() << std::endl;
         m_eventManager->setEvent(Event(name));
         
     }

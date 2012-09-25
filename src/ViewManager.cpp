@@ -33,17 +33,24 @@ ViewManager::~ViewManager()
 
 void ViewManager::setup()
 {
+     m_frameRateFont.loadFont("fonts/frabk.ttf", 14, true, true);
      std::cout<< "ViewManager-> initialized "<<std::endl;
 }
 
+void ViewManager::update(double dt)
+{
+    sprintf(m_fpsStr, "%f fps", dt);
+}
 
-void ViewManager::draw() const
+void ViewManager::draw()
 {
     for(VisualList::const_reverse_iterator it = m_visuals.rbegin(); it != m_visuals.rend(); it++) {	
 		glPushMatrix();
 		it->second->draw();
 		glPopMatrix();
 	}
+
+    m_frameRateFont.drawString(m_fpsStr, ofGetWidth() - 200,50);
 }
 
 void ViewManager::addVisual(const Visual& visual,int zOrder)

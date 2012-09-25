@@ -37,7 +37,10 @@ public:
     void setup();
     
     //! renders all the graphics
-    void draw() const;
+    void draw();
+    
+    //! updates the date manager
+    void update(double dt);
     
     //! Adds a visual as an overlay with the specified z-ordering.
 	//! \details The scene is responsible for deleting overlay objects.
@@ -56,6 +59,9 @@ private:
 	typedef std::list<Overlay>				VisualList;     ///< list of overlay elements
     
     VisualList		m_visuals;	///< list of all visuals that are rendered each frame
+    
+    ofTrueTypeFont  m_frameRateFont;    ///< font displaying the frame rate 
+    char            m_fpsStr[255];      ///<  framerate text
     
 };
 

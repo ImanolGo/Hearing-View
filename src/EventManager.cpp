@@ -58,7 +58,7 @@ void EventManager::update(double dt)
 
 void EventManager::setEvent(Event event)
 {
-    std::cout << "EventManager-> SetEvent: " << event.getName() <<std::endl; 
+    std::cout << "EventManager-> SetEvent: " << event.getName() << ", " << event.getValue()<<std::endl; 
     m_stateManager->handleEvent(event);
     m_weatherManager->handleEvent(event);
     m_dateManager->handleEvent(event);

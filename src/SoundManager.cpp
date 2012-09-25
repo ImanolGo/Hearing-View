@@ -12,6 +12,7 @@
 #include "AppManager.h"
 #include "EventManager.h"
 #include "Event.h"
+//#include "SoundEffectsManager.cpp"
 #include "SoundEffects.h"
 
     
@@ -189,11 +190,13 @@ void  SoundManager::fadeTube(float volume, float fadeTime)
         return;
     }
     
+    //AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_tube);
+    
     float currentVolume = m_tube->getVolume();
     FadeExp* fadeExp = new FadeExp(*m_tube);
     fadeExp->setParameters(currentVolume, volume, fadeTime);
     fadeExp->start();
-    std::cout<< "SoundManager-> fade tube "<<std::endl;
+    std::cout<< "SoundManager-> fade tube to "<<volume<< " in "<< fadeTime<<"s"<<std::endl;
     
 }
 
@@ -204,7 +207,9 @@ void  SoundManager::fadeSample(float volume, float fadeTime)
         return; 
     }
     
-    std::cout<< "SoundManager-> fade sample "<<m_currentSample->getName() <<std::endl;
+    //AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_currentSample);
+    
+    std::cout<< "SoundManager-> fade sample "<< m_currentSample->getName() << "to "<<volume<< " in "<< fadeTime<<"s"<<std::endl;
     float currentVolume = m_currentSample->getVolume();
     FadeExp* fadeExp = new FadeExp(*m_currentSample);
     fadeExp->setParameters(currentVolume, volume, fadeTime);

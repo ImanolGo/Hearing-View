@@ -27,7 +27,9 @@ DateManager::DateManager():
     m_sunrise(6),
     m_sunset(19),
     m_elapsedTime(0.0),
-    m_EST(0)
+    m_EST(0),
+    m_season("Summer"),
+    m_dayTime("Day")
 {
     m_Date = new ofxDate();
     
@@ -54,6 +56,162 @@ void DateManager::setup()
     this->calcDayTime();
     this->displayDate();
     std::cout<< "DateManager-> initialized "<<std::endl;
+    
+}
+
+void DateManager::update(double dt)
+{
+    m_elapsedTime+=dt;
+    if(m_elapsedTime>= REFRESHING_TIME)
+    {
+        m_elapsedTime = 0;
+        this->calcDayTime();
+        
+        int day = m_Date->getDay(); // if we change day
+        if(m_day != day)
+        {
+            m_day = day;
+            m_month = m_Date->getMonth();
+            m_year = m_Date->getYear();
+            this->calcSunEqs();
+            this->calcSeason();
+        }
+        
+    }
+    
+}
+
+
+void DateManager::calcDayTime()
+{
+    time_t now;
+    struct tm *current;
+    now = time(0);
+    current = localtime(&now);
+    
+    int currentHour = current->tm_hour;
+    int currentMin = current->tm_min;
+    
+    int hourSunrise = (int) m_sunrise;
+    int minSunrise =(m_sunrise - (double) hourSunrise)*60;
+    
+    int hourSunset = (int) m_sunset;
+    int minSunset = (m_sunset - (double) hourSunset)*60;
+    
+    string dayTime;
+    if (currentHour == hourSunrise) {
+        if (currentMin>=minSunrise) {
+            dayTime = "Day";
+        }
+        else{
+            dayTime = "Night";
+        }
+    }
+    
+    if (currentHour == hourSunset) {
+        if (currentMin < minSunset) {
+            dayTime = "Day";
+        }
+        else{
+            dayTime = "Night";
+        }
+    }
+    
+    
+    if(currentHour > hourSunrise && currentHour<hourSunset)
+    {
+        dayTime = "Day";
+    }
+    
+    else
+    {
+        dayTime = "Night";
+    }
+    
+    if(m_dayTime!=dayTime)
+    {
+        m_dayTime = dayTime;
+        AppManager::getInstance().getEventManager().setEvent(Event(m_dayTime));
+        
+    }
+    
+}
+
+void DateManager::calcSeason()
+{
+    string season;
+    if(1 <= m_month && m_month <=3)
+    {
+        season = "Winter";
+    }
+    
+    else if (4 <= m_month && m_month <=6)
+    {
+        season = "Spring";
+    }
+    
+    else if (7 <=m_month && m_month <=9)
+    {
+        season = "Summer";
+    }
+    
+    else if (10 <= m_month && m_month <= 12)
+    {
+        season = "Autumn";
+    }
+    
+    
+    if ( (m_month % 3 == 0) && (m_day >= 21))
+    {
+        if (season=="Winter")
+        {
+            season = "Spring";
+            
+        }
+        
+        else if (season=="Spring")
+        {
+            season = "Summer";
+        }
+        
+        else if (season=="Summer")
+        {
+            season = "Autumn";
+        }
+        
+        else if (season=="Autumn")
+        {
+            season = "Winter";
+        }
+        
+        else 
+        {
+            season = "Winter";
+        }    			
+    }
+    
+    
+    if(m_season!=season)
+    {
+        m_season = season;
+        AppManager::getInstance().getEventManager().setEvent(Event(m_season));
+        
+    }
+    
+}
+
+void DateManager::handleEvent(const Event& event)
+{
+    std::string name = event.getName();
+    if(name=="Winter" || name=="Summer" ||name=="Autumn" ||name=="Spring")
+    {
+        m_season = name;
+    }
+    
+    else if(name== "Day" || name=="Night" )
+    {
+        m_dayTime = name;
+    }
     
 }
 
@@ -234,157 +392,5 @@ void DateManager::calcSunEqs()
     m_sunset = 12.0 + 12.0 * ha/pi + (m_timezone+ m_EST) - m_longitude/15.0 + equation/60.0;
 }
 
-void DateManager::update(double dt)
-{
-    m_elapsedTime+=dt;
-    if(m_elapsedTime>= REFRESHING_TIME)
-    {
-        m_elapsedTime = 0;
-        this->calcDayTime();
-        
-        int day = m_Date->getDay(); // if we change day
-        if(m_day != day)
-        {
-            m_day = day;
-            m_month = m_Date->getMonth();
-            m_year = m_Date->getYear();
-            this->calcSunEqs();
-            this->calcSeason();
-        }
 
-    }
-    
-}
-
-
-void DateManager::calcDayTime()
-{
-    time_t now;
-    struct tm *current;
-    now = time(0);
-    current = localtime(&now);
-    
-    int currentHour = current->tm_hour;
-    int currentMin = current->tm_min;
-    
-    int hourSunrise = (int) m_sunrise;
-    int minSunrise =(m_sunrise - (double) hourSunrise)*60;
-    
-    int hourSunset = (int) m_sunset;
-    int minSunset = (m_sunset - (double) hourSunset)*60;
-    
-    if (currentHour == hourSunrise) {
-        if (currentMin>=minSunrise) {
-            m_dayTime = "Day";
-            return;
-        }
-        else{
-            m_dayTime = "Night";
-            return;
-        }
-    }
-    
-    if (currentHour == hourSunset) {
-        if (currentMin < minSunset) {
-            m_dayTime = "Day";
-            return;
-        }
-        else{
-            m_dayTime = "Night";
-            return;
-        }
-    }
-
-    
-    if(currentHour > hourSunrise && currentHour<hourSunset)
-    {
-        m_dayTime = "Day";
-    }
-    
-    else
-    {
-        m_dayTime = "Night";
-    }
-    
-}
-
-void DateManager::calcSeason()
-{
-    
-    std::string season;
-    
-    if(1 <= m_month && m_month <=3)
-    {
-        season = "Winter";
-    }
-    
-    else if (4 <= m_month && m_month <=6)
-    {
-        season = "Spring";
-    }
-    
-    else if (7 <=m_month && m_month <=9)
-    {
-        season = "Summer";
-    }
-    
-    else if (10 <= m_month && m_month <= 12)
-    {
-        season = "Autumn";
-    }
-    
-    
-    if ( (m_month % 3 == 0) && (m_day >= 21))
-    {
-        if (season=="Winter")
-        {
-            season = "Spring";
-            
-        }
-        
-        else if (season=="Spring")
-        {
-            season = "Summer";
-        }
-        
-        else if (season=="Summer")
-        {
-            season = "Autumn";
-        }
-        
-        else if (season=="Autumn")
-        {
-            season = "Winter";
-        }
-        
-        else 
-        {
-            season = "Winter";
-        }    			
-    }
-    
-    
-    if(m_season!=season)
-    {
-        m_season = season;
-        AppManager::getInstance().getEventManager().setEvent(Event(m_season));
-        
-    }
-    
-}
-
-void DateManager::handleEvent(const Event& event)
-{
-    std::string name = event.getName();
-    if(name=="Winter" || name=="Summer" ||name=="Autumn" ||name=="Spring")
-    {
-        m_season = name;
-    }
-    
-    else if(name== "Day" || name=="Night" )
-    {
-        m_dayTime = name;
-    }
-    
-}
 

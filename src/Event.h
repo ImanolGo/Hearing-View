@@ -21,6 +21,7 @@ public:
     
     //! Compares two event types by their names
     bool operator==(const Event& rhs) const { return ((m_name == rhs.m_name) && (m_value == rhs.m_value)); }
+    
     //! Compares two event types lexicographically by their names
     bool operator<(const Event& rhs) const { return (m_name.compare(rhs.m_name) < 0); }
     
