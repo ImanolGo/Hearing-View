@@ -102,18 +102,18 @@ protected:
 
 
 //==============================================================================
-/** \class FadeLinear SoundEffects.h
+/** \class FadeSoundLinear SoundEffects.h
  *	\brief Fades a sound linearly.
  *
  */
 //==============================================================================
 
-class FadeLinear: public FadeSound
+class FadeSoundLinear: public FadeSound
 {
 public:
     
 	//! Constructor
-	FadeLinear(SoundObject& sound);
+	FadeSoundLinear(SoundObject& sound);
     
     
     //========================= Fade Interface ================================
@@ -126,18 +126,18 @@ public:
 
 
 //==============================================================================
-/** \class FadeLog SoundEffects.h
+/** \class FadeSoundLog SoundEffects.h
  *	\brief Fades a sound logaritmically.
  *
  */
 //==============================================================================
 
-class FadeLog: public FadeSound
+class FadeSoundLog: public FadeSound
 {
 public:
     
 	//! Constructor
-	FadeLog(SoundObject& sound);
+	FadeSoundLog(SoundObject& sound);
     
     
     //========================= Fade Interface ================================
@@ -148,18 +148,18 @@ public:
 };
 
 //==============================================================================
-/** \class FadeExp SoundEffects.h
+/** \class FadeSoundExp SoundEffects.h
  *	\brief Fades a sound exponentially.
  *
  */
 //==============================================================================
 
-class FadeExp: public FadeSound
+class FadeSoundExp: public FadeSound
 {
 public:
     
 	//! Constructor
-	FadeExp(SoundObject& sound);
+	FadeSoundExp(SoundObject& sound);
     
     
     //========================= Fade Interface ================================

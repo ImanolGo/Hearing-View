@@ -14,10 +14,8 @@
 void TimedEvent::update(double dt)
 {
     m_elapsedTime = m_elapsedTime + dt;
-    std::cout << "TimedEvent-> update: elpased time =  "<< m_elapsedTime << "s"<<std::endl;
     if (m_elapsedTime>= m_delay) {
         //std::cout << "TimedEvent-> update: elpased time =  "<< m_elapsedTime << "s"<<std::endl;
         AppManager::getInstance().getEventManager().triggerTimedEvent(*this);
-        //m_elapsedTime = 0.0;
     }
 }

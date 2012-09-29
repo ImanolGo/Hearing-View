@@ -51,7 +51,7 @@ void EventManager::setup()
 
 void EventManager::update(double dt)
 {
-	for(TimedEventList::iterator it = m_timeEvents.begin(); it != m_timeEvents.end();) {
+	for(TimedEventList::iterator it = m_timeEvents.begin(); it != m_timeEvents.end(); it++) {
 		(*it)->update(dt);	
 	}
 }
@@ -73,13 +73,17 @@ void EventManager::setTimedEvent(const std::string& name, double delay)
 	
 }
 
-void EventManager::removeTimedEvent(TimedEvent& timeEvent)
+void EventManager::deleteTimedEvent(const TimedEvent& timeEvent)
 {
     for(TimedEventList::iterator it = m_timeEvents.begin(); it != m_timeEvents.end();) {
 		if(*it == &timeEvent) {
 			delete *it; 
 			it = m_timeEvents.erase(it);
-		}		
+		}	
+        else
+        {
+            ++it;
+        }
 	}
 }
 
@@ -92,9 +96,9 @@ void EventManager::removeAllTimedEvents()
     m_timeEvents.clear();
 }
 
-void EventManager::triggerTimedEvent(TimedEvent& timedEvent)
+void EventManager::triggerTimedEvent(const TimedEvent& timedEvent)
 {
-    this->setEvent(timedEvent);
-    this->removeTimedEvent(timedEvent);	
+    this->setEvent(Event(timedEvent.getName()));
+    this->deleteTimedEvent(timedEvent);	
 }
 

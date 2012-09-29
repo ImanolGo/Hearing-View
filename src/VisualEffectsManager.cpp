@@ -34,7 +34,7 @@ void VisualEffectsManager::update(double dt)
 
 void VisualEffectsManager::addVisualEffect(VisualEffect& visualEffect) 
 {
-	for(VisualEffectVector::iterator it = m_visualEffects.begin(); it != m_visualEffects.end();) {
+	for(VisualEffectVector::iterator it = m_visualEffects.begin(); it != m_visualEffects.end();it++) {
 		if(*it == &visualEffect) {
 			return;
 		}		
@@ -46,9 +46,26 @@ void VisualEffectsManager::removeVisualEffect(VisualEffect& visualEffect)
 {
 	for(VisualEffectVector::iterator it = m_visualEffects.begin(); it != m_visualEffects.end();) {
 		if(*it == &visualEffect) {
-			delete *it; 
 			it = m_visualEffects.erase(it);
-		}		
+		}	
+        else
+        {
+            ++it;
+        }
+	}
+}
+
+void VisualEffectsManager::deleteVisualEffect(VisualEffect& visualEffect) 
+{
+	for(VisualEffectVector::iterator it = m_visualEffects.begin(); it != m_visualEffects.end();) {
+		if(*it == &visualEffect) {
+            delete * it; 
+			it = m_visualEffects.erase(it);
+		}	
+        else
+        {
+            ++it;
+        }
 	}
 }
 

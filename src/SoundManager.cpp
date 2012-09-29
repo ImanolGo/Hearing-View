@@ -12,7 +12,7 @@
 #include "AppManager.h"
 #include "EventManager.h"
 #include "Event.h"
-//#include "SoundEffectsManager.cpp"
+#include "SoundEffectsManager.h"
 #include "SoundEffects.h"
 
     
@@ -130,6 +130,13 @@ void SoundManager::setCurrentSamples(std::string sampleListName)
     }
     
     m_currentSampleList = m_samples[sampleListName];
+    
+    m_indexList.clear();
+    for(int i = 0; i < m_currentSampleList.size(); i++ )
+    {
+        m_indexList.push_back(i);
+    }
+
 
 }
 
@@ -148,17 +155,19 @@ void SoundManager::playRandomSample()
 {
     if(m_indexList.empty())
     {
-        this->stopSamples();
-        AppManager::getInstance().getEventManager().setEvent(Event("End")); 
-        m_currentSample = NULL;
-        return;
+        this->fadeSample(0.0, 5.0);
+        AppManager::getInstance().getEventManager().setEvent(Event("END_SAMPLER")); 
     }
-        
-    int ind = ofRandom(m_indexList.size());
-    m_currentSample = m_currentSampleList[m_indexList[ind]];
-    m_currentSample->play();
-    m_indexList.erase(m_indexList.begin()+ind);
-    std::cout <<"SoundManager-> play sample \""<< m_currentSample->getName() <<"\"" << std::endl;
+    
+    else
+    {
+        int ind = ofRandom(m_indexList.size());
+        m_currentSample = m_currentSampleList[m_indexList[ind]];
+        m_currentSample->play();
+        m_indexList.erase(m_indexList.begin()+ind);
+        std::cout <<"SoundManager-> play sample \""<< m_currentSample->getName() <<"\"" << std::endl;
+    }
+    
 }
 
 void SoundManager::stopSamples()
@@ -173,14 +182,16 @@ void SoundManager::update(double dt)
 {
     ofSoundUpdate();
     
-    if(m_currentSample)
+    if(!m_currentSample)
     {
-        if(!m_currentSample->isPlaying())
-        {
-            this->playRandomSample();
-        }
-    
+        return;
     }
+        
+    if(!m_indexList.empty()&&!m_currentSample->isPlaying())
+    {
+        this->playRandomSample();
+    }
+    
 }
 
 void  SoundManager::fadeTube(float volume, float fadeTime)
@@ -190,10 +201,10 @@ void  SoundManager::fadeTube(float volume, float fadeTime)
         return;
     }
     
-    //AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_tube);
+    AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_tube);
     
     float currentVolume = m_tube->getVolume();
-    FadeExp* fadeExp = new FadeExp(*m_tube);
+    FadeSoundExp* fadeExp = new FadeSoundExp(*m_tube);
     fadeExp->setParameters(currentVolume, volume, fadeTime);
     fadeExp->start();
     std::cout<< "SoundManager-> fade tube to "<<volume<< " in "<< fadeTime<<"s"<<std::endl;
@@ -202,16 +213,16 @@ void  SoundManager::fadeTube(float volume, float fadeTime)
 
 void  SoundManager::fadeSample(float volume, float fadeTime)
 {
-    if(!m_currentSample)
+    if(!m_currentSample || !m_currentSample->isPlaying())
     {
         return; 
     }
     
-    //AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_currentSample);
+    AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_currentSample);
     
-    std::cout<< "SoundManager-> fade sample "<< m_currentSample->getName() << "to "<<volume<< " in "<< fadeTime<<"s"<<std::endl;
+    std::cout<< "SoundManager-> fade sample \""<< m_currentSample->getName() << "\" to "<<volume<< " in "<< fadeTime<<"s"<<std::endl;
     float currentVolume = m_currentSample->getVolume();
-    FadeExp* fadeExp = new FadeExp(*m_currentSample);
+    FadeSoundExp* fadeExp = new FadeSoundExp(*m_currentSample);
     fadeExp->setParameters(currentVolume, volume, fadeTime);
     fadeExp->start();
     

@@ -72,39 +72,38 @@ void FadeSound::start(){
 
 
 
-FadeLinear::FadeLinear(SoundObject& sound): FadeSound(sound)
+FadeSoundLinear::FadeSoundLinear(SoundObject& sound): FadeSound(sound)
 {
     
 }
 
-void FadeLinear::update(double dt)
+void FadeSoundLinear::update(double dt)
 {
     m_elapsedTime = m_elapsedTime + dt;
     
-    if (m_elapsedTime>=m_fadeTime) {
+    if (m_elapsedTime>=m_fadeTime || m_sound.getVolume() == m_to) {
         m_sound.setVolume(m_to);
         this->stop();
         return;
         
     }
      
-    
     float pct = 1.0 - (m_elapsedTime / m_fadeTime); 
     float fadeValue = (pct * (m_from - m_to) + m_to);
     m_sound.setVolume(fadeValue);
     
 }
 
-FadeLog::FadeLog(SoundObject& sound): FadeSound(sound)
+FadeSoundLog::FadeSoundLog(SoundObject& sound): FadeSound(sound)
 {
     
 }
 
-void FadeLog::update(double dt)
+void FadeSoundLog::update(double dt)
 {
     m_elapsedTime = m_elapsedTime + dt;
     
-    if (m_elapsedTime>=m_fadeTime) {
+    if (m_elapsedTime>=m_fadeTime|| m_sound.getVolume() == m_to) {
         m_sound.setVolume(m_to);
         this->stop();
         return;
@@ -118,16 +117,16 @@ void FadeLog::update(double dt)
     
 }
 
-FadeExp::FadeExp(SoundObject& sound): FadeSound(sound)
+FadeSoundExp::FadeSoundExp(SoundObject& sound): FadeSound(sound)
 {
     
 }
 
-void FadeExp::update(double dt)
+void FadeSoundExp::update(double dt)
 {
     m_elapsedTime = m_elapsedTime + dt;
     
-    if (m_elapsedTime>=m_fadeTime) {
+    if (m_elapsedTime>=m_fadeTime|| m_sound.getVolume() == m_to) {
         m_sound.setVolume(m_to);
         this->stop();
         return;

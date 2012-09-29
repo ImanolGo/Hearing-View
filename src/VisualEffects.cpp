@@ -69,4 +69,72 @@ void FadeVisual::start(){
 }
 
 
+FadeVisualLinear::FadeVisualLinear(Visual& visual): FadeVisual(visual)
+{
+    
+}
+
+void FadeVisualLinear::update(double dt)
+{
+    m_elapsedTime = m_elapsedTime + dt;
+    
+    if (m_elapsedTime>=m_fadeTime) {
+        m_visual.setAlpha(m_to);
+        this->stop();
+        return;
+        
+    }
+    
+    float pct = 1.0 - (m_elapsedTime / m_fadeTime); 
+    float fadeValue = (pct * (m_from - m_to) + m_to);
+    m_visual.setAlpha(fadeValue);
+    
+}
+
+FadeVisualLog::FadeVisualLog(Visual& visual): FadeVisual(visual)
+{
+    
+}
+
+void FadeVisualLog::update(double dt)
+{
+    m_elapsedTime = m_elapsedTime + dt;
+    
+    if (m_elapsedTime>=m_fadeTime) {
+        m_visual.setAlpha(m_to);
+        this->stop();
+        return;
+        
+    }
+    
+    float base = 10; //2.71828182845904523536028747135266249775724709369995;  
+    float pct = log10(m_fadeTime/(m_fadeTime + (base-1) * m_elapsedTime)) + 1; 
+    float fadeValue = (pct * (m_from - m_to) + m_to);
+    m_visual.setAlpha(fadeValue);
+    
+}
+
+FadeVisualExp::FadeVisualExp(Visual& visual): FadeVisual(visual)
+{
+    
+}
+
+void FadeVisualExp::update(double dt)
+{
+    m_elapsedTime = m_elapsedTime + dt;
+    
+    if (m_elapsedTime>=m_fadeTime) {
+        m_visual.setAlpha(m_to);
+        this->stop();
+        return;
+        
+    }
+    
+    float base = 10.0f;
+    float pct = - pow(base,(float)((m_elapsedTime * 1.04 - m_fadeTime)/m_fadeTime)) + 1.09; 
+    float fadeValue = (pct * (m_from - m_to) + m_to);
+    m_visual.setAlpha(fadeValue);
+    
+}
+
 

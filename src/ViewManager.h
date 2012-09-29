@@ -50,6 +50,10 @@ public:
 	//! \details The scene is no longer responsible for deleting this visual object.
 	void removeVisual(const Visual& visual);
     
+    //! fades an specific visual
+    void  fadeVisual(Visual& visual, float alpha, float fadeTime);
+
+    
     
     //==========================================================================
     

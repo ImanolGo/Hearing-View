@@ -40,8 +40,11 @@ public:
 	//! Adds a certain sound effect
 	void addSoundEffect(SoundEffect& soundEffect);
     
-	//! Removes a certain sound effect
+	//! Removes a certain sound effect from the list
 	void removeSoundEffect(SoundEffect& soundEffect);
+    
+    //! Removes and deletes certain sound effect
+	void deleteSoundEffect(SoundEffect& soundEffect);
     
 	//! Removes all sound effects for the specified sound 
 	void removeAllSoundEffects(const SoundObject& sound);    

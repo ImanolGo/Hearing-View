@@ -55,10 +55,10 @@ public:
     void setTimedEvent(const std::string& name, double delay);
 
    //! triggers a certain timed event
-   void triggerTimedEvent(TimedEvent& timeEvent);
+   void triggerTimedEvent(const TimedEvent& timeEvent);
    
    //! removes a certain timed event
-   void removeTimedEvent(TimedEvent& timeEvent);
+   void deleteTimedEvent(const TimedEvent& timeEvent);
 
    //! removes all timed events from the list
    void removeAllTimedEvents();

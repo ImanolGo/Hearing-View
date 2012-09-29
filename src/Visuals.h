@@ -27,7 +27,7 @@ class Visual
 public:
     
     //! Constructor
-    Visual(ofPoint pos, float width, float height): m_position(pos), m_width(width), m_height(height), m_alpha(1.0){}
+    Visual(ofPoint pos, float width, float height): m_position(pos), m_width(width), m_height(height){}
     
     //! Destructor
     virtual ~Visual() {}
@@ -36,18 +36,19 @@ public:
 	virtual void draw() const = 0;
     
     //! Changes the alpha channel.
-	void setAlpha(double alpha) { m_alpha = alpha;}
+	void setAlpha(double alpha) { m_color.set(m_color.r,m_color.g,m_color.b,alpha);}
     
-	//! gets the alpha channel.
-	const double& getAlpha() const { return m_alpha;}
+    //! Changes the alpha channel.
+	double getAlpha() const{ return m_color.a;}
     
     //! Sets the color of the visual
     void setColor(const ofColor& color) {m_color = color;}
     
+    
+    
 protected:
     
     ofPoint         m_position;		///< defines the position of the visual
-	double			m_alpha;		///< current alpha value of the visual
 	double			m_width;		///< the width of the visual
 	double			m_height;		///< the height of the visual
     ofColor         m_color;       ///< color of the visual	

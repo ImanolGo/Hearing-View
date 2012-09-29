@@ -17,7 +17,7 @@ class Event{
 public:
     
     //! Constructor
-    Event(const std::string& name, double value= 0.0): m_name(name), m_value(value) { }
+    Event(std::string name, double value= 0.0): m_name(name), m_value(value) { }
     
     //! Compares two event types by their names
     bool operator==(const Event& rhs) const { return ((m_name == rhs.m_name) && (m_value == rhs.m_value)); }
@@ -55,7 +55,7 @@ public:
 	//! Constructor
 	//! @param type the type of event
 	//! @param delay delay in milliseconds
-	TimedEvent(const std::string& name, double delay): Event(name), m_delay(delay),m_elapsedTime(0.0) {}
+	TimedEvent(std::string name, double delay): Event(name), m_delay(delay),m_elapsedTime(0.0) {}
     
 	//! Destructor
 	virtual ~TimedEvent() {}
@@ -63,7 +63,6 @@ public:
     //! updates event
     void update(double dt);
 
-    
 private:
     
 	double		m_delay;        //< the time the event shoul be delayed

@@ -7,7 +7,10 @@
 
 #include "ofMain.h"
 #include "Visuals.h"
+#include "VisualEffectsManager.h"
+#include "VisualEffects.h"
 #include "ViewManager.h"
+#include "AppManager.h"
 
 
 
@@ -61,7 +64,7 @@ void ViewManager::addVisual(const Visual& visual,int zOrder)
 
 void ViewManager::removeVisual(const Visual& visual)
 {
-	for(VisualList::iterator it = m_visuals.begin(); it != m_visuals.end(); ) {
+	for(VisualList::iterator it = m_visuals.begin(); it != m_visuals.end();) {
 		if(it->second == &visual) {
 			it = m_visuals.erase(it);
 		}
@@ -69,4 +72,19 @@ void ViewManager::removeVisual(const Visual& visual)
 			++it;
 		}
 	}
+}
+
+//! fades an specific visual
+void  ViewManager::fadeVisual(Visual& visual, float alpha, float fadeTime)
+{
+    for(VisualList::iterator it = m_visuals.begin(); it != m_visuals.end();it++ ) {
+		if(it->second == &visual) {
+			AppManager::getInstance().getVisualEffectsManager().removeAllVisualEffects(visual);
+            FadeVisualLog* fade = new FadeVisualLog(visual);
+            fade->setParameters(visual.getAlpha(), alpha, fadeTime);
+            fade->start();
+            std::cout<< "ViewManager-> fade visual to "<<alpha<< " in "<< fadeTime<<"s"<<std::endl;
+            break;
+		}
+    }
 }

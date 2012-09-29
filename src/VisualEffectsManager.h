@@ -41,8 +41,11 @@ public:
 	//! Adds a certain visual effect
 	void addVisualEffect(VisualEffect& visualEffect);
     
-	//! Removes a certain visual effect
+	//! Removes a certain visual effect from the list
 	void removeVisualEffect(VisualEffect& visualEffect);
+    
+    //! Removes and deletes certain visual effect
+	void deleteVisualEffect(VisualEffect& visualEffect);
     
 	//! Removes all visual effects for the specified image
 	void removeAllVisualEffects(const Visual& visual);    

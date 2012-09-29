@@ -99,6 +99,72 @@ protected:
 
 
 
+//==============================================================================
+/** \class FadeVisualLinear VisualEffect.h
+ *	\brief Fades a visual linearly.
+ *
+ */
+//==============================================================================
+
+class FadeVisualLinear: public FadeVisual
+{
+public:
+    
+	//! Constructor
+	FadeVisualLinear(Visual& visual);
+    
+    
+    //========================= Fade Interface ================================
+    
+	//! updates the linear fade if active
+	virtual void update(double dt);
+    
+};
+
+//==============================================================================
+/** \class FadeVisualLog VisualEffect.h
+ *	\brief Fades a visual logaritmicaly.
+ *
+ */
+//==============================================================================
+
+class FadeVisualLog: public FadeVisual
+{
+public:
+    
+	//! Constructor
+	FadeVisualLog(Visual& visual);
+    
+    
+    //========================= Fade Interface ================================
+    
+	//! updates the linear fade if active
+	virtual void update(double dt);
+    
+};
+
+
+//==============================================================================
+/** \class FadeVisualExp VisualEffect.h
+ *	\brief Fades a visual exponentially.
+ *
+ */
+//==============================================================================
+
+class FadeVisualExp: public FadeVisual
+{
+public:
+    
+	//! Constructor
+	FadeVisualExp(Visual& visual);
+    
+    //========================= Fade Interface ================================
+    
+	//! updates the linear fade if active
+	virtual void update(double dt);
+    
+};
+
 
 //
 ////==============================================================================

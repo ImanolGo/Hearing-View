@@ -32,6 +32,9 @@ class TextVisual;
 class State
 {
 public:
+    
+    static const double FADE_TIME;  //defines the fade time between states
+    
     //! Constructor
     State(const std::string& name,const ofPoint& pos);
     //! Destructor

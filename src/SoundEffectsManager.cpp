@@ -32,7 +32,7 @@ void SoundEffectsManager::update(double dt)
 
 void SoundEffectsManager::addSoundEffect(SoundEffect& soundEffect) 
 {
-	for(SoundEffectVector::iterator it = m_soundEffects.begin(); it != m_soundEffects.end();) {
+	for(SoundEffectVector::iterator it = m_soundEffects.begin(); it != m_soundEffects.end();it++) {
 		if(*it == &soundEffect) {
 			return;
 		}		
@@ -44,11 +44,29 @@ void SoundEffectsManager::removeSoundEffect(SoundEffect& soundEffect)
 {
 	for(SoundEffectVector::iterator it = m_soundEffects.begin(); it != m_soundEffects.end();) {
 		if(*it == &soundEffect) {
-			delete *it; 
 			it = m_soundEffects.erase(it);
-		}		
+		}	
+        else
+        {
+            ++it;
+        }
 	}
 }
+
+void SoundEffectsManager::deleteSoundEffect(SoundEffect& soundEffect) 
+{
+	for(SoundEffectVector::iterator it = m_soundEffects.begin(); it != m_soundEffects.end();) {
+		if(*it == &soundEffect) {
+            delete *it;
+			it = m_soundEffects.erase(it);
+		}	
+        else
+        {
+            ++it;
+        }
+	}
+}
+
 
 void SoundEffectsManager::removeAllSoundEffects(const SoundObject& sound) 
 {

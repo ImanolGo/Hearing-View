@@ -46,25 +46,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "src/SoundManager.cpp"
-         timestampString = "370205150.397243"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "203"
-         endingLineNumber = "203">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
          filePath = "src/SoundEffects.cpp"
-         timestampString = "363402859.814567"
+         timestampString = "370330975.746852"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "127"
-         endingLineNumber = "127"
-         landmarkName = "FadeExp::update(double dt)"
+         startingLineNumber = "126"
+         endingLineNumber = "126"
+         landmarkName = "FadeSoundExp::update(double dt)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -100,39 +88,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "src/States.cpp"
-         timestampString = "369609812.264386"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "73"
-         endingLineNumber = "73">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "src/States.cpp"
-         timestampString = "364416931.306049"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "59"
-         endingLineNumber = "59"
-         landmarkName = "State::initialize()"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
          filePath = "src/SoundEffects.cpp"
          timestampString = "364163969.63434"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "85"
          endingLineNumber = "85"
-         landmarkName = "FadeLinear::update(double dt)"
+         landmarkName = "FadeSoundLinear::update(double dt)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -141,12 +103,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/SoundEffects.cpp"
-         timestampString = "364164063.688008"
+         timestampString = "370330975.746852"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "132"
-         endingLineNumber = "132"
-         landmarkName = "FadeExp::update(double dt)"
+         startingLineNumber = "131"
+         endingLineNumber = "131"
+         landmarkName = "FadeSoundExp::update(double dt)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -155,12 +117,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/SoundEffects.cpp"
-         timestampString = "364164067.845854"
+         timestampString = "370330975.746852"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "108"
-         endingLineNumber = "108"
-         landmarkName = "FadeLog::update(double dt)"
+         startingLineNumber = "107"
+         endingLineNumber = "107"
+         landmarkName = "FadeSoundLog::update(double dt)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -169,11 +131,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/Event.cpp"
-         timestampString = "370247574.326971"
+         timestampString = "370386711.561868"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "20"
-         endingLineNumber = "20"
+         startingLineNumber = "19"
+         endingLineNumber = "19"
          landmarkName = "TimedEvent::update(double dt)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -304,17 +266,73 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/States.cpp"
-         timestampString = "370247915.104649"
+         timestampString = "370609646.163011"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "103"
          endingLineNumber = "103"
          landmarkName = "SamplerState::onEnter()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "src/States.cpp"
+         timestampString = "370609646.163011"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "72"
+         endingLineNumber = "72"
+         landmarkName = "IdleState::onEnter()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "src/ViewManager.cpp"
+         timestampString = "370420021.631593"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "80"
+         endingLineNumber = "80"
+         landmarkName = "ViewManager::fadeVisual(Visual&amp; visual, float alpha, float fadeTime)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "src/ViewManager.cpp"
+         timestampString = "370420035.29923"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "82"
+         endingLineNumber = "82"
+         landmarkName = "ViewManager::fadeVisual(Visual&amp; visual, float alpha, float fadeTime)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "src/VisualEffectsManager.cpp"
+         timestampString = "370609148.061659"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "74"
+         endingLineNumber = "74"
+         landmarkName = "VisualEffectsManager::removeAllVisualEffects(const Visual&amp; visual)"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
