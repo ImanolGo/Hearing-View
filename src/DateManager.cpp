@@ -15,7 +15,7 @@
 #include "DateManager.h"
 
 
-const double DateManager::REFRESHING_TIME = 5*60;
+const double DateManager::REFRESH_TIME = 5*60;
 
 DateManager::DateManager(): 
     m_day(1),
@@ -62,7 +62,7 @@ void DateManager::setup()
 void DateManager::update(double dt)
 {
     m_elapsedTime+=dt;
-    if(m_elapsedTime>= REFRESHING_TIME)
+    if(m_elapsedTime>= REFRESH_TIME)
     {
         m_elapsedTime = 0;
         this->calcDayTime();

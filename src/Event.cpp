@@ -17,5 +17,6 @@ void TimedEvent::update(double dt)
     if (m_elapsedTime>= m_delay) {
         //std::cout << "TimedEvent-> update: elpased time =  "<< m_elapsedTime << "s"<<std::endl;
         AppManager::getInstance().getEventManager().triggerTimedEvent(*this);
+        return;
     }
 }

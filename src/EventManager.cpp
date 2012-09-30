@@ -51,17 +51,17 @@ void EventManager::setup()
 
 void EventManager::update(double dt)
 {
-	for(TimedEventList::iterator it = m_timeEvents.begin(); it != m_timeEvents.end(); it++) {
-		(*it)->update(dt);	
-	}
+    for (unsigned int i = 0; i < m_timeEvents.size(); i++ ) {
+		m_timeEvents[i]->update(dt);
+    }
 }
 
 void EventManager::setEvent(Event event)
 {
     std::cout << "EventManager-> SetEvent: " << event.getName() << ", " << event.getValue()<<std::endl; 
     m_stateManager->handleEvent(event);
-    m_weatherManager->handleEvent(event);
     m_dateManager->handleEvent(event);
+    m_weatherManager->handleEvent(event);
     m_soundManager->handleEvent(event);
     m_guiManager->handleEvent(event);
 }
@@ -73,10 +73,10 @@ void EventManager::setTimedEvent(const std::string& name, double delay)
 	
 }
 
-void EventManager::deleteTimedEvent(const TimedEvent& timeEvent)
+void EventManager::deleteTimedEvent(const TimedEvent& timedEvent)
 {
     for(TimedEventList::iterator it = m_timeEvents.begin(); it != m_timeEvents.end();) {
-		if(*it == &timeEvent) {
+		if(*it == &timedEvent) {
 			delete *it; 
 			it = m_timeEvents.erase(it);
 		}	
@@ -89,7 +89,7 @@ void EventManager::deleteTimedEvent(const TimedEvent& timeEvent)
 
 void EventManager::removeAllTimedEvents()
 {
-    for(TimedEventList::iterator it = m_timeEvents.begin(); it != m_timeEvents.end();) {
+    for(TimedEventList::iterator it = m_timeEvents.begin(); it != m_timeEvents.end();it++) {
 		delete *it; 
 	}
     
@@ -98,7 +98,7 @@ void EventManager::removeAllTimedEvents()
 
 void EventManager::triggerTimedEvent(const TimedEvent& timedEvent)
 {
-    this->setEvent(Event(timedEvent.getName()));
+    this->setEvent(timedEvent);
     this->deleteTimedEvent(timedEvent);	
 }
 

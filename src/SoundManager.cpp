@@ -187,7 +187,7 @@ void SoundManager::update(double dt)
         return;
     }
         
-    if(!m_indexList.empty()&&!m_currentSample->isPlaying())
+    if(m_currentSample->isPlaying())
     {
         this->playRandomSample();
     }

@@ -29,7 +29,7 @@ class Event;
 class DateManager
 {
     
-    static const double   REFRESHING_TIME; //determines the time ro refresh the calculations (s)
+    static const double   REFRESH_TIME; //determines the time ro refresh the calculations (s)
     
         
 public:

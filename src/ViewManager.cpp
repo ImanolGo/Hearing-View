@@ -21,7 +21,6 @@ ViewManager::ViewManager()
 
 ViewManager::~ViewManager()
 {
-    
 	VisualList::iterator it = m_visuals.begin();
 	while(!m_visuals.empty()) {
 		const Visual* visual = it->second;

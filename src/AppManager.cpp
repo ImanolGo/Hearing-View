@@ -67,8 +67,8 @@ void AppManager::setup()
     m_viewManager->setup();
     m_soundManager->setup();
     m_guiManager->setup();
-    m_dateManager->setup();
     m_weatherManager->setup();
+    m_dateManager->setup();
     m_stateManager->setup();
 }
 
@@ -81,7 +81,7 @@ void AppManager::update(double dt)
     m_dateManager->update(dt);
     m_guiManager->update(dt);
     m_viewManager->update(dt);
-    //m_weatherManager->update(dt);
+    m_weatherManager->update(dt);
 }
 
 
