@@ -58,12 +58,17 @@ void EventManager::update(double dt)
 
 void EventManager::setEvent(Event event)
 {
-    std::cout << "EventManager-> SetEvent: " << event.getName() << ", " << event.getValue()<<std::endl; 
+    if(event.getValue()==0.0 || event.getValue()==1.0)
+    {
+        std::cout << "EventManager-> SetEvent: " << event.getName() << ", " << event.getValue()<<std::endl;
+    }
+    
+    m_guiManager->handleEvent(event);
     m_stateManager->handleEvent(event);
     m_dateManager->handleEvent(event);
     m_weatherManager->handleEvent(event);
     m_soundManager->handleEvent(event);
-    m_guiManager->handleEvent(event);
+    
 }
 
 void EventManager::setTimedEvent(const std::string& name, double delay)

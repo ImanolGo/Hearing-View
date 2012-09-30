@@ -13,6 +13,7 @@
 
 
 #include <string>
+#include <map>
 #include "ofxFileLoader.h"
 #include "ofxXmlSettings.h"
 
@@ -61,7 +62,15 @@ protected:
     //! reads and parses the current weather conditions code
     void readConditionsCode();
     
+    //! loads the icons into the icons map
+    void loadIcons();
+    
+    //! returns the icon name given its path
+    std::string getIconName(const std::string& path);
+    
 protected:
+    
+    typedef std::map <std::string, ImageVisual*>   IconMap;   ///< defines a map of weather icons sorted by the category name 
     
     std::string           m_url;                ///< stores the url to send the request
     ofxFileLoader         m_loader;             ///< loads file given an url
@@ -72,7 +81,8 @@ protected:
     std::string           m_location;			///< stores the name of the location for the weather query	
     std::string           m_iconName;			///< stores the icon name of the location for the weather query	
     double                m_elapsedTime;        ///< elapsed time since the last refreshing
-    ImageVisual*          m_icon;               ///< visual from the current weather conditions
+    ImageVisual*          m_currentIcon;        ///< stores the current weather icon
+    IconMap               m_icons;              ///< map of visuals representing the weather conditions
     TextVisual*           m_conditionText;      ///< text visual from the current weather conditions
     
 };

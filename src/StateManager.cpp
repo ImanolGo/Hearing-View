@@ -31,15 +31,15 @@ void StateManager::setup()
 {
     
      //Add to state machine and create transition
-    IdleState* idleState = new IdleState("IdleState",ofPoint(600,200));
+    IdleState* idleState = new IdleState("IdleState",ofPoint(1000,200));
     idleState->initialize();
     m_stateMachine->addState(idleState);
     
-    SamplerState* samplerState = new SamplerState("SamplerState",ofPoint(400,400));
+    SamplerState* samplerState = new SamplerState("SamplerState",ofPoint(800,400));
     samplerState->initialize();
     m_stateMachine->addState(samplerState);
     
-    AmbienceState* ambienceState = new AmbienceState("AmbienceState",ofPoint(800,400));
+    AmbienceState* ambienceState = new AmbienceState("AmbienceState",ofPoint(1200,400));
     ambienceState->initialize();
     m_stateMachine->addState(ambienceState);
    

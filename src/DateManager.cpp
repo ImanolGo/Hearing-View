@@ -10,12 +10,14 @@
 #include "Event.h"
 #include "AppManager.h"
 #include "EventManager.h"
-#include "ofxUI.h"
+#include "Visuals.h"
+#include "ViewManager.h"
 
 #include "DateManager.h"
 
 
 const double DateManager::REFRESH_TIME = 5*60;
+const double DateManager::FADE_TIME = 3;
 
 DateManager::DateManager(): 
     m_day(1),
@@ -38,6 +40,13 @@ DateManager::DateManager():
 DateManager::~DateManager()
 {
     delete m_Date;
+    
+    for (SeasonMap::iterator it= m_seasonImages.begin() ; it != m_seasonImages.end(); it++ )
+    {
+        delete it->second;
+        it->second = NULL;
+    }
+
 }
 
 void DateManager::setup()
@@ -50,7 +59,8 @@ void DateManager::setup()
     m_day = m_Date->getDay();
     m_month = m_Date->getMonth();
     m_year = m_Date->getYear();
-
+    
+    this->loadSeasons();
     this->calcSunEqs();
     this->calcSeason();
     this->calcDayTime();
@@ -193,9 +203,10 @@ void DateManager::calcSeason()
     
     if(m_season!=season)
     {
+        AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[m_season], 0, DateManager::FADE_TIME);
+        AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[season], 255, DateManager::FADE_TIME);
         m_season = season;
         AppManager::getInstance().getEventManager().setEvent(Event(m_season));
-        
     }
     
 }
@@ -205,7 +216,14 @@ void DateManager::handleEvent(const Event& event)
     std::string name = event.getName();
     if(name=="Winter" || name=="Summer" ||name=="Autumn" ||name=="Spring")
     {
-        m_season = name;
+        if(m_season!=name)
+        {
+            AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[m_season], 0, DateManager::FADE_TIME,ViewManager::LINEAR);
+            AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[name], 255, DateManager::FADE_TIME,ViewManager::LINEAR);
+            m_season = name;
+            AppManager::getInstance().getEventManager().setEvent(Event(m_season));
+        }
+
     }
     
     else if(name== "Day" || name=="Night" )
@@ -392,5 +410,45 @@ void DateManager::calcSunEqs()
     m_sunset = 12.0 + 12.0 * ha/pi + (m_timezone+ m_EST) - m_longitude/15.0 + equation/60.0;
 }
 
+
+void DateManager::loadSeasons()
+{
+    //some path, may be absolute or relative to bin/data
+    std::string samplesPath = "pictures/Seasons/";
+    std::cout<< "DateManager-> loadSamples: loading icons from \""<<samplesPath<<"\"..."<<std::endl;
+    ofDirectory dir(samplesPath);
+    //only show png files
+    dir.allowExt("png");
+    //populate the directory object
+    if(dir.listDir()==0)
+    {
+        std::cout <<"DateManager-> loadSeasons: No season images found at \""<< samplesPath <<"\"" << std::endl;
+        return;
+    }
+    
+    //go through and print out all the paths
+    for(int n = 0; n < dir.numFiles(); n++)
+    {
+        std::string seasonName = this->getSeasonsName(dir.getPath(n));
+        ImageVisual* seasonImage =  new ImageVisual(ofPoint(500,500),256,256);
+        seasonImage->setImage(dir.getPath(n));
+        m_seasonImages[seasonName] = seasonImage;
+        std::cout <<"DateManager-> loaded sample \""<< seasonName <<"\"" << std::endl;
+        AppManager::getInstance().getViewManager().addVisual(*seasonImage);
+        m_seasonImages[seasonName]->setColor(ofColor(255,255,255,0));
+    }
+    
+    AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[m_season], 255, DateManager::FADE_TIME, ViewManager::LINEAR);
+
+}
+
+
+std::string DateManager::getSeasonsName(const std::string& path)
+{
+    std::vector<std::string> strs = ofSplitString(path, "/");
+    std::string str = strs.back();
+    strs = ofSplitString(str, ".");
+    return strs.front();
+}
 
 

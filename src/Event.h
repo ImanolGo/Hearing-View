@@ -30,6 +30,9 @@ public:
     //< Get Event name
     const std::string& getName() const { return m_name; }
     
+    //< Set Event name
+    void setName(const std::string& name) {m_name = name;} 
+    
     //! return the value
     const double&  getValue() const {return m_value;}
 	

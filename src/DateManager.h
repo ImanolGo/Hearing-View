@@ -18,6 +18,7 @@
 class ofxXmlSettings;
 class ofxDate;
 class Event;
+class ImageVisual;
 
 //========================== class DateManager =======================================
 //==============================================================================
@@ -30,6 +31,7 @@ class DateManager
 {
     
     static const double   REFRESH_TIME; //determines the time ro refresh the calculations (s)
+    static const double FADE_TIME;          ///< defines the visuals fadeTime
     
         
 public:
@@ -88,8 +90,17 @@ private:
     // Displays the current date, season, day time and sunset and sunrise information
     void displayDate();
     
+protected:
+    
+    //! loads the seasons into the icons map
+    void loadSeasons();
+    
+    //! returns the icon name given its path
+    std::string getSeasonsName(const std::string& path);
         
-private:
+protected:
+    
+    typedef std::map <std::string, ImageVisual*>  SeasonMap;   ///< defines a map of seasons images sorted by the category name 
     
     ofxDate*                m_Date;         ///< current date and time
         
@@ -108,6 +119,8 @@ private:
     
     std::string             m_season;       ///< saves the current season
     std::string             m_dayTime;      ///< saves the current day time
+    
+    SeasonMap               m_seasonImages;///< map of the season images
     
 };
 

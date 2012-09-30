@@ -19,17 +19,19 @@ const string WeatherManager::WEATHER_API_KEY = "630d17ff50223932122909";
 const double WeatherManager::REFRESH_TIME = 60*1; ///< refreshing time every 1 minutes
 const double WeatherManager::FADE_TIME = 3;
 
-WeatherManager::WeatherManager(): m_icon(NULL),m_code(0)
+WeatherManager::WeatherManager(): m_currentIcon(NULL), m_code(0)
 {
 }
 
 WeatherManager::~WeatherManager() 
 {
-    if(m_icon)
+    for (IconMap::iterator it= m_icons.begin() ; it != m_icons.end(); it++ )
     {
-        delete m_icon;
-        m_icon = NULL;
+        delete it->second;
+        it->second = NULL;
     }
+    
+    m_currentIcon = NULL;
 }
 
 
@@ -39,16 +41,19 @@ void WeatherManager::setup()
     m_location = "Linz";
     m_url = "http://free.worldweatheronline.com/feed/weather.ashx?q=" + m_location + "&format=xml&num_of_days=3&key=" + WEATHER_API_KEY;
     
-    m_icon = new ImageVisual(ofPoint(500,500),128,128);
+    this->loadIcons();
+    
     m_conditionText = new TextVisual(ofPoint(500,500),128,128);
-    
     AppManager::getInstance().getViewManager().addVisual(*m_conditionText);
-    AppManager::getInstance().getViewManager().addVisual(*m_icon,1);
-    
     m_conditionText->setColor(ofColor(255,255,255,0));
-    m_icon->setColor(ofColor(255,255,255,0));
-    AppManager::getInstance().getViewManager().fadeVisual(*m_conditionText, 255, WeatherManager::FADE_TIME);
-    AppManager::getInstance().getViewManager().fadeVisual(*m_icon, 255, WeatherManager::FADE_TIME);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_conditionText, 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+    
+    if(m_currentIcon)
+    {
+        AppManager::getInstance().getViewManager().addVisual(*m_currentIcon,1);
+        m_currentIcon->setColor(ofColor(255,255,255,0));
+        AppManager::getInstance().getViewManager().fadeVisual(*m_currentIcon, 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+    }
     
     m_conditions = m_conditionsDesc = "Dry";
     
@@ -116,7 +121,7 @@ bool WeatherManager::parseXML()
         std::cout<< "WeatherManager-> parseXML: the current conditions are \""<<m_conditionsDesc<<"\"" << std::endl;
         m_conditionText->setText(m_conditionsDesc, 20);
         m_conditionText->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(*m_conditionText, 255, WeatherManager::FADE_TIME);
+        AppManager::getInstance().getViewManager().fadeVisual(*m_conditionText, 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
     }
     
     
@@ -127,14 +132,14 @@ void WeatherManager::handleEvent(const Event& event)
     std::string name = event.getName();
     if(name=="Dry")
     {
-        m_conditions = m_conditionsDesc = name;
+        m_conditions = name;
         m_code = 113;
         this->readConditionsCode();
     }
     
     if(name=="Rain")
     {
-        m_conditions = m_conditionsDesc = name;
+        m_conditions = name;
         m_code = 389;
         this->readConditionsCode();
     }
@@ -167,10 +172,17 @@ void WeatherManager::readConditionsCode()
 	}
     
 	
-	else if(m_code ==  395 || m_code ==  371 || m_code ==  338 || m_code ==  335 || m_code ==  230 || m_code ==  227||
-            m_code ==  332|| m_code ==  329 || m_code ==  326 || m_code ==  323 ) 
+	else if(m_code ==  395 || m_code ==  371 || m_code ==  338 || m_code ==  230 || m_code ==  227||
+            m_code ==  335 ) 
     {
 		iconName = "snow_" + dayTime;
+        conditions = "Rain";
+	}
+    
+    else if(m_code ==  392 || m_code ==  368 || m_code ==  332 || m_code ==  230 || m_code ==  227||
+            m_code ==  332|| m_code ==  329 || m_code ==  326 || m_code ==  323 ) 
+    {
+		iconName = "light_snow_" + dayTime;
         conditions = "Rain";
 	}
     
@@ -196,12 +208,17 @@ void WeatherManager::readConditionsCode()
 	}
     
     
-	else if(m_code ==  260|| m_code ==  248 || m_code ==  143) {
+	else if(m_code ==  260|| m_code ==  248) {
 		iconName = "fog_" + dayTime;
         conditions = "Dry";
 	}
     
-	else if(m_code ==  386 || m_code ==  392) {
+    else if(m_code ==  143) {
+		iconName = "mist_" + dayTime;
+        conditions = "Dry";
+	}
+    
+	else if(m_code ==  386) {
 		iconName = "chance_of_storm_" + dayTime;
         conditions = "Rain";
 	}
@@ -218,13 +235,15 @@ void WeatherManager::readConditionsCode()
     if(iconName!=m_iconName)
     {
         m_iconName = iconName;
-        std::cout<< "WeatherManager-> readConditionsCode: set image \""<<iconName<<".png\"" << std::endl;
-        m_icon->setImage("pictures/WeatherIcons/" + iconName + ".png");
-        m_icon->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(*m_icon, 255, WeatherManager::FADE_TIME);
+        std::cout<< "WeatherManager-> readConditionsCode: set image \""<<m_iconName<<".png\"" << std::endl;
+        AppManager::getInstance().getViewManager().removeVisual(*m_currentIcon);
+        m_currentIcon = m_icons[m_iconName];
+        AppManager::getInstance().getViewManager().addVisual(*m_currentIcon);
+        m_currentIcon->setColor(ofColor(255,255,255,0));
+        AppManager::getInstance().getViewManager().fadeVisual(*m_currentIcon, 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
         m_conditionText->setText(m_conditionsDesc, 20);
         m_conditionText->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(*m_conditionText, 255, WeatherManager::FADE_TIME);
+        AppManager::getInstance().getViewManager().fadeVisual(*m_conditionText, 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
     }
     
     if(conditions!=m_conditions)
@@ -234,6 +253,45 @@ void WeatherManager::readConditionsCode()
         
     }
 }
+
+void WeatherManager::loadIcons()
+{
+    //some path, may be absolute or relative to bin/data
+    std::string samplesPath = "pictures/WeatherIcons/";
+    std::cout<< "WeatherManager-> loadSamples: loading icons from \""<<samplesPath<<"\"..."<<std::endl;
+    ofDirectory dir(samplesPath);
+    //only show jpg and png files
+    dir.allowExt("png");
+    dir.allowExt("jpg");
+    //populate the directory object
+    if(dir.listDir()==0)
+    {
+        std::cout <<"WeatherManager-> iconSamples: No icons found in \""<< samplesPath <<"\"" << std::endl;
+        return;
+    }
+    
+    //go through and print out all the paths
+    for(int n = 0; n < dir.numFiles(); n++)
+    {
+        std::string iconName = this->getIconName(dir.getPath(n));
+        ImageVisual* icon =  new ImageVisual(ofPoint(1000,500),128,128);
+        icon->setImage(dir.getPath(n));
+        m_icons[iconName] = icon;
+        std::cout <<"WeatherManager-> loaded sample \""<< iconName <<"\"" << std::endl;
+    }
+    
+    m_currentIcon = m_icons["sunny_Day"];
+}
+
+
+std::string WeatherManager::getIconName(const std::string& path)
+{
+    std::vector<std::string> strs = ofSplitString(path, "/");
+    std::string str = strs.back();
+    strs = ofSplitString(str, ".");
+    return strs.front();
+}
+
 
 
 

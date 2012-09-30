@@ -65,8 +65,8 @@ void State::initialize()
 void IdleState::onEnter()
 {
     std::cout<<"IdleState-> OnEnter." <<std::endl;
-    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
-    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME,ViewManager::LOGARITHMIC);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME,ViewManager::LOGARITHMIC);
     AppManager::getInstance().getSoundManager().fadeTube(0.7,State::FADE_TIME);
     AppManager::getInstance().getEventManager().removeAllTimedEvents();
     
@@ -75,8 +75,8 @@ void IdleState::onEnter()
 void IdleState::onExit()
 {
     std::cout<<"IdleState-> OnExit." <<std::endl;
-    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 100, State::FADE_TIME);
-    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 100, State::FADE_TIME);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 100, State::FADE_TIME,ViewManager::LOGARITHMIC);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 100, State::FADE_TIME,ViewManager::LOGARITHMIC);
 }
 
 
@@ -85,35 +85,35 @@ void AmbienceState::onEnter()
     std::cout<<"AmbienceState-> OnEnter." <<std::endl;
     AppManager::getInstance().getSoundManager().fadeTube(1.0,FADE_TIME);
     AppManager::getInstance().getEventManager().setTimedEvent("TimeOut", 10); //3 min timed event
-    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
-    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME,ViewManager::LOGARITHMIC);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME,ViewManager::LOGARITHMIC);
     
 }
 
 void AmbienceState::onExit()
 {
     std::cout<<"AmbienceState-> OnExit." <<std::endl;
-    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 100, State::FADE_TIME);
-    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 100, State::FADE_TIME);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 100, State::FADE_TIME,ViewManager::LOGARITHMIC);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 100, State::FADE_TIME,ViewManager::LOGARITHMIC);
 }
 
 void SamplerState::onEnter()
 {
     std::cout<<"SamplerState-> OnEnter." <<std::endl;
-    AppManager::getInstance().getSoundManager().fadeTube(0.0,5.0);
+    AppManager::getInstance().getSoundManager().fadeTube(0.0,FADE_TIME);
     AppManager::getInstance().getSoundManager().playSamples();
     AppManager::getInstance().getSoundManager().fadeSample(1.0, 5.0);
-    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
-    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME,ViewManager::LOGARITHMIC);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME,ViewManager::LOGARITHMIC);
     
 }
 
 void SamplerState::onExit()
 {
     std::cout<<"SamplerState-> OnExit." <<std::endl;
-    AppManager::getInstance().getSoundManager().fadeSample(0.0, 5.0);
-    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
-    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
+    AppManager::getInstance().getSoundManager().fadeSample(0.0, FADE_TIME);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 100, State::FADE_TIME,ViewManager::LOGARITHMIC);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 100, State::FADE_TIME,ViewManager::LOGARITHMIC);
     
 }
 

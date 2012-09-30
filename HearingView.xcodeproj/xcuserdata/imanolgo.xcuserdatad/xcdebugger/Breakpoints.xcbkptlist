@@ -47,11 +47,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/SoundEffects.cpp"
-         timestampString = "370330975.746852"
+         timestampString = "370699383.442401"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "126"
-         endingLineNumber = "126"
+         startingLineNumber = "142"
+         endingLineNumber = "142"
          landmarkName = "FadeSoundExp::update(double dt)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -89,25 +89,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/SoundEffects.cpp"
-         timestampString = "364163969.63434"
+         timestampString = "370699383.442401"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "85"
-         endingLineNumber = "85"
-         landmarkName = "FadeSoundLinear::update(double dt)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "src/SoundEffects.cpp"
-         timestampString = "370330975.746852"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "131"
-         endingLineNumber = "131"
+         startingLineNumber = "147"
+         endingLineNumber = "147"
          landmarkName = "FadeSoundExp::update(double dt)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -117,11 +103,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/SoundEffects.cpp"
-         timestampString = "370330975.746852"
+         timestampString = "370699100.818761"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "107"
-         endingLineNumber = "107"
+         startingLineNumber = "115"
+         endingLineNumber = "115"
          landmarkName = "FadeSoundLog::update(double dt)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -172,40 +158,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "src/DateManager.h"
-         timestampString = "370205150.397243"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "66"
-         endingLineNumber = "66"
-         landmarkName = "class DateManager"
-         landmarkType = "3">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
          filePath = "src/DateManager.cpp"
-         timestampString = "370209862.384275"
+         timestampString = "370702377.699616"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "391"
-         endingLineNumber = "391"
-         landmarkName = "DateManager::calcSunEqs()"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "src/DateManager.cpp"
-         timestampString = "370209862.384275"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "379"
-         endingLineNumber = "379"
+         startingLineNumber = "397"
+         endingLineNumber = "397"
          landmarkName = "DateManager::calcSunEqs()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -215,11 +173,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/GuiManager.cpp"
-         timestampString = "370210498.831634"
+         timestampString = "370699100.818761"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "72"
-         endingLineNumber = "72"
+         startingLineNumber = "75"
+         endingLineNumber = "75"
          landmarkName = "GuiManager::handleEvent(const Event&amp; event)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -284,34 +242,6 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "src/ViewManager.cpp"
-         timestampString = "370649760.899495"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "79"
-         endingLineNumber = "79"
-         landmarkName = "ViewManager::fadeVisual(Visual&amp; visual, float alpha, float fadeTime)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "src/ViewManager.cpp"
-         timestampString = "370649760.899495"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "81"
-         endingLineNumber = "81"
-         landmarkName = "ViewManager::fadeVisual(Visual&amp; visual, float alpha, float fadeTime)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
          filePath = "src/VisualEffectsManager.cpp"
          timestampString = "370609148.061659"
          startingColumnNumber = "9223372036854775807"
@@ -327,11 +257,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/EventManager.cpp"
-         timestampString = "370656147.715639"
+         timestampString = "370711103.988197"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "80"
-         endingLineNumber = "80"
+         startingLineNumber = "85"
+         endingLineNumber = "85"
          landmarkName = "EventManager::deleteTimedEvent(const TimedEvent&amp; timedEvent)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -341,16 +271,16 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/EventManager.cpp"
-         timestampString = "370650149.406751"
+         timestampString = "370711103.988197"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "71"
-         endingLineNumber = "71"
+         startingLineNumber = "76"
+         endingLineNumber = "76"
          landmarkName = "EventManager::setTimedEvent(const std::string&amp; name, double delay)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
@@ -369,11 +299,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/WeatherManager.cpp"
-         timestampString = "370656147.715639"
+         timestampString = "370695939.152375"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "19"
-         endingLineNumber = "19">
+         startingLineNumber = "82"
+         endingLineNumber = "82">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -381,11 +311,27 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/WeatherManager.cpp"
-         timestampString = "370656527.986254"
+         timestampString = "370696482.871942"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "77"
-         endingLineNumber = "77">
+         startingLineNumber = "53"
+         endingLineNumber = "53"
+         landmarkName = "WeatherManager::setup()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "src/WeatherManager.cpp"
+         timestampString = "370696515.170263"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "51"
+         endingLineNumber = "51"
+         landmarkName = "WeatherManager::setup()"
+         landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

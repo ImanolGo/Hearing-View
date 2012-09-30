@@ -74,15 +74,44 @@ void ViewManager::removeVisual(const Visual& visual)
 }
 
 //! fades an specific visual
-void  ViewManager::fadeVisual(Visual& visual, float alpha, float fadeTime)
+void  ViewManager::fadeVisual(Visual& visual, float alpha, float fadeTime,  FadeType type)
 {
     for(VisualList::iterator it = m_visuals.begin(); it != m_visuals.end();it++ ) {
 		if(it->second == &visual) {
 			AppManager::getInstance().getVisualEffectsManager().removeAllVisualEffects(visual);
-            FadeVisualLog* fade = new FadeVisualLog(visual);
-            fade->setParameters(visual.getAlpha(), alpha, fadeTime);
-            fade->start();
-            std::cout<< "ViewManager-> fade visual to "<<alpha<< " in "<< fadeTime<<"s"<<std::endl;
+            switch(type)
+            {
+                case LINEAR:
+                {
+                    FadeVisualLinear* fade = new FadeVisualLinear(visual);
+                    fade->setParameters(visual.getAlpha(), alpha, fadeTime);
+                    fade->start();
+                    break;
+                }
+                case EXPONENTIAL:
+                {
+                    FadeVisualExp* fade = new FadeVisualExp(visual);
+                    fade->setParameters(visual.getAlpha(), alpha, fadeTime);
+                    fade->start();
+                    break;
+                }
+                case LOGARITHMIC:
+                {
+                    FadeVisualLog* fade = new FadeVisualLog(visual);
+                    fade->setParameters(visual.getAlpha(), alpha, fadeTime);
+                    fade->start();
+                    break;
+                }
+                default:
+                {
+                    FadeVisualLinear* fade = new FadeVisualLinear(visual);
+                    fade->setParameters(visual.getAlpha(), alpha, fadeTime);
+                    fade->start();
+                    break;
+                }
+            }
+            
+            std::cout<< "ViewManager-> fade visual to "<<alpha<< " alpha value in "<< fadeTime<<"s"<<std::endl;
             break;
 		}
     }

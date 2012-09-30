@@ -28,7 +28,7 @@ void GuiManager::setup()
 {
     float dim = 32; 
 	float xInit = OFX_UI_GLOBAL_WIDGET_SPACING; 
-    float length = 320-xInit; 
+    float length = dim*12-xInit; 
     m_gui = new ofxUICanvas(0,0,length+xInit*2.0,ofGetHeight());
     m_gui->addWidgetDown(new ofxUILabel("HEARING VIEW", OFX_UI_FONT_LARGE)); 
     m_gui->addWidgetDown(new ofxUIToggle(dim, dim, false, "SENSOR"));
@@ -46,6 +46,9 @@ void GuiManager::setup()
     vnames; vnames.push_back("Day"); vnames.push_back("Night");
     radio = (ofxUIRadio *) m_gui->addWidgetDown(new ofxUIRadio(dim, dim, "DAILY CYCLE", vnames, OFX_UI_ORIENTATION_HORIZONTAL)); 
     radio->activateToggle("Day"); 
+    
+    m_gui->addWidgetDown(new ofxUISlider(12*dim - 2*xInit, dim, 0.0,1.0,0.0, "TUBE VOLUME"));
+    m_gui->addWidgetDown(new ofxUISlider(12*dim - 2*xInit, dim, 0.0,1.0,0.0, "SAMPLE VOLUME"));
     
     ofAddListener(m_gui->newGUIEvent, this, &GuiManager::guiEvent);
     m_eventManager = &AppManager::getInstance().getEventManager();
@@ -75,7 +78,7 @@ void GuiManager::handleEvent(const Event& event)
        
     }
     
-    else if(name == "TUBE VOLUME" || name == "SAMPLER VOLUME")
+    else if(name == "TUBE VOLUME" || name == "SAMPLE VOLUME")
 	{
         widget = m_gui->getWidget(name);
         ofxUISlider *slider = (ofxUISlider *) widget;

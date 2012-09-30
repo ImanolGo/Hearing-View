@@ -155,7 +155,7 @@ void SoundManager::playRandomSample()
 {
     if(m_indexList.empty())
     {
-        this->fadeSample(0.0, 5.0);
+        m_currentSample = NULL;
         AppManager::getInstance().getEventManager().setEvent(Event("END_SAMPLER")); 
     }
     
@@ -237,9 +237,9 @@ void SoundManager::handleEvent(const Event& event)
         m_tube->setVolume((float) event.getValue());
     }
     
-    else if(name=="SAMPLER VOLUME")
+    else if(name=="SAMPLE VOLUME")
     {
-        if(!m_currentSample)
+        if(m_currentSample && m_currentSample->isPlaying())
         {
             m_currentSample->setVolume((float) event.getValue());
         }

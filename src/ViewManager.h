@@ -27,6 +27,13 @@ class ViewManager
 {
 public:
     
+    typedef enum { LINEAR, 
+        EXPONENTIAL, 
+        LOGARITHMIC
+    } FadeType;
+    
+public:
+    
     //! Constructor
     ViewManager();
     
@@ -51,7 +58,7 @@ public:
 	void removeVisual(const Visual& visual);
     
     //! fades an specific visual
-    void  fadeVisual(Visual& visual, float alpha, float fadeTime);
+    void  fadeVisual(Visual& visual, float alpha, float fadeTime, FadeType type = LOGARITHMIC);
 
     
     

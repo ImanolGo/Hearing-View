@@ -54,6 +54,7 @@ void ImageVisual::setImage(std::string path)
 {
     m_color = ofColor(255,255,255);
     m_image->loadImage(path);
+    m_image->resize(m_width,m_height);
 }
 
 void ImageVisual::draw() const

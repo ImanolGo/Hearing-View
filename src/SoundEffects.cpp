@@ -8,6 +8,8 @@
 #include <math.h>
 
 #include "AppManager.h"
+#include "Event.h"
+#include "EventManager.h"
 #include "SoundManager.h"
 #include "SoundObject.h"
 #include "SoundEffectsManager.h"
@@ -71,7 +73,6 @@ void FadeSound::start(){
 }
 
 
-
 FadeSoundLinear::FadeSoundLinear(SoundObject& sound): FadeSound(sound)
 {
     
@@ -81,7 +82,7 @@ void FadeSoundLinear::update(double dt)
 {
     m_elapsedTime = m_elapsedTime + dt;
     
-    if (m_elapsedTime>=m_fadeTime || m_sound.getVolume() == m_to) {
+    if (m_elapsedTime>=m_fadeTime) {
         m_sound.setVolume(m_to);
         this->stop();
         return;
@@ -92,6 +93,13 @@ void FadeSoundLinear::update(double dt)
     float fadeValue = (pct * (m_from - m_to) + m_to);
     m_sound.setVolume(fadeValue);
     
+    Event event("SAMPLE VOLUME",fadeValue);
+    if(m_sound.getName()=="tube")
+    {
+        event.setName("TUBE VOLUME");
+    }
+    
+    AppManager::getInstance().getEventManager().setEvent(event);
 }
 
 FadeSoundLog::FadeSoundLog(SoundObject& sound): FadeSound(sound)
@@ -115,6 +123,14 @@ void FadeSoundLog::update(double dt)
     float fadeValue = (pct * (m_from - m_to) + m_to);
     m_sound.setVolume(fadeValue);
     
+    Event event("SAMPLE VOLUME",fadeValue);
+    if(m_sound.getName()=="tube")
+    {
+        event.setName("TUBE VOLUME");
+    }
+    
+    AppManager::getInstance().getEventManager().setEvent(event);
+    
 }
 
 FadeSoundExp::FadeSoundExp(SoundObject& sound): FadeSound(sound)
@@ -126,7 +142,7 @@ void FadeSoundExp::update(double dt)
 {
     m_elapsedTime = m_elapsedTime + dt;
     
-    if (m_elapsedTime>=m_fadeTime|| m_sound.getVolume() == m_to) {
+    if (m_elapsedTime>=m_fadeTime) {
         m_sound.setVolume(m_to);
         this->stop();
         return;
@@ -137,6 +153,14 @@ void FadeSoundExp::update(double dt)
     float pct = - pow(base,(float)((m_elapsedTime * 1.04 - m_fadeTime)/m_fadeTime)) + 1.09; 
     float fadeValue = (pct * (m_from - m_to) + m_to);
     m_sound.setVolume(fadeValue);
+    
+    Event event("SAMPLE VOLUME",fadeValue);
+    if(m_sound.getName()=="tube")
+    {
+        event.setName("TUBE VOLUME");
+    }
+    
+    AppManager::getInstance().getEventManager().setEvent(event);
     
 }
 
