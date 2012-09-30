@@ -45,7 +45,8 @@ void EventManager::setup()
     m_weatherManager = &AppManager::getInstance().getWeatherManager();
     m_guiManager = &AppManager::getInstance().getGuiManager();
     
-    std::cout<< "EventManager-> initialized "<<std::endl;
+    std::cout<< m_dateManager->getTime() <<"- EventManager-> initialized "<<std::endl;
+    ofLogNotice() << m_dateManager->getTime() <<"- EventManager-> initialized ";
 }
 
 
@@ -60,20 +61,23 @@ void EventManager::setEvent(Event event)
 {
     if(event.getValue()==0.0 || event.getValue()==1.0)
     {
-        std::cout << "EventManager-> SetEvent: " << event.getName() << ", " << event.getValue()<<std::endl;
+        
+        std::cout << m_dateManager->getTime() << "- EventManager-> SetEvent: " << event.getName() << ", " << event.getValue()<<std::endl;
+        
+        ofLogNotice() << m_dateManager->getTime() << "- EventManager-> SetEvent: " << event.getName() << ", " << event.getValue();
     }
-    
-    m_guiManager->handleEvent(event);
+     
     m_stateManager->handleEvent(event);
     m_dateManager->handleEvent(event);
     m_weatherManager->handleEvent(event);
     m_soundManager->handleEvent(event);
-    
+    m_guiManager->handleEvent(event);
 }
 
 void EventManager::setTimedEvent(const std::string& name, double delay)
 {
-    std::cout << "EventManager-> setTimedEvent: " << name <<", delay "<<delay<<std::endl;
+    std::cout << m_dateManager->getTime() << " - EventManager-> setTimedEvent: " << name <<", delay "<<delay<<std::endl;
+    ofLogNotice() << m_dateManager->getTime() << "- EventManager-> setTimedEvent: " << name <<", delay "<<delay;
     m_timeEvents.push_back(new TimedEvent(name,delay));
 	
 }

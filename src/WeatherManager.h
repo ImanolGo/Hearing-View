@@ -20,6 +20,7 @@
 
 class ImageVisual;
 class TextVisual;
+class DataManager;
 
 //========================== class WeatherManager =======================================
 //==============================================================================
@@ -84,6 +85,8 @@ protected:
     ImageVisual*          m_currentIcon;        ///< stores the current weather icon
     IconMap               m_icons;              ///< map of visuals representing the weather conditions
     TextVisual*           m_conditionText;      ///< text visual from the current weather conditions
+    DateManager*          m_dateManager;        ///< pointer to the date manager
+
     
 };
 

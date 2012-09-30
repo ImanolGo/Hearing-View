@@ -15,6 +15,7 @@
 #include <string>
 
 class Visual;
+class DateManager;
 
 //========================== class ViewManager ==============================
 //============================================================================
@@ -73,6 +74,7 @@ private:
     
     ofTrueTypeFont  m_frameRateFont;    ///< font displaying the frame rate 
     char            m_fpsStr[255];      ///<  framerate text
+    DateManager*	  m_dateManager;	///< pointer to the date manager
     
 };
 

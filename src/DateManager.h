@@ -44,6 +44,9 @@ public:
     //! setups the day watcher
     void setup();
     
+    //! returns the current time
+    std::string getTime();
+    
     //! returns the year's seasons
     const std::string& getSeason(){return m_season;}
     

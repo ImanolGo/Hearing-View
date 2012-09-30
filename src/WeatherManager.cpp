@@ -19,7 +19,7 @@ const string WeatherManager::WEATHER_API_KEY = "630d17ff50223932122909";
 const double WeatherManager::REFRESH_TIME = 60*1; ///< refreshing time every 1 minutes
 const double WeatherManager::FADE_TIME = 3;
 
-WeatherManager::WeatherManager(): m_currentIcon(NULL), m_code(0)
+WeatherManager::WeatherManager(): m_currentIcon(NULL), m_dateManager(NULL), m_code(0)
 {
 }
 
@@ -32,12 +32,15 @@ WeatherManager::~WeatherManager()
     }
     
     m_currentIcon = NULL;
+    m_dateManager = NULL;
 }
 
 
 //--------------------------------------------------------------
 void WeatherManager::setup()
 {
+    m_dateManager = &AppManager::getInstance().getDateManager();
+    
     m_location = "Linz";
     m_url = "http://free.worldweatheronline.com/feed/weather.ashx?q=" + m_location + "&format=xml&num_of_days=3&key=" + WEATHER_API_KEY;
     
@@ -60,7 +63,8 @@ void WeatherManager::setup()
     this->parseXML();
     this->readConditionsCode();
     
-    std::cout<< "DateManager-> initialized "<<std::endl;
+    std::cout << m_dateManager->getTime() << "- DateManager-> initialized "<<std::endl;
+    ofLogNotice() << m_dateManager->getTime() << "- DateManager-> initialized ";
     
 }
 
@@ -92,7 +96,8 @@ bool WeatherManager::parseXML()
 	//and then try and draw it as a line on the screen
 	if(numTags == 0){
         
-        std::cout<< "WeatherManager-> parseXML: no data Tag found" << std::endl;
+        std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: no data Tag found" << std::endl;
+        ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: no data Tag found";
         return false;
     }
     
@@ -104,7 +109,8 @@ bool WeatherManager::parseXML()
     
     if(numTags == 0){
         
-        std::cout<< "WeatherManager-> parseXML: no current_condition Tag found" << std::endl;
+        std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: no current_condition Tag found" << std::endl;
+        ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: no current_condition Tag found" ;
         return false;
     }
     
@@ -118,7 +124,8 @@ bool WeatherManager::parseXML()
     if(m_conditionsDesc!= conditionsDesc)
     {
         m_conditionsDesc= conditionsDesc;
-        std::cout<< "WeatherManager-> parseXML: the current conditions are \""<<m_conditionsDesc<<"\"" << std::endl;
+        std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: the current conditions are \""<<m_conditionsDesc<<"\"" << std::endl;
+       ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: the current conditions are \""<<m_conditionsDesc<<"\"";
         m_conditionText->setText(m_conditionsDesc, 20);
         m_conditionText->setColor(ofColor(255,255,255,0));
         AppManager::getInstance().getViewManager().fadeVisual(*m_conditionText, 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
@@ -235,7 +242,8 @@ void WeatherManager::readConditionsCode()
     if(iconName!=m_iconName)
     {
         m_iconName = iconName;
-        std::cout<< "WeatherManager-> readConditionsCode: set image \""<<m_iconName<<".png\"" << std::endl;
+        std::cout << m_dateManager->getTime() << "- WeatherManager-> readConditionsCode: set image \""<<m_iconName<<".png\"" << std::endl;
+         ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> readConditionsCode: set image \""<<m_iconName<<".png\"";
         AppManager::getInstance().getViewManager().removeVisual(*m_currentIcon);
         m_currentIcon = m_icons[m_iconName];
         AppManager::getInstance().getViewManager().addVisual(*m_currentIcon);
@@ -258,7 +266,8 @@ void WeatherManager::loadIcons()
 {
     //some path, may be absolute or relative to bin/data
     std::string samplesPath = "pictures/WeatherIcons/";
-    std::cout<< "WeatherManager-> loadSamples: loading icons from \""<<samplesPath<<"\"..."<<std::endl;
+    std::cout<< m_dateManager->getTime() <<"- WeatherManager-> loadSamples: loading icons from \""<<samplesPath<<"\"..."<<std::endl;
+    ofLogNotice()<< m_dateManager->getTime() <<"- WeatherManager-> loadSamples: loading icons from \""<<samplesPath<<"\"...";
     ofDirectory dir(samplesPath);
     //only show jpg and png files
     dir.allowExt("png");
@@ -266,7 +275,8 @@ void WeatherManager::loadIcons()
     //populate the directory object
     if(dir.listDir()==0)
     {
-        std::cout <<"WeatherManager-> iconSamples: No icons found in \""<< samplesPath <<"\"" << std::endl;
+        std::cout << m_dateManager->getTime() << "- WeatherManager-> iconSamples: No icons found in \""<< samplesPath <<"\"" << std::endl;
+        ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> iconSamples: No icons found in \""<< samplesPath <<"\"";
         return;
     }
     
@@ -277,7 +287,8 @@ void WeatherManager::loadIcons()
         ImageVisual* icon =  new ImageVisual(ofPoint(1000,500),128,128);
         icon->setImage(dir.getPath(n));
         m_icons[iconName] = icon;
-        std::cout <<"WeatherManager-> loaded sample \""<< iconName <<"\"" << std::endl;
+        std::cout << m_dateManager->getTime() << "- WeatherManager-> loaded sample \""<< iconName <<"\"" << std::endl;
+        ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> loaded sample \""<< iconName <<"\"";
     }
     
     m_currentIcon = m_icons["sunny_Day"];

@@ -63,6 +63,8 @@ AppManager::~AppManager()
 
 void AppManager::setup()
 {
+    ofLogToFile("HearingView.log", true);
+    
     m_eventManager->setup();
     m_viewManager->setup();
     m_soundManager->setup();

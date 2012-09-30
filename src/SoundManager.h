@@ -19,6 +19,7 @@
 
 class SoundObject;
 class Event;
+class DateManager;
 
 //========================== class SoundManager ==============================
 //============================================================================
@@ -30,6 +31,11 @@ class Event;
 class SoundManager
 {
 public:
+    
+    typedef enum { LINEAR, 
+        EXPONENTIAL, 
+        LOGARITHMIC
+    } FadeType;
     
     //! Constructor
     SoundManager();
@@ -54,11 +60,18 @@ public:
     //! returns if the sound is playing
     bool isSamplerPlaying(){return m_isSamplerPlaying;}
     
-    //! fades the tube sound to a specific level
-    void  fadeTube(float volume, float fadeTime);
+    //! fades the tube sound from it current volume level to a specific level
+    void  fadeTube(float volume, float fadeTime, FadeType type);
+    
+    //! fades the tube sound from as specific volume level  a specific level
+    void  fadeTube(float fromVolume, float toVolume, float fadeTime, FadeType type);
     
     //! fades the current sample to a specific level
-    void  fadeSample(float volume,float fadeTime);
+    void  fadeSample(float volume,float fadeTime, FadeType type);
+    
+    //! fades the sample from as specific volume level  a specific level
+    void  fadeSample(float fromVolume, float toVolume, float fadeTime, FadeType type);
+    
     
     //! handles the events
     void handleEvent(const Event& event);
@@ -96,6 +109,8 @@ private:
     std::string                      m_conditions;        ///< saves the current weather conditions
     std::string                      m_dayTime;           ///< saves if it is day or night
     std::vector<int>                 m_indexList;         ////< list with the current sample list indexes
+    
+    DateManager*	  m_dateManager;	///< pointer to the date manager
     
 };
 

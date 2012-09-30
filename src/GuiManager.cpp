@@ -9,10 +9,11 @@
 #include "EventManager.h"
 #include "AppManager.h"
 #include "ofxUI.h"
+#include "DateManager.h"
 #include "GuiManager.h"
 
 
-GuiManager::GuiManager(): m_gui(NULL),m_eventManager(NULL)
+GuiManager::GuiManager(): m_gui(NULL),m_eventManager(NULL), m_dateManager(NULL)
 {
 }
 
@@ -21,11 +22,14 @@ GuiManager::~GuiManager()
     delete m_gui;
     m_gui = NULL;
     m_eventManager = NULL;
+    m_dateManager = NULL;
 }
 
 
 void GuiManager::setup()
 {
+    m_dateManager = &AppManager::getInstance().getDateManager();
+    
     float dim = 32; 
 	float xInit = OFX_UI_GLOBAL_WIDGET_SPACING; 
     float length = dim*12-xInit; 
@@ -53,7 +57,8 @@ void GuiManager::setup()
     ofAddListener(m_gui->newGUIEvent, this, &GuiManager::guiEvent);
     m_eventManager = &AppManager::getInstance().getEventManager();
     
-    std::cout<< "GuiManager-> initialized "<<std::endl;
+    std::cout << m_dateManager->getTime() << "- GuiManager-> initialized "<<std::endl;
+    ofLogNotice() << m_dateManager->getTime() << "- GuiManager-> initialized ";
 }
 
 
@@ -119,7 +124,8 @@ void GuiManager::guiEvent(ofxUIEventArgs &e)
     if(name =="SENSOR")
     {
 	    ofxUIToggle *toggle = (ofxUIToggle*) e.widget; 
-        std::cout << "GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue() << std::endl; 
+        std::cout << m_dateManager->getTime() << "-  GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue() << std::endl; 
+        ofLogNotice()  << m_dateManager->getTime() << "-  GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue();
         m_eventManager->setEvent(Event(name,(double)toggle->getValue()));
     }
 
@@ -127,14 +133,16 @@ void GuiManager::guiEvent(ofxUIEventArgs &e)
     else if(name =="TUBE VOLUME" || name == "SAMPLE VOLUME")
     {
 	    ofxUISlider *slider = (ofxUISlider*) e.widget; 
-        std::cout << "GuiManager-> guiEvent: "<< name << ", "<< slider->getValue() << std::endl; 
+        std::cout << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< slider->getValue() << std::endl; 
+        ofLogNotice() << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< slider->getValue(); 
         m_eventManager->setEvent(Event(name,slider->getValue()));
     }
     
     else
     {
         ofxUIToggle *toggle = (ofxUIToggle *) e.widget; 
-        std::cout << "GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue() << std::endl;
+        std::cout << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue() << std::endl;
+        ofLogNotice() << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue();
         m_eventManager->setEvent(Event(name));
         
     }

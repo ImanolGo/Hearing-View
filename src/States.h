@@ -21,6 +21,7 @@ class ofSoundPlayer;
 class ofxUICanvas;
 class CircleVisual;
 class TextVisual;
+class DateManager;
 
 //========================== class State =======================================
 //==============================================================================
@@ -57,6 +58,7 @@ protected:
     ofPoint          m_pos;   ///< position of the State
     CircleVisual*    m_circleState; ///< circle representing the state
     TextVisual*      m_textState; ///< text representing the state
+    DateManager*     m_dateManager; ///< pointer to the date manager
     
 };
 

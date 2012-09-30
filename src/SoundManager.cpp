@@ -7,6 +7,7 @@
 
 #include "ofMain.h"
 
+#include "DateManager.h"
 #include "SoundManager.h"
 #include "SoundObject.h"
 #include "AppManager.h"
@@ -20,6 +21,7 @@ SoundManager::SoundManager():
     m_tube(NULL), 
     m_isSamplerPlaying(false), 
     m_currentSample(NULL),
+    m_dateManager(NULL),
     m_season("Summer"),
     m_conditions("Dry"),
     m_dayTime("Day")
@@ -48,18 +50,25 @@ SoundManager::~SoundManager()
         m_tube = NULL;
     }
     
+    m_dateManager = NULL;
 }
 
 void SoundManager::setup()
 {
+    m_dateManager = &AppManager::getInstance().getDateManager();
+    
     m_tube = new SoundObject("tube");
     m_tube->loadSound("sounds/tube.wav");
     m_tube->setVolume(0.0);
     m_tube->setLoop(true);
     m_tube->play();
     this->loadSamples();
-    std::cout<< "SoundManager-> play tube "<<std::endl;
-    std::cout<< "SoundManager-> initialized "<<std::endl;
+    
+    
+    std::cout<< m_dateManager->getTime() << "- SoundManager-> play tube "<<std::endl;
+    std::cout<<  m_dateManager->getTime() << "- SoundManager-> initialized "<<std::endl;
+    ofLogNotice() << m_dateManager->getTime() << "- SoundManager-> play tube ";
+    ofLogNotice() << m_dateManager->getTime() << "- SoundManager-> initialized ";
 
 }
 
@@ -79,7 +88,8 @@ void SoundManager::loadSamples()
             for (int k=0; k<2; k++) 
             {
                 std::string samplesPath = "sounds/" + seasons[i] + "/" + dayTime[j] +"/" + conditions[k];
-                std::cout<< "SoundManager-> loadSamples: loading sampels from \""<<samplesPath<<"\"..."<<std::endl;
+                std::cout<< m_dateManager->getTime()<<"- SoundManager-> loadSamples: loading sampels from \""<<samplesPath<<"\"..."<<std::endl;
+                ofLogNotice()<< m_dateManager->getTime()<<"- SoundManager-> loadSamples: loading sampels from \""<<samplesPath<<"\"...";
                 ofDirectory dir(samplesPath);
                 //only show wav and aiff files
                 dir.allowExt("wav");
@@ -88,7 +98,8 @@ void SoundManager::loadSamples()
                 //populate the directory object
                 if(dir.listDir()==0)
                 {
-                    std::cout <<"SoundManager-> loadSamples: No samples found in \""<< samplesPath <<"\"" << std::endl;
+                    std::cout <<m_dateManager->getTime()<<"- SoundManager-> loadSamples: No samples found in \""<< samplesPath <<"\"" << std::endl;
+                    ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> loadSamples: No samples found in \""<< samplesPath <<"\"";
                     break;
                 }
                 
@@ -100,7 +111,8 @@ void SoundManager::loadSamples()
                     SoundObject* sample = new SoundObject(sampleName);
                     sample->loadSound(dir.getPath(n));
                     sampleList.push_back(sample);
-                    std::cout <<"SoundManager-> loaded sample \""<< sampleName <<"\"" << std::endl;
+                    std::cout <<m_dateManager->getTime()<<"- SoundManager-> loaded sample \""<< sampleName <<"\"" << std::endl;
+                    ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> loaded sample \""<< sampleName <<"\"";
                 }
                 m_samples[seasons[i] + "/" + dayTime[j] +"/" + conditions[k]] = sampleList;
             }
@@ -125,7 +137,8 @@ void SoundManager::setCurrentSamples(std::string sampleListName)
     if(m_samples.find(sampleListName) == m_samples.end())
     {
         //if there are no samples with this name, the m_currentSampleList remains at it was
-        std::cout <<"SoundManager-> setSamples: no sample list with name \""<< sampleListName <<"\"" << std::endl;
+        std::cout <<m_dateManager->getTime()<<"- SoundManager-> setSamples: no sample list with name \""<< sampleListName <<"\"" << std::endl;
+        ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> setSamples: no sample list with name \""<< sampleListName <<"\"" ;
         return;
     }
     
@@ -165,7 +178,8 @@ void SoundManager::playRandomSample()
         m_currentSample = m_currentSampleList[m_indexList[ind]];
         m_currentSample->play();
         m_indexList.erase(m_indexList.begin()+ind);
-        std::cout <<"SoundManager-> play sample \""<< m_currentSample->getName() <<"\"" << std::endl;
+        std::cout <<m_dateManager->getTime()<<"- SoundManager-> play sample \""<< m_currentSample->getName() <<"\"" << std::endl;
+        ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> play sample \""<< m_currentSample->getName() <<"\"" ;
     }
     
 }
@@ -173,7 +187,8 @@ void SoundManager::playRandomSample()
 void SoundManager::stopSamples()
 {
     m_currentSample->stop();
-    std::cout <<"SoundManager-> stop sample \""<< m_currentSample->getName() <<"\"" << std::endl;
+    std::cout <<m_dateManager->getTime()<<"- SoundManager-> stop sample \""<< m_currentSample->getName() <<"\"" << std::endl;
+    ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> stop sample \""<< m_currentSample->getName() <<"\"";
 }
 
 
@@ -194,7 +209,7 @@ void SoundManager::update(double dt)
     
 }
 
-void  SoundManager::fadeTube(float volume, float fadeTime)
+void  SoundManager::fadeTube(float volume, float fadeTime, FadeType type)
 {
     if(!m_tube)
     {
@@ -204,14 +219,90 @@ void  SoundManager::fadeTube(float volume, float fadeTime)
     AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_tube);
     
     float currentVolume = m_tube->getVolume();
-    FadeSoundExp* fadeExp = new FadeSoundExp(*m_tube);
-    fadeExp->setParameters(currentVolume, volume, fadeTime);
-    fadeExp->start();
-    std::cout<< "SoundManager-> fade tube to "<<volume<< " in "<< fadeTime<<"s"<<std::endl;
+    switch(type)
+    {
+        case LINEAR:
+        {
+            FadeSoundLinear* fade = new FadeSoundLinear(*m_tube);
+            fade->setParameters(currentVolume, volume, fadeTime);
+            fade->start();
+            break;
+        }
+        case EXPONENTIAL:
+        {
+            FadeSoundExp* fade = new FadeSoundExp(*m_tube);
+            fade->setParameters(currentVolume, volume, fadeTime);
+            fade->start();
+            break;
+        }
+        case LOGARITHMIC:
+        {
+            FadeSoundLog* fade = new FadeSoundLog(*m_tube);
+            fade->setParameters(currentVolume, volume, fadeTime);
+            fade->start();
+            break;
+        }
+        default:
+        {
+            FadeSoundLinear* fade = new FadeSoundLinear(*m_tube);
+            fade->setParameters(currentVolume, volume, fadeTime);
+            fade->start();
+            break;
+        }
+    }
+    
+    std::cout <<m_dateManager->getTime()<<"- SoundManager-> fade tube to "<<volume<< " in "<< fadeTime<<"s"<<std::endl;
+    ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> fade tube to "<<volume<< " in "<< fadeTime<<"s";
+}
+
+void  SoundManager::fadeTube(float fromVolume, float toVolume, float fadeTime, FadeType type)
+{
+    if(!m_tube)
+    {
+        return;
+    }
+    
+    AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_tube);
+    
+    switch(type)
+    {
+        case LINEAR:
+        {
+            FadeSoundLinear* fade = new FadeSoundLinear(*m_tube);
+            fade->setParameters(fromVolume, toVolume, fadeTime);
+            fade->start();
+            break;
+        }
+        case EXPONENTIAL:
+        {
+            FadeSoundExp* fade = new FadeSoundExp(*m_tube);
+            fade->setParameters(fromVolume, toVolume, fadeTime);
+            fade->start();
+            break;
+        }
+        case LOGARITHMIC:
+        {
+            FadeSoundLog* fade = new FadeSoundLog(*m_tube);
+            fade->setParameters(fromVolume, toVolume, fadeTime);
+            fade->start();
+            break;
+        }
+        default:
+        {
+            FadeSoundLinear* fade = new FadeSoundLinear(*m_tube);
+            fade->setParameters(fromVolume, toVolume, fadeTime);
+            fade->start();
+            break;
+        }
+    }
+    
+    std::cout <<m_dateManager->getTime()<<"- SoundManager-> fade tube from" << fromVolume <<" to "<<toVolume<<  " in "<< fadeTime<<"s"<<std::endl;
+    ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> fade tube from" << fromVolume << " to "<<toVolume<<  " in "<< fadeTime<<"s";
     
 }
 
-void  SoundManager::fadeSample(float volume, float fadeTime)
+
+void  SoundManager::fadeSample(float volume, float fadeTime, FadeType type)
 {
     if(!m_currentSample || !m_currentSample->isPlaying())
     {
@@ -219,14 +310,89 @@ void  SoundManager::fadeSample(float volume, float fadeTime)
     }
     
     AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_currentSample);
-    
-    std::cout<< "SoundManager-> fade sample \""<< m_currentSample->getName() << "\" to "<<volume<< " in "<< fadeTime<<"s"<<std::endl;
     float currentVolume = m_currentSample->getVolume();
-    FadeSoundExp* fadeExp = new FadeSoundExp(*m_currentSample);
-    fadeExp->setParameters(currentVolume, volume, fadeTime);
-    fadeExp->start();
+    
+    switch(type)
+    {
+        case LINEAR:
+        {
+            FadeSoundLinear* fade = new FadeSoundLinear(*m_currentSample);
+            fade->setParameters(currentVolume, volume, fadeTime);
+            fade->start();
+            break;
+        }
+        case EXPONENTIAL:
+        {
+            FadeSoundExp* fade = new FadeSoundExp(*m_currentSample);
+            fade->setParameters(currentVolume, volume, fadeTime);
+            fade->start();
+            break;
+        }
+        case LOGARITHMIC:
+        {
+            FadeSoundLog* fade = new FadeSoundLog(*m_currentSample);
+            fade->setParameters(currentVolume, volume, fadeTime);
+            fade->start();
+            break;
+        }
+        default:
+        {
+            FadeSoundLinear* fade = new FadeSoundLinear(*m_currentSample);
+            fade->setParameters(currentVolume, volume, fadeTime);
+            fade->start();
+            break;
+        }
+    }
+
+    
+    std::cout <<m_dateManager->getTime()<<"- SoundManager-> sample tube to "<<volume<< " in "<< fadeTime<<"s"<<std::endl;
+    ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> sample tube to "<<volume<< " in "<< fadeTime<<"s";
     
 }
+
+void  SoundManager::fadeSample(float fromVolume, float toVolume, float fadeTime, FadeType type)
+{
+    if(!m_currentSample || !m_currentSample->isPlaying())
+    {
+        return; 
+    }
+    
+    AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_currentSample);
+
+    switch(type)
+    {
+        case LINEAR:
+        {
+            FadeSoundLinear* fade = new FadeSoundLinear(*m_currentSample);
+            fade->setParameters(fromVolume, toVolume, fadeTime);
+            fade->start();
+            break;
+        }
+        case EXPONENTIAL:
+        {
+            FadeSoundExp* fade = new FadeSoundExp(*m_currentSample);
+            fade->setParameters(fromVolume, toVolume, fadeTime);
+            fade->start();
+            break;
+        }
+        case LOGARITHMIC:
+        {
+            FadeSoundLog* fade = new FadeSoundLog(*m_currentSample);
+            fade->setParameters(fromVolume, toVolume, fadeTime);
+            fade->start();
+            break;
+        }
+        default:
+        {
+            FadeSoundLinear* fade = new FadeSoundLinear(*m_currentSample);
+            fade->setParameters(fromVolume, toVolume, fadeTime);
+            fade->start();
+            break;
+        }
+    }
+    
+    std::cout <<m_dateManager->getTime()<<"- SoundManager-> fade sample from" << fromVolume <<" to "<<toVolume<<  " in "<< fadeTime<<"s"<<std::endl;
+    ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> fade sample from" << fromVolume << " to "<<toVolume<<  " in "<< fadeTime<<"s";}
 
 void SoundManager::handleEvent(const Event& event)
 {

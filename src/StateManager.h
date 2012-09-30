@@ -18,6 +18,7 @@ class Event;
 
 class StateMachine;
 class ofxUIEventArgs;
+class DateManager;
 
 //========================== class StateManager ==============================
 //============================================================================
@@ -47,6 +48,7 @@ public:
 private:
     
     StateMachine*	  m_stateMachine;	///< pointer to the current state machine
+    DateManager*      m_dateManager;    ///< pointer to the date manager
     
 };
 

@@ -5,6 +5,8 @@
 //  Created by Imanolgo on 6/24/12.
 //
 
+#include <time.h>
+
 #include "ofxXmlSettings.h"
 #include "ofxDate.h"
 #include "Event.h"
@@ -65,7 +67,8 @@ void DateManager::setup()
     this->calcSeason();
     this->calcDayTime();
     this->displayDate();
-    std::cout<< "DateManager-> initialized "<<std::endl;
+    std::cout<<this->getTime()<< "- DateManager-> initialized "<<std::endl;
+    ofLogNotice()<<this->getTime()<< "- DateManager-> initialized ";
     
 }
 
@@ -91,7 +94,17 @@ void DateManager::update(double dt)
     
 }
 
+std::string DateManager::getTime()
+{
+    time_t     now = time(0);
+    struct tm  tstruct;
+    char       buf[80];
+    tstruct = *localtime(&now);
+    strftime(buf, sizeof(buf), "%H:%M:%S", &tstruct);
+    
+    return buf;
 
+}
 void DateManager::calcDayTime()
 {
     time_t now;
@@ -235,28 +248,44 @@ void DateManager::handleEvent(const Event& event)
 
 void DateManager::displayDate()
 {
-    std::cout<< "DateManager-> Date:  "<< m_day<< "/"<<m_month<<"/"<<m_year<<std::endl;
-    std::cout<< "DateManager-> Season:  "<< m_season<< std::endl;
-    std::cout<< "DateManager-> Status:  "<< m_dayTime<< std::endl;
+    std::cout<<this->getTime() << "- DateManager-> Date:  "<< m_day<< "/"<<m_month<<"/"<<m_year<<std::endl;
+    std::cout<<this->getTime() << "- DateManager-> Season:  "<< m_season<< std::endl;
+    std::cout<<this->getTime() << "- DateManager-> Status:  "<< m_dayTime<< std::endl;
     
-        
-    std::cout<< "DateManager-> Sunrise:  ";
-    
+    ofLogNotice()<<this->getTime() << "- DateManager-> Date:  "<< m_day<< "/"<<m_month<<"/"<<m_year;
+    ofLogNotice()<<this->getTime() << "- DateManager-> Season:  "<< m_season;
+    ofLogNotice()<<this->getTime() << "- DateManager-> Status:  "<< m_dayTime;
+       
+    std::cout<<this->getTime() << "- DateManager-> Sunrise:  ";
+    ofLogNotice()<<this->getTime() << "- DateManager-> Sunrise:  ";
     int hourSunrise = (int) m_sunrise;
     int minSunrise =(m_sunrise - (double) hourSunrise)*60;
     
     if (hourSunrise < 10) cout << '0';
+    
     cout << hourSunrise << ':';
+    ofLogNotice()<< hourSunrise << ':';
+    
     if (minSunrise < 10) cout << '0';
+    
     cout << minSunrise << std::endl;
+    ofLogNotice()<< minSunrise;
 
-    std::cout<< "DateManager-> Sunset:  ";
+
+    std::cout<<this->getTime() << "- DateManager-> Sunset:  ";
+    ofLogNotice()<<this->getTime() << "- DateManager-> Sunset:  ";
     int hourSunset = (int) m_sunset;
     int minSunset = (m_sunset - (double) hourSunset)*60;
+    
     if (hourSunset < 10) cout << '0';
+    
     cout << hourSunset << ':';
+    ofLogNotice()<< hourSunset << ':';
+
     if (minSunset < 10) cout << '0';
+    
     cout << minSunset << std::endl;
+    ofLogNotice()<< minSunset;
     
             
 }
@@ -415,14 +444,16 @@ void DateManager::loadSeasons()
 {
     //some path, may be absolute or relative to bin/data
     std::string samplesPath = "pictures/Seasons/";
-    std::cout<< "DateManager-> loadSamples: loading icons from \""<<samplesPath<<"\"..."<<std::endl;
+    std::cout<<this->getTime() << "- DateManager-> loadSamples: loading icons from \""<<samplesPath<<"\"..."<<std::endl;
+    ofLogNotice()<<this->getTime() << "- DateManager-> loadSamples: loading icons from \""<<samplesPath<<"\"...";
     ofDirectory dir(samplesPath);
     //only show png files
     dir.allowExt("png");
     //populate the directory object
     if(dir.listDir()==0)
     {
-        std::cout <<"DateManager-> loadSeasons: No season images found at \""<< samplesPath <<"\"" << std::endl;
+        std::cout<<this->getTime() << "- DateManager-> loadSeasons: No season images found at \""<< samplesPath <<"\"" << std::endl;
+        ofLogNotice()<<this->getTime() << "- DateManager-> loadSeasons: No season images found at \""<< samplesPath <<"\"";
         return;
     }
     
@@ -433,7 +464,8 @@ void DateManager::loadSeasons()
         ImageVisual* seasonImage =  new ImageVisual(ofPoint(500,500),256,256);
         seasonImage->setImage(dir.getPath(n));
         m_seasonImages[seasonName] = seasonImage;
-        std::cout <<"DateManager-> loaded sample \""<< seasonName <<"\"" << std::endl;
+        std::cout<<this->getTime() << "- DateManager-> loaded sample \""<< seasonName <<"\"" << std::endl;
+        ofLogNotice()<<this->getTime() << "- DateManager-> loaded sample \""<< seasonName <<"\"";
         AppManager::getInstance().getViewManager().addVisual(*seasonImage);
         m_seasonImages[seasonName]->setColor(ofColor(255,255,255,0));
     }
