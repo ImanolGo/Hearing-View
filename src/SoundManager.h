@@ -57,9 +57,6 @@ public:
     //! stop play samples
     void stopSamples();
     
-    //! returns if the sound is playing
-    bool isSamplerPlaying(){return m_isSamplerPlaying;}
-    
     //! fades the tube sound from it current volume level to a specific level
     void  fadeTube(float volume, float fadeTime, FadeType type);
     
@@ -103,7 +100,7 @@ private:
     SamplesMap                       m_samples;           ///< list of the sounds to be play
     SamplesList                      m_currentSampleList; ///< current sample list to be played
     SoundObject*                     m_currentSample;     ///< current playback sample
-    bool                             m_isSamplerPlaying;  ///< it tells wether the sampler is finished or not
+    bool                             m_playSamples;       ///< it tells wether the sampler hast to play or not
     
     std::string                      m_season;            ///< saves the current season
     std::string                      m_conditions;        ///< saves the current weather conditions

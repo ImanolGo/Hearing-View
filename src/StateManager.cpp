@@ -54,6 +54,7 @@ void StateManager::setup()
     m_stateMachine->createTransition("SamplerState", "IdleState", Event("SENSOR",0));
     
     std::cout<< m_dateManager->getTime() <<"- StateManager-> initialized "<<std::endl;
+    ofLogNotice()<< m_dateManager->getTime() <<"- StateManager-> initialized ";
     
     m_stateMachine->setCurrentState("IdleState");
     

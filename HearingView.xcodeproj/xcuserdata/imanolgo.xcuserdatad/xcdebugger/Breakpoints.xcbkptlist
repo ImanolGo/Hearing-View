@@ -204,20 +204,6 @@
          timestampString = "370736929.193948"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "115"
-         endingLineNumber = "115"
-         landmarkName = "SamplerState::onEnter()"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "src/States.cpp"
-         timestampString = "370736929.193948"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
          startingLineNumber = "80"
          endingLineNumber = "80"
          landmarkName = "IdleState::onEnter()"
@@ -243,11 +229,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/EventManager.cpp"
-         timestampString = "370733585.188942"
+         timestampString = "370737744.195137"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "89"
-         endingLineNumber = "89"
+         startingLineNumber = "88"
+         endingLineNumber = "88"
          landmarkName = "EventManager::deleteTimedEvent(const TimedEvent&amp; timedEvent)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -257,11 +243,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/EventManager.cpp"
-         timestampString = "370733585.188942"
+         timestampString = "370737744.195137"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "79"
-         endingLineNumber = "79"
+         startingLineNumber = "78"
+         endingLineNumber = "78"
          landmarkName = "EventManager::setTimedEvent(const std::string&amp; name, double delay)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -271,11 +257,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/SoundManager.cpp"
-         timestampString = "370736929.193948"
+         timestampString = "370737913.810892"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "205"
-         endingLineNumber = "205"
+         startingLineNumber = "206"
+         endingLineNumber = "206"
          landmarkName = "SoundManager::update(double dt)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -331,6 +317,34 @@
          startingLineNumber = "145"
          endingLineNumber = "145"
          landmarkName = "GuiManager::guiEvent(ofxUIEventArgs &amp;e)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "src/SoundManager.cpp"
+         timestampString = "370737913.810892"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "173"
+         endingLineNumber = "173"
+         landmarkName = "SoundManager::playRandomSample()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "src/SoundManager.cpp"
+         timestampString = "370737708.1408"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "170"
+         endingLineNumber = "170"
+         landmarkName = "SoundManager::playRandomSample()"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

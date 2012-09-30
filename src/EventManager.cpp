@@ -40,10 +40,10 @@ EventManager::~EventManager()
 void EventManager::setup()
 {
     m_stateManager = &AppManager::getInstance().getStateManager();
+    m_guiManager = &AppManager::getInstance().getGuiManager();
     m_soundManager = &AppManager::getInstance().getSoundManager();
     m_dateManager = &AppManager::getInstance().getDateManager();
     m_weatherManager = &AppManager::getInstance().getWeatherManager();
-    m_guiManager = &AppManager::getInstance().getGuiManager();
     
     std::cout<< m_dateManager->getTime() <<"- EventManager-> initialized "<<std::endl;
     ofLogNotice() << m_dateManager->getTime() <<"- EventManager-> initialized ";
@@ -63,7 +63,6 @@ void EventManager::setEvent(Event event)
     {
         
         std::cout << m_dateManager->getTime() << "- EventManager-> SetEvent: " << event.getName() << ", " << event.getValue()<<std::endl;
-        
         ofLogNotice() << m_dateManager->getTime() << "- EventManager-> SetEvent: " << event.getName() << ", " << event.getValue();
     }
      

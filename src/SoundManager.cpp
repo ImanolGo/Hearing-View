@@ -19,7 +19,7 @@
     
 SoundManager::SoundManager(): 
     m_tube(NULL), 
-    m_isSamplerPlaying(false), 
+    m_playSamples(false), 
     m_currentSample(NULL),
     m_dateManager(NULL),
     m_season("Summer"),
@@ -161,6 +161,7 @@ void SoundManager::playSamples()
         m_indexList.push_back(i);
     }
     
+    m_playSamples = true;
     this->playRandomSample();
 }
 
@@ -168,7 +169,7 @@ void SoundManager::playRandomSample()
 {
     if(m_indexList.empty())
     {
-        m_currentSample = NULL;
+        m_playSamples = false;
         AppManager::getInstance().getEventManager().setEvent(Event("END_SAMPLER")); 
     }
     
@@ -197,12 +198,12 @@ void SoundManager::update(double dt)
 {
     ofSoundUpdate();
     
-    if(!m_currentSample)
+    if(!m_playSamples)
     {
         return;
     }
         
-    if(m_currentSample->isPlaying())
+    if(!m_currentSample->isPlaying())
     {
         this->playRandomSample();
     }
@@ -408,6 +409,14 @@ void SoundManager::handleEvent(const Event& event)
         if(m_currentSample && m_currentSample->isPlaying())
         {
             m_currentSample->setVolume((float) event.getValue());
+        }
+    }
+    
+    else if(name=="SENSOR")
+    {
+        if(event.getValue() == 0.0)
+        {
+            m_playSamples = false;
         }
     }
     
