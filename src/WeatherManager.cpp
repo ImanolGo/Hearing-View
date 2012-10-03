@@ -27,6 +27,7 @@ WeatherManager::~WeatherManager()
 {
     for (IconMap::iterator it= m_icons.begin() ; it != m_icons.end(); it++ )
     {
+        AppManager::getInstance().getViewManager().removeVisual(*it->second);
         delete it->second;
         it->second = NULL;
     }
@@ -277,9 +278,9 @@ void WeatherManager::loadIcons()
     
     float widthWeather = ofGetWidth()/3.0; 
     float heightWeather = 3*ofGetHeight()/10.0; 
-    float sizeIcon = heightWeather/3;
+    float sizeIcon = heightWeather/2.0;
     float x = widthWeather+ widthWeather/10.0;
-    float y = 4*heightWeather + heightWeather/3;
+    float y = 4*ofGetHeight()/10.0 + heightWeather/3.0;
     
     //go through and print out all the paths
     for(int n = 0; n < dir.numFiles(); n++)
@@ -294,8 +295,9 @@ void WeatherManager::loadIcons()
     
     m_currentIcon = m_icons["sunny_Day"];
     
-    x = x + 3*sizeIcon/2;
-    m_conditionText = new TextVisual(ofPoint(x,y),2*widthWeather/3,sizeIcon);
+    x = x + sizeIcon;
+    y = y + sizeIcon/2;
+    m_conditionText = new TextVisual(ofPoint(x,y),2*widthWeather/3,2*sizeIcon);
     AppManager::getInstance().getViewManager().addVisual(*m_conditionText);
     m_conditionText->setColor(ofColor(255,255,255,0));
     AppManager::getInstance().getViewManager().fadeVisual(*m_conditionText, 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);

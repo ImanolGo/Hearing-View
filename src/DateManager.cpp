@@ -41,11 +41,13 @@ DateManager::DateManager():
 DateManager::~DateManager()
 {
     delete m_Date;
+    m_Date = NULL;
     
     for (SeasonMap::iterator it= m_seasonImages.begin() ; it != m_seasonImages.end(); it++ )
     {
-        delete it->second;
-        it->second = NULL;
+       AppManager::getInstance().getViewManager().removeVisual(*it->second);
+       delete it->second;
+       it->second = NULL;
     }
 
 }

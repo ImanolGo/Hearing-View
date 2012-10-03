@@ -19,7 +19,7 @@
 
 class ofSoundPlayer;
 class ofxUICanvas;
-class CircleVisual;
+class ImageVisual;
 class TextVisual;
 class DateManager;
 
@@ -56,7 +56,7 @@ protected:
     
     std::string      m_name;  ///< unique identifier of this state
     ofPoint          m_pos;   ///< position of the State
-    CircleVisual*    m_circleState; ///< circle representing the state
+    ImageVisual*    m_circleState; ///< circle representing the state
     TextVisual*      m_textState; ///< text representing the state
     DateManager*     m_dateManager; ///< pointer to the date manager
     

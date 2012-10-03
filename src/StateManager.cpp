@@ -35,15 +35,26 @@ void StateManager::setup()
     m_dateManager = &AppManager::getInstance().getDateManager();
     
      //Add to state machine and create transition
-    IdleState* idleState = new IdleState("IdleState",ofPoint(1000,200));
+    float widthStates = ofGetWidth()/3.0; 
+    float heightStates = 4*ofGetHeight()/10.0;
+    float x = widthStates + widthStates/12;
+    float y = 0;
+    
+    x = widthStates + widthStates/2;
+    y = widthStates/5.0;
+    
+    IdleState* idleState = new IdleState("IdleState",ofPoint(x,y));
     idleState->initialize();
     m_stateMachine->addState(idleState);
     
-    SamplerState* samplerState = new SamplerState("SamplerState",ofPoint(800,400));
+    x = 2*widthStates - widthStates/5.0;
+    y = 2*heightStates/3;
+    SamplerState* samplerState = new SamplerState("SamplerState",ofPoint(x,y));
     samplerState->initialize();
     m_stateMachine->addState(samplerState);
     
-    AmbienceState* ambienceState = new AmbienceState("AmbienceState",ofPoint(1200,400));
+    x = widthStates + widthStates/5.0;
+    AmbienceState* ambienceState = new AmbienceState("AmbienceState",ofPoint(x,y));
     ambienceState->initialize();
     m_stateMachine->addState(ambienceState);
    

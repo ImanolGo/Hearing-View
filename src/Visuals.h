@@ -80,7 +80,7 @@ public:
 	virtual void draw() const;
     
     //! Sets the text to be drawn
-    void setText(std::string text,int fontSize);
+    void setText(std::string text,int fontSize, bool centred= false);
     
 private:
     

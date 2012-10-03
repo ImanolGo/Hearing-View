@@ -35,18 +35,16 @@ State::~State()
     if(m_circleState)
     {
         AppManager::getInstance().getViewManager().removeVisual(*m_circleState);
+        delete m_circleState;
+        m_circleState = NULL;
     }
     
-    delete m_circleState;
-    m_circleState = NULL;
-    
-    if(m_textState)
+    if(m_circleState)
     {
         AppManager::getInstance().getViewManager().removeVisual(*m_textState);
+        delete m_textState;
+        m_textState = NULL;
     }
-    
-    delete m_textState;
-    m_textState = NULL;
     
     m_dateManager = NULL;
 }
@@ -56,11 +54,12 @@ void State::initialize()
 {
     m_dateManager = &AppManager::getInstance().getDateManager();
 
-    m_circleState = new CircleVisual(m_pos,100,100);
+    m_circleState = new ImageVisual(m_pos,70,70);
+    m_circleState->setImage("pictures/icons/button.png");
     m_circleState->setColor(ofColor(255,255,255,100));
     m_textState = new TextVisual(m_pos,20,20);
     m_textState->setColor(ofColor(0,0,0,100));
-    m_textState->setText(this->getName(),20);
+    m_textState->setText(this->getName(),15, true);
     AppManager::getInstance().getViewManager().addVisual(*m_textState);
     AppManager::getInstance().getViewManager().addVisual(*m_circleState,1);
     

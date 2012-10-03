@@ -16,11 +16,19 @@ TextVisual::~TextVisual()
     
 }
 
-void TextVisual::setText(std::string text, int fontSize)
+void TextVisual::setText(std::string text, int fontSize, bool centred)
 {
     m_text = text;
     m_font = new ofTrueTypeFont();
     m_font->loadFont("fonts/frabk.ttf",fontSize);
+    
+    if(centred)
+    {
+        ofRectangle box = m_font->getStringBoundingBox(m_text, m_position.x, m_position.y);
+        m_position.x = m_position.x - box.width/2;
+        m_position.y = m_position.y - box.height/2;
+        
+    }
     
 }
 
@@ -79,9 +87,9 @@ void CircleVisual::draw() const
     ofEnableAlphaBlending();
     ofSetColor(m_color);
     ofFill();
-    //ofEllipse(m_position,m_width,m_height);
+    ofEllipse(m_position,m_width,m_height);
     ofSetCircleResolution(100);
-    ofCircle(m_position,m_width/2);
+    //ofCircle(m_position,m_width/2);
     ofDisableAlphaBlending();
     ofPopStyle();   // recall the pushed style
 }

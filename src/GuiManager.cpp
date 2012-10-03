@@ -30,46 +30,61 @@ void GuiManager::setup()
 {
     m_dateManager = &AppManager::getInstance().getDateManager();
     
-    //SAMPLER
+    //VOLUME
     float widthVol = ofGetWidth()/3.0; 
     float heightVol = 4*ofGetHeight()/10.0; 
-    float heightSlider =heightVol/10.0 ; 
+    float heightSlider =heightVol/10.0 ;
+    float x = widthVol/12;
+    float y = 0;
     m_gui = new ofxUICanvas();
-    m_gui->addWidget(new ofxUILabel(widthVol/12,0, "HEARING VIEW", OFX_UI_FONT_LARGE));
-    m_gui->addWidget(new ofxUISlider(widthVol/12,3*heightVol/5,2*widthVol/3,heightSlider,0.0,1.0,0.0, "TUBE VOLUME"));
+    m_gui->addWidget(new ofxUILabel(x,y, "HEARING VIEW", OFX_UI_FONT_LARGE));
+    x = 3*heightVol/5;
+    m_gui->addWidget(new ofxUISlider(x,y,2*widthVol/3,heightSlider,0.0,1.0,0.0, "TUBE VOLUME"));
     
+    //STATES
     float widthStates = widthVol; 
     float heightStates = heightVol;
+    x = widthVol + widthStates/12;
+    y = 0;
+    m_gui->addWidget(new ofxUILabel(x,y, "STATES", OFX_UI_FONT_MEDIUM));
     
-    m_gui->addWidget(new ofxUILabel(widthVol + widthStates/12,0, "STATES", OFX_UI_FONT_MEDIUM));
-    
+    //SEASONS
     float widthSeasons = widthVol; 
     float heightSeasons = heightVol;
+    x = widthVol +widthStates + widthSeasons/12;
+    y = 0;
+    m_gui->addWidget(new ofxUILabel(x,y, "SEASONS", OFX_UI_FONT_MEDIUM));
     
-    m_gui->addWidget(new ofxUILabel(widthVol +widthStates + widthSeasons/12,0, "SEASONS", OFX_UI_FONT_MEDIUM));
-    
+    //SAMPLER
     float widthSampler = widthVol; 
     float heightSampler = 3*ofGetHeight()/10.0;
-    
-    m_gui->addWidget(new ofxUILabel(widthSampler/6,heightVol, "SAMPLER", OFX_UI_FONT_MEDIUM));
+    x = widthSampler/6;
+    y = heightVol;
+    m_gui->addWidget(new ofxUILabel(x,y, "SAMPLER", OFX_UI_FONT_MEDIUM));
     m_gui->addWidgetDown(new ofxUISlider(widthSampler/6,heightVol+ 3*heightSampler/5,2*widthSampler/3,heightSlider,0.0,1.0,0.0, "SAMPLE VOLUME"));
     
-    float widthWeather = 2*ofGetWidth()/3; 
-    float heightWeather = heightSampler;
+    //WEATHER
+    float widthWeather = ofGetWidth()/3.0; 
+    float heightWeather = 3*ofGetHeight()/10.0; 
+    x = widthSampler;
+    y = heightSeasons;
+    m_gui->addWidget(new ofxUILabel( x,y, "WEATHER CONDITIONS", OFX_UI_FONT_MEDIUM));
     
-    m_gui->addWidget(new ofxUILabel( widthSampler+ widthWeather/6,heightVol, "WEATHER CONDITIONS", OFX_UI_FONT_MEDIUM));
-    
+    //CONTROL
     float widthControl = ofGetWidth(); 
     float heightControl = 3*ofGetHeight()/10.0;
     float yOffset = heightSampler + heightVol;
     float buttom = heightControl/10;
-    
-    m_gui->addWidget(new ofxUILabel(widthControl/8,yOffset, "CONTROL", OFX_UI_FONT_MEDIUM));
-    m_gui->addWidget(new ofxUIToggle(widthControl/8,yOffset + buttom,buttom, buttom, false, "SENSOR"));
+    x = widthControl/8;
+    y = yOffset;
+    m_gui->addWidget(new ofxUILabel(x,y, "CONTROL", OFX_UI_FONT_MEDIUM));
+    y = yOffset + buttom;
+    m_gui->addWidget(new ofxUIToggle(x,y,buttom, buttom, false, "SENSOR"));
     
     vector<string> vnames; vnames.push_back("Day"); vnames.push_back("Night");
   
-    ofxUIRadio* radio = new  ofxUIRadio(3*widthControl/8,yOffset + buttom, buttom, buttom, "DAILY CYCLE", vnames, OFX_UI_ORIENTATION_VERTICAL);
+    x = 3*widthControl/8;
+    ofxUIRadio* radio = new  ofxUIRadio(x,y, buttom, buttom, "DAILY CYCLE", vnames, OFX_UI_ORIENTATION_VERTICAL);
     
     m_gui->addWidget(radio);
     radio->activateToggle("Day");
@@ -78,7 +93,8 @@ void GuiManager::setup()
     vnames.push_back("Summer"); vnames.push_back("Autumn"); vnames.push_back("Winter");
     vnames.push_back("Spring");
     
-    radio = new  ofxUIRadio(5*widthControl/8,yOffset + buttom, buttom, buttom, "SEASONS", vnames, OFX_UI_ORIENTATION_VERTICAL);
+    x = 5*widthControl/8;
+    radio = new  ofxUIRadio(x,y, buttom, buttom, "SEASONS", vnames, OFX_UI_ORIENTATION_VERTICAL);
     
     m_gui->addWidget(radio);
     radio->activateToggle("Summer");
@@ -91,9 +107,6 @@ void GuiManager::setup()
     radio->activateToggle("Dry"); 
     
     vnames.clear();
-    
-    
-    
     
     
     ofAddListener(m_gui->newGUIEvent, this, &GuiManager::guiEvent);

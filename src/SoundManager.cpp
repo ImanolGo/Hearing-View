@@ -47,17 +47,13 @@ SoundManager::~SoundManager()
     
     m_samples.clear(); 
     
-    if(m_tube)
-    {
-        delete m_tube;
-        m_tube = NULL;
-    }
     if(m_soundVisual)
     {
+        AppManager::getInstance().getViewManager().removeVisual(*m_soundVisual);
         delete m_soundVisual;
         m_soundVisual = NULL;
     }
-    
+   
     m_dateManager = NULL;
 }
 

@@ -68,6 +68,20 @@ void ViewManager::addVisual(const Visual& visual,int zOrder)
 	m_visuals.sort();
 }
 
+void ViewManager::deleteVisual(const Visual& visual)
+{
+	for(VisualList::iterator it = m_visuals.begin(); it != m_visuals.end();) {
+		if(it->second == &visual) {
+            delete it->second;
+            it->second = NULL;
+			it = m_visuals.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+}
+
 void ViewManager::removeVisual(const Visual& visual)
 {
 	for(VisualList::iterator it = m_visuals.begin(); it != m_visuals.end();) {
