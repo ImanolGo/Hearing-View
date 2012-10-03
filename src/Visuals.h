@@ -10,13 +10,16 @@
 #ifndef __VISUALS_H__
 #define __VISUALS_H__
 
+
 #include <string>
 
 #include "ofMain.h"
+//#include "SoundObject.h"
 
+class SoundObject;
 
-//========================== class Visual ==============================
-//============================================================================
+//=============================== class Visual ==============================
+//===========================================================================
 /** \class Visual Visuals.h
  *	\brief Base class for all visuals
  *	\details Gives basic functionalities for all objects to be rendered
@@ -56,7 +59,7 @@ protected:
 };
 
 
-//========================== class TextVisual ==============================
+//============================ class TextVisual ==============================
 //============================================================================
 /** \class TextVisual Visuals.h
  *	\brief Represents a text visual
@@ -88,9 +91,9 @@ private:
 
 
 
-//========================== class ImageVisual ==============================
+//=========================== class ImageVisual ==============================
 //============================================================================
-/** \class ImageVisual ImageVisual.h
+/** \class ImageVisual Visual.h
  *	\brief Represents an image visual
  *	\details The class uses the OF class ofImage to draw the image
  */
@@ -122,7 +125,7 @@ private:
 
 //========================== class CircleVisual ==============================
 //============================================================================
-/** \class CircleVisual CircleVisual.h
+/** \class CircleVisual Visual.h
  *	\brief Represents an circle visual
  *	\details The class uses the OF class ofCircle to draw a circle
  */
@@ -140,6 +143,37 @@ public:
     
 	//! Draws the text visual
 	virtual void draw() const;
+    
+};
+
+
+//=========================== class SoundVisual ==============================
+//============================================================================
+/** \class SoundVisual Visual.h
+ *	\brief Represents an sound visual
+ *	\details Visualization of a playback sound 
+ */
+
+
+class SoundVisual: public Visual
+{
+public:
+    
+    //! Constructor
+    SoundVisual(const SoundObject& sound, ofPoint pos, float width, float height);    
+    //! Destructor
+    virtual ~SoundVisual(){}
+    
+	//! Draws the text visual
+	virtual void draw() const;
+    
+    //! Sets the color
+    void setColor(const ofColor& color){m_color= color;}
+    
+private:
+    
+    const SoundObject&  m_sound; ///< reference to the sound it visualizes
+    ofColor             m_color; ///< color of the visual
     
 };
 

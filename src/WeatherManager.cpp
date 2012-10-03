@@ -46,11 +46,6 @@ void WeatherManager::setup()
     
     this->loadIcons();
     
-    m_conditionText = new TextVisual(ofPoint(500,500),128,128);
-    AppManager::getInstance().getViewManager().addVisual(*m_conditionText);
-    m_conditionText->setColor(ofColor(255,255,255,0));
-    AppManager::getInstance().getViewManager().fadeVisual(*m_conditionText, 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
-    
     if(m_currentIcon)
     {
         AppManager::getInstance().getViewManager().addVisual(*m_currentIcon,1);
@@ -280,11 +275,17 @@ void WeatherManager::loadIcons()
         return;
     }
     
+    float widthWeather = ofGetWidth()/3.0; 
+    float heightWeather = 3*ofGetHeight()/10.0; 
+    float sizeIcon = heightWeather/3;
+    float x = widthWeather+ widthWeather/10.0;
+    float y = 4*heightWeather + heightWeather/3;
+    
     //go through and print out all the paths
     for(int n = 0; n < dir.numFiles(); n++)
     {
         std::string iconName = this->getIconName(dir.getPath(n));
-        ImageVisual* icon =  new ImageVisual(ofPoint(1000,500),128,128);
+        ImageVisual* icon =  new ImageVisual(ofPoint(x,y),sizeIcon,sizeIcon);
         icon->setImage(dir.getPath(n));
         m_icons[iconName] = icon;
         std::cout << m_dateManager->getTime() << "- WeatherManager-> loaded sample \""<< iconName <<"\"" << std::endl;
@@ -292,6 +293,12 @@ void WeatherManager::loadIcons()
     }
     
     m_currentIcon = m_icons["sunny_Day"];
+    
+    x = x + 3*sizeIcon/2;
+    m_conditionText = new TextVisual(ofPoint(x,y),2*widthWeather/3,sizeIcon);
+    AppManager::getInstance().getViewManager().addVisual(*m_conditionText);
+    m_conditionText->setColor(ofColor(255,255,255,0));
+    AppManager::getInstance().getViewManager().fadeVisual(*m_conditionText, 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
 }
 
 

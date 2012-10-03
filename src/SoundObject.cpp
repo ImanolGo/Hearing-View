@@ -17,7 +17,7 @@ SoundObject::SoundObject(std::string name): m_name(name), m_volume(1.0)
 SoundObject::~SoundObject()
 {
     delete m_soundPlayer;
-    m_soundPlayer = new ofSoundPlayer();
+    m_soundPlayer = NULL;
 }
 
 void SoundObject::setVolume(float volume)
@@ -40,4 +40,3 @@ void SoundObject::setVolume(float volume)
     m_volume = volume;
     m_soundPlayer->setVolume(m_volume);
 }
-

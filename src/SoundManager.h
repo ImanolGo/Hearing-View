@@ -20,6 +20,7 @@
 class SoundObject;
 class Event;
 class DateManager;
+class SoundVisual;
 
 //========================== class SoundManager ==============================
 //============================================================================
@@ -108,6 +109,7 @@ private:
     std::vector<int>                 m_indexList;         ////< list with the current sample list indexes
     
     DateManager*	  m_dateManager;	///< pointer to the date manager
+    SoundVisual*      m_soundVisual;    ///< visualization of th ecurrent sound level
     
 };
 

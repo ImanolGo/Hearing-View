@@ -65,7 +65,7 @@ void State::initialize()
     AppManager::getInstance().getViewManager().addVisual(*m_circleState,1);
     
     std::cout<<m_dateManager->getTime()<<"- State->" <<m_name<< " initialized." <<std::endl;
-    std::cout<<m_dateManager->getTime()<<"- State->" <<m_name<< " initialized.";
+    ofLogNotice()<<m_dateManager->getTime()<<"- State->" <<m_name<< " initialized.";
     
 }
 

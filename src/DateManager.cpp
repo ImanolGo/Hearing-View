@@ -22,9 +22,6 @@ const double DateManager::REFRESH_TIME = 5*60;
 const double DateManager::FADE_TIME = 3;
 
 DateManager::DateManager(): 
-    m_day(1),
-    m_month(1),
-    m_year(1900),
     m_latitude(0.0),
     m_longitude(0.0),
     m_timezone(0),
@@ -36,7 +33,9 @@ DateManager::DateManager():
     m_dayTime("Day")
 {
     m_Date = new ofxDate();
-    
+    m_day = m_Date->getDay();
+    m_month = m_Date->getMonth();
+    m_year = m_Date->getYear();
 }
 
 DateManager::~DateManager()
@@ -102,7 +101,9 @@ std::string DateManager::getTime()
     tstruct = *localtime(&now);
     strftime(buf, sizeof(buf), "%H:%M:%S", &tstruct);
     
-    return buf;
+    std::string date = ofToString(m_day) + "/" +  ofToString(m_month) + "/" +  ofToString(m_year) + "," + buf;
+
+    return  date;
 
 }
 void DateManager::calcDayTime()
@@ -457,11 +458,15 @@ void DateManager::loadSeasons()
         return;
     }
     
+    float widthSeasons = ofGetWidth()/3.0; 
+    float heightSeason = 4*ofGetHeight()/10.0; 
+    float hightIcon = 9*heightSeason/10;
+    
     //go through and print out all the paths
     for(int n = 0; n < dir.numFiles(); n++)
     {
         std::string seasonName = this->getSeasonsName(dir.getPath(n));
-        ImageVisual* seasonImage =  new ImageVisual(ofPoint(500,500),256,256);
+        ImageVisual* seasonImage =  new ImageVisual(ofPoint(widthSeasons*2 + widthSeasons/20,heightSeason/10),widthSeasons - widthSeasons/10,hightIcon);
         seasonImage->setImage(dir.getPath(n));
         m_seasonImages[seasonName] = seasonImage;
         std::cout<<this->getTime() << "- DateManager-> loaded sample \""<< seasonName <<"\"" << std::endl;

@@ -6,6 +6,7 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
+#include "SoundObject.h"
 #include "Visuals.h"
 
 TextVisual::~TextVisual()
@@ -84,3 +85,32 @@ void CircleVisual::draw() const
     ofDisableAlphaBlending();
     ofPopStyle();   // recall the pushed style
 }
+
+
+SoundVisual::SoundVisual(const SoundObject& sound, ofPoint pos, float width, float height):
+    Visual(pos,width,height),
+    m_sound(sound)
+{
+    
+}
+
+void SoundVisual::draw() const
+{
+    if(!&m_sound)
+    {
+        return;
+    }
+    
+    const float* energy = m_sound.getEnergy();
+    
+    ofPushStyle();  // push the current style for use later
+    ofEnableAlphaBlending();
+    ofSetColor(m_color);
+    ofFill();
+    ofRect(m_position,m_width*energy[0],m_height/3);
+    ofRect(m_position.x, m_position.y + m_height/3,m_width*energy[0],m_height/3);
+    ofDisableAlphaBlending();
+    ofPopStyle();   // recall the pushed style
+}
+
+

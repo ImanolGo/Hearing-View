@@ -13,6 +13,7 @@
 #include <string>
 
 #include "ofMain.h"
+#include "ofOpenALSoundPlayer.h"
 
 //========================== class SoundObject ==============================
 //============================================================================
@@ -40,7 +41,7 @@ public:
     void setVolume(float volume);
     
     //! get the volume of a sample
-    const float getVolume() {return m_volume;}
+    float getVolume() const {return m_volume;}
     
     //! get the volume of a sample
     const std::string& getName() const {return m_name;}
@@ -57,9 +58,12 @@ public:
     //! returns if the sound is playing
     bool isPlaying() {return m_soundPlayer->getIsPlaying();}
     
+    //! returns the spectral energy of right and left channel
+    const float * getEnergy() const {return ofSoundGetSpectrum(1);}
+    
 private:
     
-    ofSoundPlayer*  m_soundPlayer; ///< the oFSoundPlayer class
+    ofSoundPlayer*        m_soundPlayer; ///< the oFSoundPlayer class
     float           m_volume;      ///< it saves the volume
     std::string     m_name;        ///< sound identifier
     

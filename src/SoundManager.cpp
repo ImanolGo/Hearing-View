@@ -13,6 +13,8 @@
 #include "AppManager.h"
 #include "EventManager.h"
 #include "Event.h"
+#include "Visuals.h"
+#include "ViewManager.h"
 #include "SoundEffectsManager.h"
 #include "SoundEffects.h"
 
@@ -22,6 +24,7 @@ SoundManager::SoundManager():
     m_playSamples(false), 
     m_currentSample(NULL),
     m_dateManager(NULL),
+    m_soundVisual(NULL),
     m_season("Summer"),
     m_conditions("Dry"),
     m_dayTime("Day")
@@ -49,6 +52,11 @@ SoundManager::~SoundManager()
         delete m_tube;
         m_tube = NULL;
     }
+    if(m_soundVisual)
+    {
+        delete m_soundVisual;
+        m_soundVisual = NULL;
+    }
     
     m_dateManager = NULL;
 }
@@ -64,6 +72,8 @@ void SoundManager::setup()
     m_tube->play();
     this->loadSamples();
     
+    m_soundVisual = new SoundVisual(*m_currentSample,ofPoint(500,1000),5,50);
+    AppManager::getInstance().getViewManager().addVisual(*m_soundVisual);
     
     std::cout<< m_dateManager->getTime() << "- SoundManager-> play tube "<<std::endl;
     std::cout<<  m_dateManager->getTime() << "- SoundManager-> initialized "<<std::endl;
