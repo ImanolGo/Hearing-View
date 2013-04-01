@@ -2,42 +2,41 @@
 /*==============================================================================
  Imanolgo on 01/04/13.
  ==============================================================================*/
-/*! \file SerialManager.h
+/*! \file SensorManager.h
  * \authors Imanol Gómez
  * \copyright{2013}
  *///============================================================================
 
 
-#ifndef __SERIAL_MANAGER_H__
-#define __SERIAL_MANAGER_H__
+#ifndef __SENSOR_MANAGER_H__
+#define __SENSOR_MANAGER_H__
 
 #include "ofMain.h"
 
 
-#define MESSAGE_LENGTH 3
+#define MESSAGE_LENGTH 1
 
-//========================== class SerialManager =======================================
+//========================== class SensorManager =======================================
 //==============================================================================
-/** \class SerialManager SerialManager.h
- *	\brief class for controlling the serial communication
- *	\details It communicates with the WatchDog 2000 weather setation through serial and sends
- *           the information to the weather manager
+/** \class SensorManager SensorManager.h
+ *	\brief class for controlling the serial communication with the Arduino microcontroller
+ *	\details It communicates with the Arduino which sends via serial the state of the sensor 
+ *           "0" is for off, "1" is for on
  */
 
 class DateManager;
 
-class SerialManager
+class SensorManager
 {
 
     static const int BAUD_RATE;		///< defines communication's baud rate 
-    static const double REFRESH_TIME;		///< defines time (s) of the refresh of information 
     
 public:
     //! Constructor
-    SerialManager();
+    SensorManager();
     
     //! Destructor
-    virtual ~SerialManager();
+    virtual ~SensorManager();
     
     //! setups the serial manager
     void setup();

@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		081486F7159B7B1100A9894E /* AppManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 081486F6159B7B1100A9894E /* AppManager.cpp */; };
-		081E175E170994AD00189ABC /* SerialManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 081E175C170994AD00189ABC /* SerialManager.cpp */; };
+		081E17741709CB5700189ABC /* WeatherStationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 081E17721709CB5700189ABC /* WeatherStationManager.cpp */; };
+		081E17771709CC3200189ABC /* SensorManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 081E17751709CC3200189ABC /* SensorManager.cpp */; };
 		082F967415966A08006214D2 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 082F966D15966A08006214D2 /* tinyxml.cpp */; };
 		082F967515966A08006214D2 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 082F966F15966A08006214D2 /* tinyxmlerror.cpp */; };
 		082F967615966A08006214D2 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 082F967015966A08006214D2 /* tinyxmlparser.cpp */; };
@@ -85,8 +86,10 @@
 		081486F41599900A00A9894E /* AppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppManager.h; sourceTree = "<group>"; };
 		081486F5159ADE9100A9894E /* ViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewManager.h; sourceTree = "<group>"; };
 		081486F6159B7B1100A9894E /* AppManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppManager.cpp; sourceTree = "<group>"; };
-		081E175C170994AD00189ABC /* SerialManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SerialManager.cpp; sourceTree = "<group>"; };
-		081E175D170994AD00189ABC /* SerialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerialManager.h; sourceTree = "<group>"; };
+		081E17721709CB5700189ABC /* WeatherStationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeatherStationManager.cpp; sourceTree = "<group>"; };
+		081E17731709CB5700189ABC /* WeatherStationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherStationManager.h; sourceTree = "<group>"; };
+		081E17751709CC3200189ABC /* SensorManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SensorManager.cpp; sourceTree = "<group>"; };
+		081E17761709CC3200189ABC /* SensorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorManager.h; sourceTree = "<group>"; };
 		082F95F61595DA8A006214D2 /* ofxUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUI.h; sourceTree = "<group>"; };
 		082F95F71595DA8A006214D2 /* ofxUI2DPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUI2DPad.h; sourceTree = "<group>"; };
 		082F95F81595DA8A006214D2 /* ofxUIBiLabelSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIBiLabelSlider.h; sourceTree = "<group>"; };
@@ -391,8 +394,10 @@
 		08D6B7BF15A62C57001EA0B6 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				081E175C170994AD00189ABC /* SerialManager.cpp */,
-				081E175D170994AD00189ABC /* SerialManager.h */,
+				081E17751709CC3200189ABC /* SensorManager.cpp */,
+				081E17761709CC3200189ABC /* SensorManager.h */,
+				081E17721709CB5700189ABC /* WeatherStationManager.cpp */,
+				081E17731709CB5700189ABC /* WeatherStationManager.h */,
 				08CEA67915A5091A00C6CB82 /* WeatherManager.h */,
 				082F96D01599055A006214D2 /* WeatherManager.cpp */,
 				082F968315970B1E006214D2 /* DateManager.h */,
@@ -604,7 +609,8 @@
 				083125B015AB8A9E00C4827E /* Event.cpp in Sources */,
 				0840EAF115B4BDE900782650 /* Visuals.cpp in Sources */,
 				0861F28E160F4CDD007BD5A5 /* GuiManager.cpp in Sources */,
-				081E175E170994AD00189ABC /* SerialManager.cpp in Sources */,
+				081E17741709CB5700189ABC /* WeatherStationManager.cpp in Sources */,
+				081E17771709CC3200189ABC /* SensorManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

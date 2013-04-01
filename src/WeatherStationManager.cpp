@@ -1,5 +1,5 @@
 //
-//  SerialManager.cpp
+//  WeatherStationManager.cpp
 //  HearingView
 //
 //  Created by Imanolgo on 01/04/13.
@@ -11,24 +11,24 @@
 #include "EventManager.h"
 #include "DateManager.h"
 
-#include "SerialManager.h"
+#include "WeatherStationManager.h"
  
-const int SerialManager::BAUD_RATE = 9600; ///< the baud rate
-const double SerialManager::REFRESH_TIME = 60*1; ///< refreshing time every 1 minutes
+const int WeatherStationManager::BAUD_RATE = 9600; ///< the baud rate
+const double WeatherStationManager::REFRESH_TIME = 60*1; ///< refreshing time every 1 minutes
 
-SerialManager::SerialManager():m_elapsedTime(0.0),m_nBytesRead(0), m_dateManager(NULL)
+WeatherStationManager::WeatherStationManager():m_elapsedTime(0.0),m_nBytesRead(0), m_dateManager(NULL)
 {
     //Intentionaly left empty
 }
 
-SerialManager::~SerialManager() 
+WeatherStationManager::~WeatherStationManager() 
 {
     //Intentionaly left empty
 }
 
 
 //--------------------------------------------------------------
-void SerialManager::setup()
+void WeatherStationManager::setup()
 {
     m_dateManager = &AppManager::getInstance().getDateManager();
     
@@ -49,13 +49,13 @@ void SerialManager::setup()
 	m_nBytesRead = 0;
 	memset(m_bytesReadString, 0, MESSAGE_LENGTH+1);
     
-    std::cout << m_dateManager->getTime() << "- SerialManager-> setup " << std::endl;
-    ofLogNotice() << m_dateManager->getTime() << "- SerialManager->setup " ;
+    std::cout << m_dateManager->getTime() << "- WeatherStationManager-> setup " << std::endl;
+    ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->setup " ;
 
     
 }
 
-void SerialManager::update(double dt)
+void WeatherStationManager::update(double dt)
 {
     m_elapsedTime+=dt;
     if(m_elapsedTime>= REFRESH_TIME)
@@ -80,7 +80,7 @@ void SerialManager::update(double dt)
        
 }
 
-void SerialManager::handleEvent(const Event& event)
+void WeatherStationManager::handleEvent(const Event& event)
 {
    //Intentionaly left empty    
 }
