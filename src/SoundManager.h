@@ -21,6 +21,7 @@ class SoundObject;
 class Event;
 class DateManager;
 class SoundVisual;
+class TextVisual;
 
 //========================== class SoundManager ==============================
 //============================================================================
@@ -110,6 +111,8 @@ private:
     
     DateManager*	  m_dateManager;	///< pointer to the date manager
     SoundVisual*      m_soundVisual;    ///< visualization of th ecurrent sound level
+    
+    TextVisual*       m_sampleText;     ///< text visual from th ecurrent sample being played
     
 };
 

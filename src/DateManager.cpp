@@ -460,15 +460,19 @@ void DateManager::loadSeasons()
         return;
     }
     
-    float widthSeasons = ofGetWidth()/3.0; 
-    float heightSeason = 4*ofGetHeight()/10.0; 
-    float hightIcon = 9*heightSeason/10;
+    float margin = ofGetHeight()/70.0;
+    float widthVisuals = ofGetWidth() - 4*margin; 
+    float heightVisuals = ofGetHeight()/3.0 - 4*margin;
+    float h = heightVisuals - 4*margin;
+    float w = 2*widthVisuals/5 - 2*margin;
+    float x = 3*margin + 3*widthVisuals/5 + w/2;
+    float y = 8*margin + 2*heightVisuals + h/2;
     
     //go through and print out all the paths
     for(int n = 0; n < dir.numFiles(); n++)
     {
         std::string seasonName = this->getSeasonsName(dir.getPath(n));
-        ImageVisual* seasonImage =  new ImageVisual(ofPoint(widthSeasons*2 + widthSeasons/20,heightSeason/10),widthSeasons - widthSeasons/10,hightIcon);
+        ImageVisual* seasonImage =  new ImageVisual(ofPoint(x,y),h,h,true);
         seasonImage->setImage(dir.getPath(n));
         m_seasonImages[seasonName] = seasonImage;
         std::cout<<this->getTime() << "- DateManager-> loaded sample \""<< seasonName <<"\"" << std::endl;

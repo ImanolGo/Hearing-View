@@ -35,26 +35,25 @@ void StateManager::setup()
     m_dateManager = &AppManager::getInstance().getDateManager();
     
      //Add to state machine and create transition
-    float widthStates = ofGetWidth()/3.0; 
-    float heightStates = 4*ofGetHeight()/10.0;
-    float x = widthStates + widthStates/12;
-    float y = 0;
+    //STATES
     
-    x = widthStates + widthStates/2;
-    y = widthStates/5.0;
+    float margin = ofGetHeight()/70.0;
+    float widthVisuals = ofGetWidth() - 4*margin; 
+    float heightVisuals = ofGetHeight()/3.0 - 4*margin;
+    float w = 2*widthVisuals/5 - 2*margin;
+    float h = heightVisuals - 4*margin;
+    float x =  3*margin;
+    float y =  8*margin + 2*heightVisuals;
     
-    IdleState* idleState = new IdleState("IdleState",ofPoint(x,y));
+    IdleState* idleState = new IdleState("IdleState",ofPoint(x + w/2,y+h/4));
     idleState->initialize();
     m_stateMachine->addState(idleState);
-    
-    x = 2*widthStates - widthStates/5.0;
-    y = 2*heightStates/3;
-    SamplerState* samplerState = new SamplerState("SamplerState",ofPoint(x,y));
+
+    SamplerState* samplerState = new SamplerState("SamplerState",ofPoint(x+w/4,y+3*h/4));
     samplerState->initialize();
     m_stateMachine->addState(samplerState);
     
-    x = widthStates + widthStates/5.0;
-    AmbienceState* ambienceState = new AmbienceState("AmbienceState",ofPoint(x,y));
+    AmbienceState* ambienceState = new AmbienceState("AmbienceState",ofPoint(x+3*w/4,y+3*h/4));
     ambienceState->initialize();
     m_stateMachine->addState(ambienceState);
    

@@ -30,7 +30,7 @@ class Visual
 public:
     
     //! Constructor
-    Visual(ofPoint pos, float width, float height): m_position(pos), m_width(width), m_height(height){}
+    Visual(ofPoint pos, float width, float height, bool centred = false): m_position(pos), m_width(width), m_height(height), m_centred(centred){}
     
     //! Destructor
     virtual ~Visual() {}
@@ -54,7 +54,8 @@ protected:
     ofPoint         m_position;		///< defines the position of the visual
 	double			m_width;		///< the width of the visual
 	double			m_height;		///< the height of the visual
-    ofColor         m_color;       ///< color of the visual	
+    ofColor         m_color;        ///< color of the visual	
+    bool            m_centred;      ///< sets of the position reference is the centre
     
 };
 
@@ -71,7 +72,7 @@ class TextVisual: public Visual
 public:
     
     //! Constructor
-    TextVisual(ofPoint pos, float width, float height): Visual(pos, width, height), m_font(NULL) {}
+    TextVisual(ofPoint pos, float width, float height, bool centred = false): Visual(pos, width, height, centred), m_font(NULL) {}
     
     //! Destructor
     virtual ~TextVisual();
@@ -80,12 +81,13 @@ public:
 	virtual void draw() const;
     
     //! Sets the text to be drawn
-    void setText(std::string text,int fontSize, bool centred= false);
+    void setText(std::string text,int fontSize);
     
 private:
     
     ofTrueTypeFont*  m_font;		///< pointer to the ofTrueTypeFont class
     std::string      m_text;        ///< text to be rendered
+    ofRectangle      m_box;         ///< the box surrounding the text
     
 };
 
@@ -103,7 +105,7 @@ class ImageVisual: public Visual
 public:
     
     //! Constructor
-    ImageVisual(ofPoint pos, float width, float height);
+    ImageVisual(ofPoint pos, float width, float height,bool centred = false);
     
     //! Destructor
     virtual ~ImageVisual();
@@ -136,10 +138,34 @@ class CircleVisual: public Visual
 public:
     
     //! Constructor
-    CircleVisual(ofPoint pos, float width, float height): Visual(pos,width,height) {}
+    CircleVisual(ofPoint pos, float width, float height,bool centred = false);
     
     //! Destructor
     virtual ~CircleVisual(){}
+    
+	//! Draws the text visual
+	virtual void draw() const;
+    
+};
+
+
+//========================== class RectangleVisual ==============================
+//============================================================================
+/** \class RectangleVisual Visual.h
+ *	\brief Represents an rectangle visual
+ *	\details The class uses the OF class ofRectangle to draw a rectangle
+ */
+
+
+class RectangleVisual: public Visual
+{
+public:
+    
+    //! Constructor
+    RectangleVisual(ofPoint pos, float width, float height,bool centred = false);
+    
+    //! Destructor
+    virtual ~RectangleVisual(){}
     
 	//! Draws the text visual
 	virtual void draw() const;
@@ -160,7 +186,7 @@ class SoundVisual: public Visual
 public:
     
     //! Constructor
-    SoundVisual(const SoundObject& sound, ofPoint pos, float width, float height);    
+    SoundVisual(const SoundObject& sound, ofPoint pos, float width, float height, bool centred = false);    
     //! Destructor
     virtual ~SoundVisual(){}
     

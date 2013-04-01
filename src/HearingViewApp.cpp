@@ -1,35 +1,35 @@
-#include "testApp.h"
+#include "HearingViewApp.h"
 #include "AppManager.h"
 
 //--------------------------------------------------------------
-void testApp::setup(){
+void HearingViewApp::setup(){
     
     m_appManager = &AppManager::getInstance();
     m_appManager->setup();
 }
 
 //--------------------------------------------------------------
-void testApp::update(){
+void HearingViewApp::update(){
 
     double dt = ofGetLastFrameTime();
 	m_appManager->update(dt);
 }
 
 //--------------------------------------------------------------
-void testApp::draw(){
+void HearingViewApp::draw(){
 
     m_appManager->draw();
 
 }
 
-void testApp::exit()
+void HearingViewApp::exit()
 {
     delete m_appManager; 
     m_appManager = NULL;
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed(int key)
+void HearingViewApp::keyPressed(int key)
 {
     switch (key) 
     {            
@@ -43,42 +43,42 @@ void testApp::keyPressed(int key)
     }
 }
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){
+void HearingViewApp::keyReleased(int key){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ){
+void HearingViewApp::mouseMoved(int x, int y ){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button){
+void HearingViewApp::mouseDragged(int x, int y, int button){
 
 
 }
 
 //--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button){
+void HearingViewApp::mousePressed(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button){
+void HearingViewApp::mouseReleased(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
-void testApp::windowResized(int w, int h){
+void HearingViewApp::windowResized(int w, int h){
 
 }
 
 //--------------------------------------------------------------
-void testApp::gotMessage(ofMessage msg){
+void HearingViewApp::gotMessage(ofMessage msg){
 
 }
 
 //--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo){
+void HearingViewApp::dragEvent(ofDragInfo dragInfo){
 
 }

@@ -17,7 +17,6 @@
 #include "ViewManager.h"
 #include "SoundEffectsManager.h"
 #include "SoundEffects.h"
-
     
 SoundManager::SoundManager(): 
     m_tube(NULL), 
@@ -25,6 +24,7 @@ SoundManager::SoundManager():
     m_currentSample(NULL),
     m_dateManager(NULL),
     m_soundVisual(NULL),
+    m_sampleText(NULL),
     m_season("Summer"),
     m_conditions("Dry"),
     m_dayTime("Day")
@@ -55,6 +55,12 @@ SoundManager::~SoundManager()
     }
    
     m_dateManager = NULL;
+    
+    if (m_sampleText) {
+        AppManager::getInstance().getViewManager().removeVisual(*m_sampleText);
+        delete m_sampleText;
+        m_sampleText = NULL;
+    }
 }
 
 void SoundManager::setup()
@@ -68,8 +74,18 @@ void SoundManager::setup()
     m_tube->play();
     this->loadSamples();
     
+    float margin = ofGetHeight()/70;
+    float widthVolumes = (1-0.25)*(ofGetWidth() - 4*margin); 
+    float heightVolumes = ofGetHeight()/3.0 - 4*margin;
+    float x =  6*margin + widthVolumes/2 + widthVolumes/8;
+    float y =  6*margin + heightVolumes + heightVolumes/4;
+    
     m_soundVisual = new SoundVisual(*m_currentSample,ofPoint(500,1000),5,50);
     AppManager::getInstance().getViewManager().addVisual(*m_soundVisual);
+    
+    m_sampleText = new TextVisual(ofPoint(x,y),5,50);
+    m_sampleText->setColor(ofColor(255,255,255));
+    AppManager::getInstance().getViewManager().addVisual(*m_sampleText);
     
     std::cout<< m_dateManager->getTime() << "- SoundManager-> play tube "<<std::endl;
     std::cout<<  m_dateManager->getTime() << "- SoundManager-> initialized "<<std::endl;
@@ -133,8 +149,8 @@ void SoundManager::loadSamples()
 std::string SoundManager::getSampleName(const std::string& path)
 {
     std::vector<std::string> strs = ofSplitString(path, "/");
-    
-    return strs.back();
+    strs = ofSplitString(strs.back(), ".");
+    return strs.front();
 }
 
 
@@ -176,13 +192,17 @@ void SoundManager::playRandomSample()
     if(m_indexList.empty())
     {
         m_playSamples = false;
-        AppManager::getInstance().getEventManager().setEvent(Event("END_SAMPLER")); 
+        AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText, 0, 3,ViewManager::LOGARITHMIC);
+        AppManager::getInstance().getEventManager().setEvent(Event("END_SAMPLER"));
     }
     
     else
     {
         int ind = ofRandom(m_indexList.size());
         m_currentSample = m_currentSampleList[m_indexList[ind]];
+        m_sampleText->setText("\"" + m_currentSample->getName() + "\"", 15);
+        m_sampleText->setColor(ofColor(255,255,255,0));
+        AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText, 255, 3,ViewManager::LOGARITHMIC);
         m_currentSample->play();
         m_indexList.erase(m_indexList.begin()+ind);
         std::cout <<m_dateManager->getTime()<<"- SoundManager-> play sample \""<< m_currentSample->getName() <<"\"" << std::endl;
@@ -316,6 +336,7 @@ void  SoundManager::fadeSample(float volume, float fadeTime, FadeType type)
         return; 
     }
     
+    AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText,volume*255, 3,ViewManager::LOGARITHMIC);
     AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_currentSample);
     float currentVolume = m_currentSample->getVolume();
     
@@ -364,6 +385,7 @@ void  SoundManager::fadeSample(float fromVolume, float toVolume, float fadeTime,
         return; 
     }
     
+    AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText, toVolume*255, 3,ViewManager::LOGARITHMIC);
     AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_currentSample);
 
     switch(type)

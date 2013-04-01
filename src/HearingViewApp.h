@@ -5,7 +5,7 @@
 
 class AppManager;
 
-class testApp : public ofBaseApp{
+class HearingViewApp : public ofBaseApp{
 
 	public:
 		void setup();

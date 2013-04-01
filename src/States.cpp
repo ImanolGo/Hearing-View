@@ -54,12 +54,12 @@ void State::initialize()
 {
     m_dateManager = &AppManager::getInstance().getDateManager();
 
-    m_circleState = new ImageVisual(m_pos,70,70);
+    m_circleState = new ImageVisual(m_pos,70,70,true);
     m_circleState->setImage("pictures/icons/button.png");
     m_circleState->setColor(ofColor(255,255,255,100));
-    m_textState = new TextVisual(m_pos,20,20);
-    m_textState->setColor(ofColor(0,0,0,100));
-    m_textState->setText(this->getName(),15, true);
+    m_textState = new TextVisual(m_pos,20,20, true);
+    m_textState->setColor(ofColor(240,240,240,100));
+    m_textState->setText(this->getName(),15);
     AppManager::getInstance().getViewManager().addVisual(*m_textState);
     AppManager::getInstance().getViewManager().addVisual(*m_circleState,1);
     

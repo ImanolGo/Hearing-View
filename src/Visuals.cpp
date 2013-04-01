@@ -16,19 +16,12 @@ TextVisual::~TextVisual()
     
 }
 
-void TextVisual::setText(std::string text, int fontSize, bool centred)
+void TextVisual::setText(std::string text, int fontSize)
 {
     m_text = text;
     m_font = new ofTrueTypeFont();
-    m_font->loadFont("fonts/frabk.ttf",fontSize);
-    
-    if(centred)
-    {
-        ofRectangle box = m_font->getStringBoundingBox(m_text, m_position.x, m_position.y);
-        m_position.x = m_position.x - box.width/2;
-        m_position.y = m_position.y - box.height/2;
-        
-    }
+    m_font->loadFont("fonts/Klavika-Bold.otf",fontSize);
+    m_box = m_font->getStringBoundingBox(m_text, m_position.x, m_position.y);
     
 }
 
@@ -39,18 +32,33 @@ void TextVisual::draw() const
     ofSetColor(m_color);
     if (m_font) 
     {
-        m_font->drawString(m_text,m_position.x,m_position.y);
+        if(m_centred)
+        {
+            m_font->drawString(m_text,m_position.x - m_box.width/2.0,m_position.y + m_box.height/2.0);
+        }
+        
+        else
+        {
+            m_font->drawString(m_text,m_position.x,m_position.y);
+        }
+       
     }
     ofDisableAlphaBlending();
     ofPopStyle();   // recall the pushed style
 }
 
-ImageVisual::ImageVisual(ofPoint pos, float width, float height): 
+ImageVisual::ImageVisual(ofPoint pos, float width, float height,bool centred): 
     Visual(pos, width, height), 
     m_image(NULL) 
 {
      m_image = new ofImage();
      m_image->allocate(m_width,m_height,OF_IMAGE_COLOR);
+    
+    if(centred)
+    {
+        m_position.x = m_position.x - m_width/2.0;
+        m_position.y = m_position.y - m_height/2.0;
+    }
 }
 
 ImageVisual::~ImageVisual()
@@ -80,6 +88,15 @@ void ImageVisual::draw() const
     
 }
 
+CircleVisual::CircleVisual(ofPoint pos, float width, float height,bool centred): 
+Visual(pos,width,height,centred) 
+{
+    if(centred)
+    {
+        m_position.x = m_position.x - m_width/2.0;
+        m_position.y = m_position.y - m_height/2.0;
+    }
+}
 
 void CircleVisual::draw() const
 {
@@ -94,12 +111,37 @@ void CircleVisual::draw() const
     ofPopStyle();   // recall the pushed style
 }
 
+RectangleVisual::RectangleVisual(ofPoint pos, float width, float height,bool centred): 
+    Visual(pos,width,height,centred) 
+{
+    if(centred)
+    {
+        m_position.x = m_position.x - m_width/2;
+        m_position.y = m_position.y - m_height/2;
+    }
+}
 
-SoundVisual::SoundVisual(const SoundObject& sound, ofPoint pos, float width, float height):
+void RectangleVisual::draw() const
+{
+    ofPushStyle();  // push the current style for use later
+    ofEnableAlphaBlending();
+    ofSetColor(m_color);
+    ofFill();
+    ofRect(m_position, m_width,m_height);
+    ofDisableAlphaBlending();
+    ofPopStyle();   // recall the pushed style
+}
+
+
+SoundVisual::SoundVisual(const SoundObject& sound, ofPoint pos, float width, float height, bool centred):
     Visual(pos,width,height),
     m_sound(sound)
 {
-    
+    if(centred)
+    {
+        m_position.x = m_position.x - m_width/2;
+        m_position.y = m_position.y - m_height/2;
+    }
 }
 
 void SoundVisual::draw() const
