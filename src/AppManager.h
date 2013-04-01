@@ -24,6 +24,7 @@ class DateManager;
 class WeatherManager;
 class SoundEffectsManager;
 class VisualEffectsManager;
+class SerialManager;
 
 //========================== class AppManager ==============================
 //============================================================================
@@ -100,6 +101,7 @@ private:
     ViewManager*            m_viewManager;          ///< manages and renders all visuals
     SoundManager*           m_soundManager;         ///< manages and plays all sounds
     WeatherManager*         m_weatherManager;       ///< manages the weather conditions
+    SerialManager*          m_serialManager;        ///< manages the serial communication
     DateManager*            m_dateManager;          ///< manages the date and the seasons
     SoundEffectsManager*    m_soundEffectsManager;  ///< manages all the sound effects
     VisualEffectsManager*   m_visualEffectsManager; ///< manages all the visual effects

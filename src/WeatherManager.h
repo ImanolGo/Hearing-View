@@ -93,7 +93,8 @@ protected:
     double                m_elapsedTime;        ///< elapsed time since the last refreshing
     ImageVisual*          m_currentIcon;        ///< stores the current weather icon
     IconMap               m_icons;              ///< map of visuals representing the weather conditions
-    TextMap               m_textVisuals;       ///< text visuals from the current weather conditions
+    TextMap               m_textVisuals;        ///< text visuals from the current weather conditions
+    int                   m_fontSize;           ///< defines the text fontsize
     DateManager*          m_dateManager;        ///< pointer to the date manager
 
     

@@ -16,6 +16,7 @@
 #include "GuiManager.h"
 #include "SoundEffectsManager.h"
 #include "VisualEffectsManager.h"
+#include "SerialManager.h"
 
 
 #include "AppManager.h"
@@ -43,6 +44,7 @@ m_dateManager(NULL),m_weatherManager(NULL), m_soundEffectsManager(NULL),m_visual
     m_dateManager = new DateManager();
     m_soundEffectsManager = new SoundEffectsManager();
     m_visualEffectsManager = new VisualEffectsManager();
+    m_serialManager = new SerialManager();
     
 }
 
@@ -58,6 +60,7 @@ AppManager::~AppManager()
     delete m_visualEffectsManager;
     delete m_soundManager;
     delete m_viewManager;
+    delete m_serialManager;
 }
 
 
@@ -72,6 +75,7 @@ void AppManager::setup()
     m_weatherManager->setup();
     m_dateManager->setup();
     m_stateManager->setup();
+    m_serialManager->setup();
 }
 
 void AppManager::update(double dt)
@@ -84,6 +88,7 @@ void AppManager::update(double dt)
     m_guiManager->update(dt);
     m_viewManager->update(dt);
     m_weatherManager->update(dt);
+    m_serialManager->update(dt);
 }
 
 

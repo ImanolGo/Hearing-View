@@ -27,7 +27,9 @@ m_code(0),
 m_temperature(0.0f),
 m_windSpeed(0.0f),
 m_precipMM(0.0f),
-m_humidity(0)
+m_humidity(0),
+m_elapsedTime(0.0),
+m_fontSize(13)
 {
 }
 
@@ -133,7 +135,9 @@ bool WeatherManager::parseXML()
         m_conditionsDesc= conditionsDesc;
         std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: the current conditions are \""<<m_conditionsDesc<<"\"" << std::endl;
        ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: the current conditions are \""<<m_conditionsDesc<<"\"";
-        m_textVisuals["currentConditions"]->setText(m_conditionsDesc, 20);
+        
+        std::string text = "Conditions: " + m_conditionsDesc;
+        m_textVisuals["currentConditions"]->setText(text, m_fontSize);
          m_textVisuals["currentConditions"]->setColor(ofColor(255,255,255,0));
         AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["currentConditions"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
     }
@@ -142,11 +146,11 @@ bool WeatherManager::parseXML()
     if(m_temperature!= temperature)
     {
         m_temperature = temperature;
-        std::string text = "Temperature: " + ofToString(temperature) + "ºC";
+        std::string text = "Temperature: " + ofToString(temperature) + "°C";
         std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         
-        m_textVisuals["temperature"]->setText(text, 12);
+        m_textVisuals["temperature"]->setText(text, m_fontSize);
         m_textVisuals["temperature"]->setColor(ofColor(255,255,255,0));
         AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["temperature"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
         
@@ -160,7 +164,7 @@ bool WeatherManager::parseXML()
         std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         
-        m_textVisuals["humidity"]->setText(text, 12);
+        m_textVisuals["humidity"]->setText(text, m_fontSize);
         m_textVisuals["humidity"]->setColor(ofColor(255,255,255,0));
         AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["humidity"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
         
@@ -174,7 +178,7 @@ bool WeatherManager::parseXML()
         std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         
-        m_textVisuals["windSpeed"]->setText(text, 12);
+        m_textVisuals["windSpeed"]->setText(text, m_fontSize);
         m_textVisuals["windSpeed"]->setColor(ofColor(255,255,255,0));
         AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["windSpeed"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
         
@@ -188,7 +192,7 @@ bool WeatherManager::parseXML()
         std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         
-        m_textVisuals["precipMM"]->setText(text, 12);
+        m_textVisuals["precipMM"]->setText(text, m_fontSize);
         m_textVisuals["precipMM"]->setColor(ofColor(255,255,255,0));
         AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["precipMM"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
         
@@ -311,7 +315,8 @@ void WeatherManager::readConditionsCode()
         AppManager::getInstance().getViewManager().addVisual(*m_currentIcon);
         m_currentIcon->setColor(ofColor(255,255,255,0));
         AppManager::getInstance().getViewManager().fadeVisual(*m_currentIcon, 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
-        m_textVisuals["currentConditions"]->setText(m_conditionsDesc, 20);
+        std::string text = "Conditions: " + m_conditionsDesc;
+        m_textVisuals["currentConditions"]->setText(text, m_fontSize);
         m_textVisuals["currentConditions"]->setColor(ofColor(255,255,255,0));
         AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["currentConditions"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
     }
@@ -345,18 +350,17 @@ void WeatherManager::loadIcons()
     float margin = ofGetHeight()/70.0;
     float widthVisuals = ofGetWidth() - 4*margin; 
     float heightVisuals = ofGetHeight()/3.0 - 4*margin;
-    float w = 1*widthVisuals/5 - 2*margin;
+    float w = heightVisuals - 8*margin;
     float h = heightVisuals - 4*margin;
-    float sizeIcon = h/2.0;
-    float x = 3*margin + 2*widthVisuals/5 + w/2;
-    float y = 8*margin + 2*heightVisuals + 3*h/8;
+    float x = 4*margin + 4*widthVisuals/5 - w;
+    float y = 8*margin + 2*heightVisuals + h*0.5;
     
     
     //go through and print out all the paths
     for(int n = 0; n < dir.numFiles(); n++)
     {
         std::string iconName = this->getIconName(dir.getPath(n));
-        ImageVisual* icon =  new ImageVisual(ofPoint(x,y),sizeIcon,sizeIcon,true);
+        ImageVisual* icon =  new ImageVisual(ofPoint(x,y),w,w,true);
         icon->setImage(dir.getPath(n));
         m_icons[iconName] = icon;
         std::cout << m_dateManager->getTime() << "- WeatherManager-> loaded sample \""<< iconName <<"\"" << std::endl;
@@ -376,53 +380,51 @@ void WeatherManager::loadTextVisuals()
     float margin = ofGetHeight()/70.0;
     float widthVisuals = ofGetWidth() - 4*margin; 
     float heightVisuals = ofGetHeight()/3.0 - 4*margin;
-    float w = 1*widthVisuals/5 - 2*margin;
+    float sizeIcon = heightVisuals - 8*margin;
+    float w = 2.0*widthVisuals/5 - 4*margin - sizeIcon;
     float h = heightVisuals - 4*margin;
-    float sizeIcon = h/2.0;
-    float x = 3*margin + 2*widthVisuals/5 + w/2;
-    float y = 8*margin + 2*heightVisuals + 3*h/4;
+    float x = 5*margin + 2.0*widthVisuals/5;
+    float y = 8*margin + 2*heightVisuals + h*0.25 + m_fontSize*0.5;
     
-    TextVisual* textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, true);
+    TextVisual* textVisual = new TextVisual(ofPoint(x,y),w*0.5,h*0.5, false);
     textVisual->setColor(ofColor(255,255,255,0));
     m_textVisuals["currentConditions"]= textVisual;
     AppManager::getInstance().getViewManager().addVisual(*m_textVisuals["currentConditions"]);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["currentConditions"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
-    
-    int fontSize = 12;
+
     std::string text;
-    x = 3*margin + 2*widthVisuals/5 + widthVisuals*0.1+ w/2;
-    y = 8*margin + 2*heightVisuals + 3*h/8;
-    textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, true);
+    y = y + 3.0*m_fontSize/2;
+    textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, false);
     textVisual->setColor(ofColor(255,255,255,0));
-    text = "Temperature: " + ofToString(m_temperature) + "ºC";
-    textVisual->setText(text, fontSize);
+    text = "Temperature: " + ofToString(m_temperature) + "°C";
+    textVisual->setText(text, m_fontSize);
     m_textVisuals["temperature"]= textVisual;
     AppManager::getInstance().getViewManager().addVisual(*m_textVisuals["temperature"]);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["temperature"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
     
-    y = y + fontSize;
-    textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, true);
+    y = y + 3.0*m_fontSize/2;
+    textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, false);
     textVisual->setColor(ofColor(255,255,255,0));
     text = "Humidity: " + ofToString(m_humidity) + "%";
-    textVisual->setText(text, fontSize);
+    textVisual->setText(text, m_fontSize);
     m_textVisuals["humidity"]= textVisual;
     AppManager::getInstance().getViewManager().addVisual(*m_textVisuals["humidity"]);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["humidity"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
     
-    y = y + fontSize;
-    textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, true);
+    y = y + 3.0*m_fontSize/2;
+    textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, false);
     textVisual->setColor(ofColor(255,255,255,0));
     text = "Wind Speed: " + ofToString(m_windSpeed) + "Kph";
-    textVisual->setText(text, fontSize);
+    textVisual->setText(text, m_fontSize);
     m_textVisuals["windSpeed"]= textVisual;
     AppManager::getInstance().getViewManager().addVisual(*m_textVisuals["windSpeed"]);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["windSpeed"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
     
-    y = y + fontSize;
-    textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, true);
+    y = y + 3.0*m_fontSize/2;
+    textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, false);
     textVisual->setColor(ofColor(255,255,255,0));
     text = "Precipitation: " + ofToString(m_precipMM) + "mm";
-    textVisual->setText(text, fontSize);
+    textVisual->setText(text, m_fontSize);
     m_textVisuals["precipMM"]= textVisual;
     AppManager::getInstance().getViewManager().addVisual(*m_textVisuals["precipMM"]);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["precipMM"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);

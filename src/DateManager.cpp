@@ -465,7 +465,7 @@ void DateManager::loadSeasons()
     float heightVisuals = ofGetHeight()/3.0 - 4*margin;
     float h = heightVisuals - 4*margin;
     float w = 2*widthVisuals/5 - 2*margin;
-    float x = 3*margin + 3*widthVisuals/5 + w/2;
+    float x = 3*margin + 3*widthVisuals/5 + widthVisuals/10 +  w/2;
     float y = 8*margin + 2*heightVisuals + h/2;
     
     //go through and print out all the paths

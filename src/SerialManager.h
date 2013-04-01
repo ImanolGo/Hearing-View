@@ -1,102 +1,64 @@
 
 /*==============================================================================
- Imanolgo on 6/25/12.
+ Imanolgo on 01/04/13.
  ==============================================================================*/
-/*! \file WeatherManager.h
+/*! \file SerialManager.h
  * \authors Imanol Gómez
- * \copyright{2012}
+ * \copyright{2013}
  *///============================================================================
 
 
-#ifndef __WEATHER_MANAGER_H__
-#define __WEATHER_MANAGER_H__
+#ifndef __SERIAL_MANAGER_H__
+#define __SERIAL_MANAGER_H__
+
+#include "ofMain.h"
 
 
-#include <string>
-#include <map>
-#include "ofxFileLoader.h"
-#include "ofxXmlSettings.h"
+#define MESSAGE_LENGTH 3
 
-
-class ImageVisual;
-class TextVisual;
-class DataManager;
-
-//========================== class WeatherManager =======================================
+//========================== class SerialManager =======================================
 //==============================================================================
-/** \class WeatherManager WeatherManager.h
- *	\brief class for accessing the current weather conditions
- *	\details It constantly monitors the weather conditions from the FreeWeather API
+/** \class SerialManager SerialManager.h
+ *	\brief class for controlling the serial communication
+ *	\details It communicates with the WatchDog 2000 weather setation through serial and sends
+ *           the information to the weather manager
  */
 
+class DateManager;
 
-class WeatherManager
+class SerialManager
 {
-    static const string	 WEATHER_API_KEY;   ///< defines the World Weather Online API key
+
+    static const int BAUD_RATE;		///< defines communication's baud rate 
     static const double REFRESH_TIME;		///< defines time (s) of the refresh of information 
-    static const double FADE_TIME;          ///< defines the visuals fadeTime
     
 public:
     //! Constructor
-    WeatherManager();
+    SerialManager();
     
     //! Destructor
-    virtual ~WeatherManager();
+    virtual ~SerialManager();
     
-    //! setups the day watcher
+    //! setups the serial manager
     void setup();
     
-    //! setups the class
-    void setUrl(std::string url) {m_url = url;}
-    
-    //! setups the class
+    //! updates the class
     void update(double dt);
     
     //! handles the events
     void handleEvent(const Event& event);
     
-protected:
-    
-    //! reads and parses the information from Yahoo's weather API
-    bool parseXML(); 
-    
-    //! reads and parses the current weather conditions code
-    void readConditionsCode();
-    
-    //! loads the icons into the icons map
-    void loadIcons();
-    
-    //! loads the text visuals and add them
-    void loadTextVisuals();
-    
-    //! returns the icon name given its path
-    std::string getIconName(const std::string& path);
     
 protected:
     
-    typedef std::map <std::string, ImageVisual*>   IconMap;   ///< defines a map of weather icons sorted by the category name 
+    char		m_bytesRead[MESSAGE_LENGTH];				// data from serial, we will be trying to read 3
+    char		m_bytesReadString[MESSAGE_LENGTH +1];		// a string needs a null terminator, so we need 3 + 1 bytes
+    int			m_nBytesRead;                             // how much did we read?	
     
-    typedef std::map <std::string, TextVisual*>     TextMap;   ///< defines a map of weather texts 
-    
-    std::string           m_url;                ///< stores the url to send the request
-    ofxFileLoader         m_loader;             ///< loads file given an url
-    ofxXmlSettings        m_XML;                ///< it saves the url xml information
-    std::string           m_conditions;         ///< stores the current weather options for the sound manager
-    std::string           m_conditionsDesc;     ///< stores the current weather conditions description
-    float                 m_temperature;        ///< stores the current temperature in °C(Celcius)
-    int                   m_humidity;           ///< stores the current relative humidty (%)
-    float                 m_windSpeed;          ///< stores the current wind speed in kilometre per hour
-    int                   m_precipMM;           ///< stores the precipititation amount in millimeter
-    int                   m_code;               ///< stores the current weather conditions code
-    std::string           m_location;			///< stores the name of the location for the weather query	
-    std::string           m_iconName;			///< stores the icon name of the location for the weather query	
-    double                m_elapsedTime;        ///< elapsed time since the last refreshing
-    ImageVisual*          m_currentIcon;        ///< stores the current weather icon
-    IconMap               m_icons;              ///< map of visuals representing the weather conditions
-    TextMap               m_textVisuals;       ///< text visuals from the current weather conditions
-    DateManager*          m_dateManager;        ///< pointer to the date manager
+    double          m_elapsedTime;        ///< elapsed time since the last refreshing
+    DateManager*    m_dateManager;        ///< pointer to the date manager
 
-    
+    ofSerial	m_serial;    
 };
 
 #endif

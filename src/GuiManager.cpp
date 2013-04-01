@@ -106,7 +106,7 @@ void GuiManager::setup()
     
     
     //WEATHER CONDITIONS
-    w = 1*widthVisuals/5 - 2*margin;
+    w = 2*widthVisuals/5 - 2*margin;
     h = heightVisuals - 4*margin;
     x = 3*margin + 2*widthVisuals/5 + margin/2;
     y = 6*margin + margin/2 + 2*heightVisuals;
@@ -120,13 +120,13 @@ void GuiManager::setup()
         
     //SEASONS
     
-    w = 2*widthVisuals/5 - 2*margin;
+    w = 1*widthVisuals/5 - 2*margin;
     h = heightVisuals - 4*margin;
-    x = 3*margin + 3*widthVisuals/5 +  margin/2;
+    x = 3*margin + 4*widthVisuals/5 +  margin/2;
     y = 6*margin + margin/2 + 2*heightVisuals;
     m_gui->addWidget(new ofxUILabel(x,y, "SEASONS", OFX_UI_FONT_MEDIUM));
     
-    x = 3*margin + 3*widthVisuals/5;
+    x = 3*margin + 4*widthVisuals/5;
     y = 8*margin + 2*heightVisuals;
     rectVisual = new RectangleVisual(ofPoint(x,y),w,h);
     rectVisual->setColor(ofColor(46,85,18,100));
