@@ -13,9 +13,6 @@
 
 #include "ofMain.h"
 
-
-#define MESSAGE_LENGTH 1
-
 //========================== class SensorManager =======================================
 //==============================================================================
 /** \class SensorManager SensorManager.h
@@ -49,10 +46,8 @@ public:
     
     
 protected:
-    
-    char		m_bytesRead[MESSAGE_LENGTH];				// data from serial, we will be trying to read 3
-    char		m_bytesReadString[MESSAGE_LENGTH +1];		// a string needs a null terminator, so we need 3 + 1 bytes
-    int			m_nBytesRead;                             // how much did we read?	
+
+    char		m_byteRead;				// data from serial, we will be trying to read a byte
     
     double          m_elapsedTime;        ///< elapsed time since the last refreshing
     DateManager*    m_dateManager;        ///< pointer to the date manager

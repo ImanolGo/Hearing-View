@@ -96,7 +96,13 @@ bool WeatherManager::parseXML()
 {
     std::string xmlFromServer = m_loader.loadFromUrl(m_url); 
     //std::cout <<xmlFromServer <<std::endl;
-    m_XML.loadFromBuffer(xmlFromServer);
+    
+    if(!m_XML.loadFromBuffer(xmlFromServer)){
+        std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: could not load from buffer" << std::endl;
+        ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: could not load from buffer";
+        return false;
+    }
+    
     
     //lets see how many <rss> </rss> tags there are in the xml file
 	int numTags = m_XML.getNumTags("data");
@@ -104,7 +110,6 @@ bool WeatherManager::parseXML()
 	//if there is at least one <rss> tag we can read the list of points
 	//and then try and draw it as a line on the screen
 	if(numTags == 0){
-        
         std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: no data Tag found" << std::endl;
         ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: no data Tag found";
         return false;
