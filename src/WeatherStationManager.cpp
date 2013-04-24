@@ -14,7 +14,7 @@
 #include "WeatherStationManager.h"
  
 const int WeatherStationManager::BAUD_RATE = 9600; ///< the baud rate
-const double WeatherStationManager::REFRESH_TIME = 60*1; ///< refreshing time every 1 minutes
+const double WeatherStationManager::REFRESH_TIME = 10*60; ///< refreshing time every 10 minutes
 
 WeatherStationManager::WeatherStationManager():m_elapsedTime(0.0),m_nBytesRead(0), m_dateManager(NULL)
 {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0808D1EE172891EC0087E0F5 /* WeatherThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0808D1ED172891EC0087E0F5 /* WeatherThread.cpp */; };
 		081486F7159B7B1100A9894E /* AppManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 081486F6159B7B1100A9894E /* AppManager.cpp */; };
 		081E17741709CB5700189ABC /* WeatherStationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 081E17721709CB5700189ABC /* WeatherStationManager.cpp */; };
 		081E17771709CC3200189ABC /* SensorManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 081E17751709CC3200189ABC /* SensorManager.cpp */; };
@@ -82,6 +83,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0808D1EC17288E190087E0F5 /* WeatherThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherThread.h; sourceTree = "<group>"; };
+		0808D1ED172891EC0087E0F5 /* WeatherThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeatherThread.cpp; sourceTree = "<group>"; };
 		081486F3159985C600A9894E /* States.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = States.h; sourceTree = "<group>"; };
 		081486F41599900A00A9894E /* AppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppManager.h; sourceTree = "<group>"; };
 		081486F5159ADE9100A9894E /* ViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewManager.h; sourceTree = "<group>"; };
@@ -396,6 +399,8 @@
 			children = (
 				081E17751709CC3200189ABC /* SensorManager.cpp */,
 				081E17761709CC3200189ABC /* SensorManager.h */,
+				0808D1ED172891EC0087E0F5 /* WeatherThread.cpp */,
+				0808D1EC17288E190087E0F5 /* WeatherThread.h */,
 				081E17721709CB5700189ABC /* WeatherStationManager.cpp */,
 				081E17731709CB5700189ABC /* WeatherStationManager.h */,
 				08CEA67915A5091A00C6CB82 /* WeatherManager.h */,
@@ -611,6 +616,7 @@
 				0861F28E160F4CDD007BD5A5 /* GuiManager.cpp in Sources */,
 				081E17741709CB5700189ABC /* WeatherStationManager.cpp in Sources */,
 				081E17771709CC3200189ABC /* SensorManager.cpp in Sources */,
+				0808D1EE172891EC0087E0F5 /* WeatherThread.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

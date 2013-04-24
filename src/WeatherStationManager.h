@@ -24,6 +24,7 @@
  *           the information to the weather manager
  */
 
+
 class DateManager;
 
 class WeatherStationManager
