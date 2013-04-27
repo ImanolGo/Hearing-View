@@ -14,8 +14,9 @@
 #include "WeatherThread.h"
  
 const int WeatherThread::BAUD_RATE = 9600; ///< the baud rate
+const double WeatherThread::REFRESH_TIME = 1*60*1000; ///< the refresh tim, every minute
 
-WeatherThread::WeatherThread():m_nBytesRead(0), m_dateManager(NULL)
+WeatherThread::WeatherThread():m_nBytesRead(0)
 {
     //Intentionaly left empty
 }
@@ -26,7 +27,6 @@ WeatherThread::~WeatherThread()
 }
 
 void WeatherThread::start(){
-    m_dateManager = &AppManager::getInstance().getDateManager();
     
     m_serial.listDevices();
 	vector <ofSerialDeviceInfo> deviceList = m_serial.getDeviceList();
@@ -43,41 +43,21 @@ void WeatherThread::start(){
 	//serial.setup("/dev/ttyUSB0", 9600); //linux example
 	
 	m_nBytesRead = 0;
-	memset(m_bytesReadString, 0, MESSAGE_LENGTH+1);
+	memset(m_bytesOKString, 0, OK_SIZE+1);
+    memset(m_bytesConditionsString, 0, CONDITIONS_SIZE+1);
     
-    std::cout << m_dateManager->getTime() << "- WeatherStationManager-> setup " << std::endl;
-    ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->setup " ;
+    std::cout << "WeatherThread-> start " << std::endl;
     
     startThread(true, false);   // blocking, verbose
 }
 
 void WeatherThread::stop(){
     stopThread();
+    std::cout << "WeatherThread-> stop " << std::endl;
 }
 
 void WeatherThread::threadedFunction(){
     
-    while( isThreadRunning() != 0 ){
-        if( lock() ){
-            if ( m_serial.available() > 0 )
-            {
-                unsigned char bytesReturned[MESSAGE_LENGTH];
-                
-                memset(m_bytesReadString, 0, MESSAGE_LENGTH+1);
-                memset(bytesReturned, 0, MESSAGE_LENGTH);
-                int nRead;
-                while( (nRead = m_serial.readBytes( bytesReturned, MESSAGE_LENGTH)) > 0){
-                    m_nBytesRead = nRead;
-                };
-                
-                memcpy(m_bytesReadString, bytesReturned, 3);   
-                
-            }
-
-            unlock();
-            //ofSleepMillis(1 * 500);
-        }
-    }
 }
 
 

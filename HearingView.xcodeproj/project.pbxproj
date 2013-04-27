@@ -7,32 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0808D1EE172891EC0087E0F5 /* WeatherThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0808D1ED172891EC0087E0F5 /* WeatherThread.cpp */; };
-		081486F7159B7B1100A9894E /* AppManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 081486F6159B7B1100A9894E /* AppManager.cpp */; };
-		081E17741709CB5700189ABC /* WeatherStationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 081E17721709CB5700189ABC /* WeatherStationManager.cpp */; };
-		081E17771709CC3200189ABC /* SensorManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 081E17751709CC3200189ABC /* SensorManager.cpp */; };
 		082F967415966A08006214D2 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 082F966D15966A08006214D2 /* tinyxml.cpp */; };
 		082F967515966A08006214D2 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 082F966F15966A08006214D2 /* tinyxmlerror.cpp */; };
 		082F967615966A08006214D2 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 082F967015966A08006214D2 /* tinyxmlparser.cpp */; };
 		082F967715966A08006214D2 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 082F967215966A08006214D2 /* ofxXmlSettings.cpp */; };
 		082F969B15971EC6006214D2 /* ofxDate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 082F969615971EC6006214D2 /* ofxDate.cpp */; };
-		082F96B2159723A3006214D2 /* DateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 082F96B1159723A3006214D2 /* DateManager.cpp */; };
-		082F96B515972ED9006214D2 /* StateMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 082F96B315972ED9006214D2 /* StateMachine.cpp */; };
-		082F96D11599055A006214D2 /* WeatherManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 082F96D01599055A006214D2 /* WeatherManager.cpp */; };
 		082F96D5159907AD006214D2 /* ofxFileLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 082F96D3159907AD006214D2 /* ofxFileLoader.cpp */; };
-		083125B015AB8A9E00C4827E /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 083125AF15AB8A9E00C4827E /* Event.cpp */; };
-		0840EAF115B4BDE900782650 /* Visuals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0840EAEF15B4BDE900782650 /* Visuals.cpp */; };
-		0841A3FE159BC05F00DBAB03 /* SoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0841A3FD159BC05F00DBAB03 /* SoundManager.cpp */; };
-		084826A8159B87C800502B1E /* States.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 084826A7159B87C800502B1E /* States.cpp */; };
-		0861F28E160F4CDD007BD5A5 /* GuiManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0861F28D160F4CDD007BD5A5 /* GuiManager.cpp */; };
-		086C982015AA055200CBC0CB /* SoundObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 086C981F15AA055200CBC0CB /* SoundObject.cpp */; };
-		08A630EA15A5596B00FB52D1 /* ViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08A630E915A5596B00FB52D1 /* ViewManager.cpp */; };
-		08BEF3F115A9C38B000F0471 /* EventManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08BEF3F015A9C38B000F0471 /* EventManager.cpp */; };
-		08CEA67815A4FD8200C6CB82 /* StateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08CEA67715A4FD8200C6CB82 /* StateManager.cpp */; };
-		08D6B7C515A63324001EA0B6 /* SoundEffectsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08D6B7C415A63324001EA0B6 /* SoundEffectsManager.cpp */; };
-		08D6B7C715A634B3001EA0B6 /* SoundEffects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08D6B7C615A634B3001EA0B6 /* SoundEffects.cpp */; };
-		08D6B7CC15A64E3C001EA0B6 /* VisualEffectsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08D6B7CB15A64E3C001EA0B6 /* VisualEffectsManager.cpp */; };
-		08D6B7CE15A64FE3001EA0B6 /* VisualEffects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08D6B7CD15A64FE3001EA0B6 /* VisualEffects.cpp */; };
+		08F598E0172BFF9100F9A313 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598AF172BFF9100F9A313 /* Event.cpp */; };
+		08F598E1172BFF9100F9A313 /* EventManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598B1172BFF9100F9A313 /* EventManager.cpp */; };
+		08F598E2172BFF9100F9A313 /* GuiManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598B3172BFF9100F9A313 /* GuiManager.cpp */; };
+		08F598E3172BFF9100F9A313 /* AppManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598B6172BFF9100F9A313 /* AppManager.cpp */; };
+		08F598E4172BFF9100F9A313 /* HearingViewApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598B8172BFF9100F9A313 /* HearingViewApp.cpp */; };
+		08F598E5172BFF9100F9A313 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598BA172BFF9100F9A313 /* main.cpp */; };
+		08F598E6172BFF9100F9A313 /* SoundEffects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598BC172BFF9100F9A313 /* SoundEffects.cpp */; };
+		08F598E7172BFF9100F9A313 /* SoundEffectsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598BE172BFF9100F9A313 /* SoundEffectsManager.cpp */; };
+		08F598E8172BFF9100F9A313 /* SoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598C0172BFF9100F9A313 /* SoundManager.cpp */; };
+		08F598E9172BFF9100F9A313 /* SoundObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598C2172BFF9100F9A313 /* SoundObject.cpp */; };
+		08F598EA172BFF9100F9A313 /* StateMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598C5172BFF9100F9A313 /* StateMachine.cpp */; };
+		08F598EB172BFF9100F9A313 /* StateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598C7172BFF9100F9A313 /* StateManager.cpp */; };
+		08F598EC172BFF9100F9A313 /* States.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598C9172BFF9100F9A313 /* States.cpp */; };
+		08F598ED172BFF9100F9A313 /* DateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598CC172BFF9100F9A313 /* DateManager.cpp */; };
+		08F598EE172BFF9100F9A313 /* SensorManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598CE172BFF9100F9A313 /* SensorManager.cpp */; };
+		08F598EF172BFF9100F9A313 /* WeatherManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598D1172BFF9100F9A313 /* WeatherManager.cpp */; };
+		08F598F0172BFF9100F9A313 /* WeatherStationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598D3172BFF9100F9A313 /* WeatherStationManager.cpp */; };
+		08F598F1172BFF9100F9A313 /* WeatherThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598D5172BFF9100F9A313 /* WeatherThread.cpp */; };
+		08F598F2172BFF9100F9A313 /* ViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598D8172BFF9100F9A313 /* ViewManager.cpp */; };
+		08F598F3172BFF9100F9A313 /* VisualEffects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598DA172BFF9100F9A313 /* VisualEffects.cpp */; };
+		08F598F4172BFF9100F9A313 /* VisualEffectsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598DC172BFF9100F9A313 /* VisualEffectsManager.cpp */; };
+		08F598F5172BFF9100F9A313 /* Visuals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08F598DE172BFF9100F9A313 /* Visuals.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -44,8 +46,6 @@
 		E45BE9810E8CC7DD009D7055 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9770E8CC7DD009D7055 /* CoreServices.framework */; };
 		E45BE9830E8CC7DD009D7055 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9790E8CC7DD009D7055 /* OpenGL.framework */; };
 		E45BE9840E8CC7DD009D7055 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */; };
-		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
-		E4B69E210A3A1BDC003C02F2 /* HearingViewApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* HearingViewApp.cpp */; };
 		E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424410CC5A17004149E2 /* AppKit.framework */; };
 		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
@@ -83,16 +83,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0808D1EC17288E190087E0F5 /* WeatherThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherThread.h; sourceTree = "<group>"; };
-		0808D1ED172891EC0087E0F5 /* WeatherThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeatherThread.cpp; sourceTree = "<group>"; };
-		081486F3159985C600A9894E /* States.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = States.h; sourceTree = "<group>"; };
-		081486F41599900A00A9894E /* AppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppManager.h; sourceTree = "<group>"; };
-		081486F5159ADE9100A9894E /* ViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewManager.h; sourceTree = "<group>"; };
-		081486F6159B7B1100A9894E /* AppManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppManager.cpp; sourceTree = "<group>"; };
-		081E17721709CB5700189ABC /* WeatherStationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeatherStationManager.cpp; sourceTree = "<group>"; };
-		081E17731709CB5700189ABC /* WeatherStationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherStationManager.h; sourceTree = "<group>"; };
-		081E17751709CC3200189ABC /* SensorManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SensorManager.cpp; sourceTree = "<group>"; };
-		081E17761709CC3200189ABC /* SensorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorManager.h; sourceTree = "<group>"; };
 		082F95F61595DA8A006214D2 /* ofxUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUI.h; sourceTree = "<group>"; };
 		082F95F71595DA8A006214D2 /* ofxUI2DPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUI2DPad.h; sourceTree = "<group>"; };
 		082F95F81595DA8A006214D2 /* ofxUIBiLabelSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIBiLabelSlider.h; sourceTree = "<group>"; };
@@ -138,41 +128,54 @@
 		082F967015966A08006214D2 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
 		082F967215966A08006214D2 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
 		082F967315966A08006214D2 /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
-		082F968215970B0E006214D2 /* StateMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateMachine.h; sourceTree = "<group>"; };
-		082F968315970B1E006214D2 /* DateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateManager.h; sourceTree = "<group>"; };
 		082F969615971EC6006214D2 /* ofxDate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDate.cpp; sourceTree = "<group>"; };
 		082F969715971EC6006214D2 /* ofxDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxDate.h; sourceTree = "<group>"; };
-		082F96B1159723A3006214D2 /* DateManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DateManager.cpp; sourceTree = "<group>"; };
-		082F96B315972ED9006214D2 /* StateMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StateMachine.cpp; sourceTree = "<group>"; };
-		082F96D01599055A006214D2 /* WeatherManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeatherManager.cpp; sourceTree = "<group>"; };
 		082F96D3159907AD006214D2 /* ofxFileLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFileLoader.cpp; sourceTree = "<group>"; };
 		082F96D4159907AD006214D2 /* ofxFileLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFileLoader.h; sourceTree = "<group>"; };
-		083125AE15AB89DC00C4827E /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
-		083125AF15AB8A9E00C4827E /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
-		0840EAEF15B4BDE900782650 /* Visuals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visuals.cpp; sourceTree = "<group>"; };
-		0840EAF015B4BDE900782650 /* Visuals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Visuals.h; sourceTree = "<group>"; };
-		0841A3FC159BBA7900DBAB03 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
-		0841A3FD159BC05F00DBAB03 /* SoundManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundManager.cpp; sourceTree = "<group>"; };
-		084826A7159B87C800502B1E /* States.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = States.cpp; sourceTree = "<group>"; };
-		0861F28D160F4CDD007BD5A5 /* GuiManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuiManager.cpp; sourceTree = "<group>"; };
-		0861F28F160F4CEC007BD5A5 /* GuiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuiManager.h; sourceTree = "<group>"; };
-		086C981E15AA047B00CBC0CB /* SoundObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundObject.h; sourceTree = "<group>"; };
-		086C981F15AA055200CBC0CB /* SoundObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundObject.cpp; sourceTree = "<group>"; };
-		089BA5B0159C32E60085DD7C /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
-		08A630E915A5596B00FB52D1 /* ViewManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ViewManager.cpp; sourceTree = "<group>"; };
-		08BEF3EF15A9C2BE000F0471 /* EventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventManager.h; sourceTree = "<group>"; };
-		08BEF3F015A9C38B000F0471 /* EventManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventManager.cpp; sourceTree = "<group>"; };
-		08CEA67615A4FC0200C6CB82 /* StateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateManager.h; sourceTree = "<group>"; };
-		08CEA67715A4FD8200C6CB82 /* StateManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StateManager.cpp; sourceTree = "<group>"; };
-		08CEA67915A5091A00C6CB82 /* WeatherManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherManager.h; sourceTree = "<group>"; };
-		08D6B7C015A62CBB001EA0B6 /* VisualEffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisualEffectsManager.h; sourceTree = "<group>"; };
-		08D6B7C115A62E32001EA0B6 /* VisualEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisualEffects.h; sourceTree = "<group>"; };
-		08D6B7C215A62FC1001EA0B6 /* SoundEffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEffectsManager.h; sourceTree = "<group>"; };
-		08D6B7C315A630E0001EA0B6 /* SoundEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEffects.h; sourceTree = "<group>"; };
-		08D6B7C415A63324001EA0B6 /* SoundEffectsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundEffectsManager.cpp; sourceTree = "<group>"; };
-		08D6B7C615A634B3001EA0B6 /* SoundEffects.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundEffects.cpp; sourceTree = "<group>"; };
-		08D6B7CB15A64E3C001EA0B6 /* VisualEffectsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisualEffectsManager.cpp; sourceTree = "<group>"; };
-		08D6B7CD15A64FE3001EA0B6 /* VisualEffects.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisualEffects.cpp; sourceTree = "<group>"; };
+		08F598AF172BFF9100F9A313 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
+		08F598B0172BFF9100F9A313 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		08F598B1172BFF9100F9A313 /* EventManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventManager.cpp; sourceTree = "<group>"; };
+		08F598B2172BFF9100F9A313 /* EventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventManager.h; sourceTree = "<group>"; };
+		08F598B3172BFF9100F9A313 /* GuiManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuiManager.cpp; sourceTree = "<group>"; };
+		08F598B4172BFF9100F9A313 /* GuiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuiManager.h; sourceTree = "<group>"; };
+		08F598B6172BFF9100F9A313 /* AppManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppManager.cpp; sourceTree = "<group>"; };
+		08F598B7172BFF9100F9A313 /* AppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppManager.h; sourceTree = "<group>"; };
+		08F598B8172BFF9100F9A313 /* HearingViewApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HearingViewApp.cpp; sourceTree = "<group>"; };
+		08F598B9172BFF9100F9A313 /* HearingViewApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HearingViewApp.h; sourceTree = "<group>"; };
+		08F598BA172BFF9100F9A313 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		08F598BC172BFF9100F9A313 /* SoundEffects.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundEffects.cpp; sourceTree = "<group>"; };
+		08F598BD172BFF9100F9A313 /* SoundEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEffects.h; sourceTree = "<group>"; };
+		08F598BE172BFF9100F9A313 /* SoundEffectsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundEffectsManager.cpp; sourceTree = "<group>"; };
+		08F598BF172BFF9100F9A313 /* SoundEffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEffectsManager.h; sourceTree = "<group>"; };
+		08F598C0172BFF9100F9A313 /* SoundManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundManager.cpp; sourceTree = "<group>"; };
+		08F598C1172BFF9100F9A313 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
+		08F598C2172BFF9100F9A313 /* SoundObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundObject.cpp; sourceTree = "<group>"; };
+		08F598C3172BFF9100F9A313 /* SoundObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundObject.h; sourceTree = "<group>"; };
+		08F598C5172BFF9100F9A313 /* StateMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StateMachine.cpp; sourceTree = "<group>"; };
+		08F598C6172BFF9100F9A313 /* StateMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateMachine.h; sourceTree = "<group>"; };
+		08F598C7172BFF9100F9A313 /* StateManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StateManager.cpp; sourceTree = "<group>"; };
+		08F598C8172BFF9100F9A313 /* StateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateManager.h; sourceTree = "<group>"; };
+		08F598C9172BFF9100F9A313 /* States.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = States.cpp; sourceTree = "<group>"; };
+		08F598CA172BFF9100F9A313 /* States.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = States.h; sourceTree = "<group>"; };
+		08F598CC172BFF9100F9A313 /* DateManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DateManager.cpp; sourceTree = "<group>"; };
+		08F598CD172BFF9100F9A313 /* DateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateManager.h; sourceTree = "<group>"; };
+		08F598CE172BFF9100F9A313 /* SensorManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SensorManager.cpp; sourceTree = "<group>"; };
+		08F598CF172BFF9100F9A313 /* SensorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorManager.h; sourceTree = "<group>"; };
+		08F598D0172BFF9100F9A313 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		08F598D1172BFF9100F9A313 /* WeatherManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeatherManager.cpp; sourceTree = "<group>"; };
+		08F598D2172BFF9100F9A313 /* WeatherManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherManager.h; sourceTree = "<group>"; };
+		08F598D3172BFF9100F9A313 /* WeatherStationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeatherStationManager.cpp; sourceTree = "<group>"; };
+		08F598D4172BFF9100F9A313 /* WeatherStationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherStationManager.h; sourceTree = "<group>"; };
+		08F598D5172BFF9100F9A313 /* WeatherThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeatherThread.cpp; sourceTree = "<group>"; };
+		08F598D6172BFF9100F9A313 /* WeatherThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherThread.h; sourceTree = "<group>"; };
+		08F598D8172BFF9100F9A313 /* ViewManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ViewManager.cpp; sourceTree = "<group>"; };
+		08F598D9172BFF9100F9A313 /* ViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewManager.h; sourceTree = "<group>"; };
+		08F598DA172BFF9100F9A313 /* VisualEffects.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisualEffects.cpp; sourceTree = "<group>"; };
+		08F598DB172BFF9100F9A313 /* VisualEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisualEffects.h; sourceTree = "<group>"; };
+		08F598DC172BFF9100F9A313 /* VisualEffectsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisualEffectsManager.cpp; sourceTree = "<group>"; };
+		08F598DD172BFF9100F9A313 /* VisualEffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisualEffectsManager.h; sourceTree = "<group>"; };
+		08F598DE172BFF9100F9A313 /* Visuals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visuals.cpp; sourceTree = "<group>"; };
+		08F598DF172BFF9100F9A313 /* Visuals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Visuals.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -185,9 +188,6 @@
 		E45BE9790E8CC7DD009D7055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		E4B69B5B0A3A1756003C02F2 /* HearingViewDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HearingViewDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
-		E4B69E1E0A3A1BDC003C02F2 /* HearingViewApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = HearingViewApp.cpp; path = src/HearingViewApp.cpp; sourceTree = SOURCE_ROOT; };
-		E4B69E1F0A3A1BDC003C02F2 /* HearingViewApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = HearingViewApp.h; path = src/HearingViewApp.h; sourceTree = SOURCE_ROOT; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
 		E4C2424410CC5A17004149E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		E4C2424510CC5A17004149E2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -326,90 +326,90 @@
 			path = ../../../addons/ofxFileLoader;
 			sourceTree = "<group>";
 		};
-		083125AD15AB89BF00C4827E /* Events */ = {
+		08F598AE172BFF9100F9A313 /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				08BEF3EF15A9C2BE000F0471 /* EventManager.h */,
-				08BEF3F015A9C38B000F0471 /* EventManager.cpp */,
-				083125AE15AB89DC00C4827E /* Event.h */,
-				083125AF15AB8A9E00C4827E /* Event.cpp */,
-				0861F28D160F4CDD007BD5A5 /* GuiManager.cpp */,
-				0861F28F160F4CEC007BD5A5 /* GuiManager.h */,
+				08F598AF172BFF9100F9A313 /* Event.cpp */,
+				08F598B0172BFF9100F9A313 /* Event.h */,
+				08F598B1172BFF9100F9A313 /* EventManager.cpp */,
+				08F598B2172BFF9100F9A313 /* EventManager.h */,
+				08F598B3172BFF9100F9A313 /* GuiManager.cpp */,
+				08F598B4172BFF9100F9A313 /* GuiManager.h */,
 			);
-			name = Events;
+			path = Events;
 			sourceTree = "<group>";
 		};
-		08D6B7BB15A62BB9001EA0B6 /* Sound */ = {
+		08F598B5172BFF9100F9A313 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				0841A3FC159BBA7900DBAB03 /* SoundManager.h */,
-				0841A3FD159BC05F00DBAB03 /* SoundManager.cpp */,
-				08D6B7C215A62FC1001EA0B6 /* SoundEffectsManager.h */,
-				08D6B7C415A63324001EA0B6 /* SoundEffectsManager.cpp */,
-				08D6B7C315A630E0001EA0B6 /* SoundEffects.h */,
-				08D6B7C615A634B3001EA0B6 /* SoundEffects.cpp */,
-				086C981E15AA047B00CBC0CB /* SoundObject.h */,
-				086C981F15AA055200CBC0CB /* SoundObject.cpp */,
+				08F598B6172BFF9100F9A313 /* AppManager.cpp */,
+				08F598B7172BFF9100F9A313 /* AppManager.h */,
+				08F598B8172BFF9100F9A313 /* HearingViewApp.cpp */,
+				08F598B9172BFF9100F9A313 /* HearingViewApp.h */,
+				08F598BA172BFF9100F9A313 /* main.cpp */,
 			);
-			name = Sound;
+			path = Main;
 			sourceTree = "<group>";
 		};
-		08D6B7BC15A62BE2001EA0B6 /* Visuals */ = {
+		08F598BB172BFF9100F9A313 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
-				0840EAEF15B4BDE900782650 /* Visuals.cpp */,
-				0840EAF015B4BDE900782650 /* Visuals.h */,
-				081486F5159ADE9100A9894E /* ViewManager.h */,
-				08A630E915A5596B00FB52D1 /* ViewManager.cpp */,
-				08D6B7C015A62CBB001EA0B6 /* VisualEffectsManager.h */,
-				08D6B7CB15A64E3C001EA0B6 /* VisualEffectsManager.cpp */,
-				08D6B7C115A62E32001EA0B6 /* VisualEffects.h */,
-				08D6B7CD15A64FE3001EA0B6 /* VisualEffects.cpp */,
+				08F598BC172BFF9100F9A313 /* SoundEffects.cpp */,
+				08F598BD172BFF9100F9A313 /* SoundEffects.h */,
+				08F598BE172BFF9100F9A313 /* SoundEffectsManager.cpp */,
+				08F598BF172BFF9100F9A313 /* SoundEffectsManager.h */,
+				08F598C0172BFF9100F9A313 /* SoundManager.cpp */,
+				08F598C1172BFF9100F9A313 /* SoundManager.h */,
+				08F598C2172BFF9100F9A313 /* SoundObject.cpp */,
+				08F598C3172BFF9100F9A313 /* SoundObject.h */,
 			);
-			name = Visuals;
+			path = Sound;
 			sourceTree = "<group>";
 		};
-		08D6B7BD15A62BFA001EA0B6 /* Main */ = {
+		08F598C4172BFF9100F9A313 /* StateMachine */ = {
 			isa = PBXGroup;
 			children = (
-				081486F41599900A00A9894E /* AppManager.h */,
-				081486F6159B7B1100A9894E /* AppManager.cpp */,
-				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
-				E4B69E1E0A3A1BDC003C02F2 /* HearingViewApp.cpp */,
-				E4B69E1F0A3A1BDC003C02F2 /* HearingViewApp.h */,
+				08F598C5172BFF9100F9A313 /* StateMachine.cpp */,
+				08F598C6172BFF9100F9A313 /* StateMachine.h */,
+				08F598C7172BFF9100F9A313 /* StateManager.cpp */,
+				08F598C8172BFF9100F9A313 /* StateManager.h */,
+				08F598C9172BFF9100F9A313 /* States.cpp */,
+				08F598CA172BFF9100F9A313 /* States.h */,
 			);
-			name = Main;
+			path = StateMachine;
 			sourceTree = "<group>";
 		};
-		08D6B7BE15A62C18001EA0B6 /* StateMachine */ = {
+		08F598CB172BFF9100F9A313 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				082F968215970B0E006214D2 /* StateMachine.h */,
-				082F96B315972ED9006214D2 /* StateMachine.cpp */,
-				081486F3159985C600A9894E /* States.h */,
-				084826A7159B87C800502B1E /* States.cpp */,
-				08CEA67615A4FC0200C6CB82 /* StateManager.h */,
-				08CEA67715A4FD8200C6CB82 /* StateManager.cpp */,
+				08F598CC172BFF9100F9A313 /* DateManager.cpp */,
+				08F598CD172BFF9100F9A313 /* DateManager.h */,
+				08F598CE172BFF9100F9A313 /* SensorManager.cpp */,
+				08F598CF172BFF9100F9A313 /* SensorManager.h */,
+				08F598D0172BFF9100F9A313 /* Utils.h */,
+				08F598D1172BFF9100F9A313 /* WeatherManager.cpp */,
+				08F598D2172BFF9100F9A313 /* WeatherManager.h */,
+				08F598D3172BFF9100F9A313 /* WeatherStationManager.cpp */,
+				08F598D4172BFF9100F9A313 /* WeatherStationManager.h */,
+				08F598D5172BFF9100F9A313 /* WeatherThread.cpp */,
+				08F598D6172BFF9100F9A313 /* WeatherThread.h */,
 			);
-			name = StateMachine;
+			path = Tools;
 			sourceTree = "<group>";
 		};
-		08D6B7BF15A62C57001EA0B6 /* Tools */ = {
+		08F598D7172BFF9100F9A313 /* Visuals */ = {
 			isa = PBXGroup;
 			children = (
-				081E17751709CC3200189ABC /* SensorManager.cpp */,
-				081E17761709CC3200189ABC /* SensorManager.h */,
-				0808D1ED172891EC0087E0F5 /* WeatherThread.cpp */,
-				0808D1EC17288E190087E0F5 /* WeatherThread.h */,
-				081E17721709CB5700189ABC /* WeatherStationManager.cpp */,
-				081E17731709CB5700189ABC /* WeatherStationManager.h */,
-				08CEA67915A5091A00C6CB82 /* WeatherManager.h */,
-				082F96D01599055A006214D2 /* WeatherManager.cpp */,
-				082F968315970B1E006214D2 /* DateManager.h */,
-				082F96B1159723A3006214D2 /* DateManager.cpp */,
-				089BA5B0159C32E60085DD7C /* Utils.h */,
+				08F598D8172BFF9100F9A313 /* ViewManager.cpp */,
+				08F598D9172BFF9100F9A313 /* ViewManager.h */,
+				08F598DA172BFF9100F9A313 /* VisualEffects.cpp */,
+				08F598DB172BFF9100F9A313 /* VisualEffects.h */,
+				08F598DC172BFF9100F9A313 /* VisualEffectsManager.cpp */,
+				08F598DD172BFF9100F9A313 /* VisualEffectsManager.h */,
+				08F598DE172BFF9100F9A313 /* Visuals.cpp */,
+				08F598DF172BFF9100F9A313 /* Visuals.h */,
 			);
-			name = Tools;
+			path = Visuals;
 			sourceTree = "<group>";
 		};
 		BB4B014C10F69532006C3DED /* addons */ = {
@@ -483,12 +483,12 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				083125AD15AB89BF00C4827E /* Events */,
-				08D6B7BF15A62C57001EA0B6 /* Tools */,
-				08D6B7BE15A62C18001EA0B6 /* StateMachine */,
-				08D6B7BD15A62BFA001EA0B6 /* Main */,
-				08D6B7BC15A62BE2001EA0B6 /* Visuals */,
-				08D6B7BB15A62BB9001EA0B6 /* Sound */,
+				08F598AE172BFF9100F9A313 /* Events */,
+				08F598B5172BFF9100F9A313 /* Main */,
+				08F598BB172BFF9100F9A313 /* Sound */,
+				08F598C4172BFF9100F9A313 /* StateMachine */,
+				08F598CB172BFF9100F9A313 /* Tools */,
+				08F598D7172BFF9100F9A313 /* Visuals */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -589,34 +589,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
-				E4B69E210A3A1BDC003C02F2 /* HearingViewApp.cpp in Sources */,
 				082F967415966A08006214D2 /* tinyxml.cpp in Sources */,
 				082F967515966A08006214D2 /* tinyxmlerror.cpp in Sources */,
 				082F967615966A08006214D2 /* tinyxmlparser.cpp in Sources */,
 				082F967715966A08006214D2 /* ofxXmlSettings.cpp in Sources */,
 				082F969B15971EC6006214D2 /* ofxDate.cpp in Sources */,
-				082F96B2159723A3006214D2 /* DateManager.cpp in Sources */,
-				082F96B515972ED9006214D2 /* StateMachine.cpp in Sources */,
-				082F96D11599055A006214D2 /* WeatherManager.cpp in Sources */,
 				082F96D5159907AD006214D2 /* ofxFileLoader.cpp in Sources */,
-				081486F7159B7B1100A9894E /* AppManager.cpp in Sources */,
-				084826A8159B87C800502B1E /* States.cpp in Sources */,
-				0841A3FE159BC05F00DBAB03 /* SoundManager.cpp in Sources */,
-				08CEA67815A4FD8200C6CB82 /* StateManager.cpp in Sources */,
-				08A630EA15A5596B00FB52D1 /* ViewManager.cpp in Sources */,
-				08D6B7C515A63324001EA0B6 /* SoundEffectsManager.cpp in Sources */,
-				08D6B7C715A634B3001EA0B6 /* SoundEffects.cpp in Sources */,
-				08D6B7CC15A64E3C001EA0B6 /* VisualEffectsManager.cpp in Sources */,
-				08D6B7CE15A64FE3001EA0B6 /* VisualEffects.cpp in Sources */,
-				08BEF3F115A9C38B000F0471 /* EventManager.cpp in Sources */,
-				086C982015AA055200CBC0CB /* SoundObject.cpp in Sources */,
-				083125B015AB8A9E00C4827E /* Event.cpp in Sources */,
-				0840EAF115B4BDE900782650 /* Visuals.cpp in Sources */,
-				0861F28E160F4CDD007BD5A5 /* GuiManager.cpp in Sources */,
-				081E17741709CB5700189ABC /* WeatherStationManager.cpp in Sources */,
-				081E17771709CC3200189ABC /* SensorManager.cpp in Sources */,
-				0808D1EE172891EC0087E0F5 /* WeatherThread.cpp in Sources */,
+				08F598E0172BFF9100F9A313 /* Event.cpp in Sources */,
+				08F598E1172BFF9100F9A313 /* EventManager.cpp in Sources */,
+				08F598E2172BFF9100F9A313 /* GuiManager.cpp in Sources */,
+				08F598E3172BFF9100F9A313 /* AppManager.cpp in Sources */,
+				08F598E4172BFF9100F9A313 /* HearingViewApp.cpp in Sources */,
+				08F598E5172BFF9100F9A313 /* main.cpp in Sources */,
+				08F598E6172BFF9100F9A313 /* SoundEffects.cpp in Sources */,
+				08F598E7172BFF9100F9A313 /* SoundEffectsManager.cpp in Sources */,
+				08F598E8172BFF9100F9A313 /* SoundManager.cpp in Sources */,
+				08F598E9172BFF9100F9A313 /* SoundObject.cpp in Sources */,
+				08F598EA172BFF9100F9A313 /* StateMachine.cpp in Sources */,
+				08F598EB172BFF9100F9A313 /* StateManager.cpp in Sources */,
+				08F598EC172BFF9100F9A313 /* States.cpp in Sources */,
+				08F598ED172BFF9100F9A313 /* DateManager.cpp in Sources */,
+				08F598EE172BFF9100F9A313 /* SensorManager.cpp in Sources */,
+				08F598EF172BFF9100F9A313 /* WeatherManager.cpp in Sources */,
+				08F598F0172BFF9100F9A313 /* WeatherStationManager.cpp in Sources */,
+				08F598F1172BFF9100F9A313 /* WeatherThread.cpp in Sources */,
+				08F598F2172BFF9100F9A313 /* ViewManager.cpp in Sources */,
+				08F598F3172BFF9100F9A313 /* VisualEffects.cpp in Sources */,
+				08F598F4172BFF9100F9A313 /* VisualEffectsManager.cpp in Sources */,
+				08F598F5172BFF9100F9A313 /* Visuals.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

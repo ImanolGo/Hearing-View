@@ -11,23 +11,23 @@
 #ifndef __WEATHER_THREAD_H__
 #define __WEATHER_THREAD_H__
 
-#define MESSAGE_LENGTH 3
+#define OK_SIZE 4 ///< defines the size of the input OK command
+#define CONDITIONS_SIZE 70 ///< defines the size of the input current conditions
 
 #include "ofMain.h"
 
 typedef enum {
     IDLE=0,
-    WAKE_UPSTATION,
-    READ_TEMPERATURE,
-    WIND_HUMIDITY
+    WAKE_UP_STATION,
+    READ_DATA,
+    END_SESSION
 } SERIAL_STATE;
 
 
-class DateManager;
-
 class WeatherThread : public ofThread{
     
-    static const int BAUD_RATE;		///< defines communication's baud rate 
+    static const double REFRESH_TIME;       ///< defines the refresh time 
+    static const int BAUD_RATE;             ///< defines communication's baud rate 
 
 	public:
 
@@ -48,11 +48,12 @@ class WeatherThread : public ofThread{
 
 private:
     
-    char		m_bytesRead[MESSAGE_LENGTH];				// data from serial, we will be trying to read 3
-    char		m_bytesReadString[MESSAGE_LENGTH +1];		// a string needs a null terminator, so we need 3 + 1 bytes
-    int			m_nBytesRead;                             // how much did we read?	
+    char		m_bytesOK[OK_SIZE];	// data from serial, we will be trying to read the Ok message
+    char		m_bytesOKString[OK_SIZE +1]; // a string needs a null terminator
+    char		m_bytesConditions[CONDITIONS_SIZE];	// data from serial, we will be trying to read the Ok message
+    char		m_bytesConditionsString[CONDITIONS_SIZE +1]; // a string needs a null terminator
+    int         m_nBytesRead;                             // how much did we read?	
 
-    DateManager*    m_dateManager;        ///< pointer to the date manager
     ofSerial        m_serial;             ///< a serial object
     SERIAL_STATE    m_serialState;        ///< defines the current state of the serial communication
     int             m_maxWaitingLoops;    ///< defines the maximum number of loops 
