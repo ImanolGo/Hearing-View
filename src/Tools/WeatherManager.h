@@ -96,7 +96,6 @@ protected:
     TextMap               m_textVisuals;        ///< text visuals from the current weather conditions
     int                   m_fontSize;           ///< defines the text fontsize
     DateManager*          m_dateManager;        ///< pointer to the date manager
-
     
 };
 

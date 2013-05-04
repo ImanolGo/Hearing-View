@@ -12,7 +12,7 @@
 #define __WEATHER_STATION_MANAGER_H__
 
 #include "ofMain.h"
-
+#include "WeatherThread.h"
 
 #define MESSAGE_LENGTH 3
 
@@ -29,9 +29,6 @@ class DateManager;
 
 class WeatherStationManager
 {
-
-    static const int BAUD_RATE;		///< defines communication's baud rate 
-    static const double REFRESH_TIME;		///< defines time (s) of the refresh of information 
     
 public:
     //! Constructor
@@ -40,10 +37,10 @@ public:
     //! Destructor
     virtual ~WeatherStationManager();
     
-    //! setups the serial manager
+    //! setups the weather station manager
     void setup();
     
-    //! updates the class
+    //! updates the weather station manager
     void update(double dt);
     
     //! handles the events
@@ -52,14 +49,9 @@ public:
     
 protected:
     
-    char		m_bytesRead[MESSAGE_LENGTH];				// data from serial, we will be trying to read 3
-    char		m_bytesReadString[MESSAGE_LENGTH +1];		// a string needs a null terminator, so we need 3 + 1 bytes
-    int			m_nBytesRead;                             // how much did we read?	
-    
-    double          m_elapsedTime;        ///< elapsed time since the last refreshing
+    WeatherThread         m_weatherThread;      ///< class reading by serial from the weather station on a separate process
     DateManager*    m_dateManager;        ///< pointer to the date manager
 
-    ofSerial	m_serial;    
 };
 
 #endif

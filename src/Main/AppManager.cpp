@@ -92,8 +92,9 @@ void AppManager::update(double dt)
     m_guiManager->update(dt);
     m_viewManager->update(dt);
     m_weatherManager->update(dt);
-    m_sensorManager->update(dt);
     m_weatherStationManager->update(dt);
+    m_sensorManager->update(dt);
+
 }
 
 

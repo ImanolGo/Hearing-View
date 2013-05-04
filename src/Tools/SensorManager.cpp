@@ -41,13 +41,13 @@ void SensorManager::setup()
 	// (ie, COM4 on a pc, /dev/tty.... on linux, /dev/tty... on a mac)
 	// arduino users check in arduino app....		
     
-	m_serial.setup(portNum, BAUD_RATE); //open the first device
+	//m_serial.setup(portNum, BAUD_RATE); //open the first device
 	//serial.setup("COM4"); // windows example
-	//m_serial.setup("/dev/tty.usbserial-A700flJG",BAUD_RATE); // mac osx example
+	m_serial.setup("/dev/tty.usbserial-A700flJG",BAUD_RATE); // mac osx example
 	//serial.setup("/dev/ttyUSB0", 9600); //linux example
     
-    std::cout << m_dateManager->getTime() << "- SensorManager-> setup " << std::endl;
-    ofLogNotice() << m_dateManager->getTime() << "- SensorManager->setup " ;
+    std::cout << m_dateManager->getTime() << "- SensorManager-> initialized " << std::endl;
+    ofLogNotice() << m_dateManager->getTime() << "- SensorManager->initialized " ;
 
     
 }
