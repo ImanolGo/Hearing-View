@@ -47,6 +47,9 @@ public:
     //! returns the current time
     std::string getTime();
     
+    //! returns the current Date
+    std::string getDate();
+    
     //! returns the year's seasons
     const std::string& getSeason(){return m_season;}
     
@@ -109,6 +112,8 @@ protected:
         
     double                  m_sunset;       ///< it saves the sunset time as a double number
     double                  m_sunrise;      ///< it saves the sunrise time as a double number
+    double                  m_dawn;         ///< it saves the dawn time as a double number
+    double                  m_dusk;         ///< it saves the dusk time as a double number
     int                     m_day;          ///< saves the current day
     int                     m_month;        ///< saves the current month
     int                     m_year;         ///< saves the current year

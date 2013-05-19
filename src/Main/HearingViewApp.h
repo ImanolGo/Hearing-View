@@ -3,11 +3,15 @@
 #include "ofMain.h"
 #include "ofxUI.h"
 
+#define BUFFER_SIZE 128
+#define SAMPLE_RATE	44100
+
 class AppManager;
 
 class HearingViewApp : public ofBaseApp{
 
 	public:
+
 		void setup();
 		void update();
 		void draw();
@@ -22,9 +26,21 @@ class HearingViewApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+        void audioReceived 	(float * input, int bufferSize, int nChannels);
+        void audioRequested 	(float * input, int bufferSize, int nChannels);
+    
         void exit();
+    
+        void setVolume(float volume) {outputVolume=volume;}
+        void startAudioStream();
+        void stopAudioStream();
 
         AppManager*     m_appManager; //< it manages the whole application
+    
+    private:
+    
+        float   * audioBuf;      //< audio buffer saving the audion input stream
+        float   outputVolume;    //< defines the volume of the output audi stream
 		
 };
 

@@ -4,8 +4,18 @@
 //--------------------------------------------------------------
 void HearingViewApp::setup(){
     
+    //setup Sou
+    outputVolume = 0.0;
+    ofSoundStreamListDevices();
+	ofSoundStreamSetup(2,2,this, SAMPLE_RATE, BUFFER_SIZE, 4);
+	audioBuf = new float[BUFFER_SIZE];
+    ofSoundStreamStop();
+    
     m_appManager = &AppManager::getInstance();
     m_appManager->setup();
+    ofSoundStreamStart();
+    
+    
 }
 
 //--------------------------------------------------------------
@@ -42,6 +52,36 @@ void HearingViewApp::keyPressed(int key)
             break;
     }
 }
+
+void HearingViewApp::startAudioStream()
+{
+    ofSoundStreamStart();
+}
+
+void HearingViewApp::stopAudioStream()
+{
+    ofSoundStreamStop();
+}
+
+//--------------------------------------------------------------
+void HearingViewApp::audioReceived 	(float * input, int bufferSize, int nChannels){
+    
+	for (int i = 0; i < bufferSize; i++){
+        audioBuf[i] = input[i*nChannels];
+	}
+    
+    
+}
+
+void HearingViewApp::audioRequested 	(float * output, int bufferSize, int nChannels){
+    
+    for(int i=0; i<bufferSize;i++) {
+        output[i*nChannels]   = audioBuf[i]*outputVolume;
+        output[i*nChannels+1]   = audioBuf[i]*outputVolume;
+    }
+}
+
+
 //--------------------------------------------------------------
 void HearingViewApp::keyReleased(int key){
 

@@ -108,6 +108,15 @@ std::string DateManager::getTime()
     return  date;
 
 }
+
+std::string DateManager::getDate()
+{
+    
+    std::string date = ofToString(m_day) + "_" +  ofToString(m_month) + "_" +  ofToString(m_year);
+    return  date;
+    
+}
+
 void DateManager::calcDayTime()
 {
     time_t now;
@@ -115,43 +124,22 @@ void DateManager::calcDayTime()
     now = time(0);
     current = localtime(&now);
     
-    int currentHour = current->tm_hour;
-    int currentMin = current->tm_min;
-    
-    int hourSunrise = (int) m_sunrise;
-    int minSunrise =(m_sunrise - (double) hourSunrise)*60;
-    
-    int hourSunset = (int) m_sunset;
-    int minSunset = (m_sunset - (double) hourSunset)*60;
+    double time = current->tm_hour + current->tm_min/60.0;
     
     string dayTime;
-    if (currentHour == hourSunrise) {
-        if (currentMin>=minSunrise) {
-            dayTime = "Day";
-        }
-        else{
-            dayTime = "Night";
-        }
+    if (time>=m_dawn&&time<m_sunrise) {
+        dayTime = "Dawn";
     }
     
-    if (currentHour == hourSunset) {
-        if (currentMin < minSunset) {
-            dayTime = "Day";
-        }
-        else{
-            dayTime = "Night";
-        }
-    }
-    
-    
-    if(currentHour > hourSunrise && currentHour<hourSunset)
-    {
+    else if(time>=m_sunrise&&time<m_sunset) {
         dayTime = "Day";
     }
     
-    else
-    {
-        dayTime = "Night";
+    else if(time>=m_sunset&&time<m_dusk) {
+        dayTime = "Dusk";
+    }
+    else{
+         dayTime = "Night";
     }
     
     if(m_dayTime!=dayTime)
@@ -258,7 +246,22 @@ void DateManager::displayDate()
     ofLogNotice()<<this->getTime() << "- DateManager-> Date:  "<< m_day<< "/"<<m_month<<"/"<<m_year;
     ofLogNotice()<<this->getTime() << "- DateManager-> Season:  "<< m_season;
     ofLogNotice()<<this->getTime() << "- DateManager-> Status:  "<< m_dayTime;
-       
+    
+    std::cout<<this->getTime() << "- DateManager-> Dawn:  ";
+    ofLogNotice()<<this->getTime() << "- DateManager-> Dawn:  ";
+    int hourDawn = (int) m_dawn;
+    int minDawn =(m_dawn - (double) hourDawn)*60;
+    
+    if (hourDawn < 10) cout << '0';
+    
+    cout << hourDawn << ':';
+    ofLogNotice()<< hourDawn << ':';
+    
+    if (minDawn < 10) cout << '0';
+    
+    cout << minDawn << std::endl;
+    ofLogNotice()<< minDawn;
+    
     std::cout<<this->getTime() << "- DateManager-> Sunrise:  ";
     ofLogNotice()<<this->getTime() << "- DateManager-> Sunrise:  ";
     int hourSunrise = (int) m_sunrise;
@@ -289,6 +292,21 @@ void DateManager::displayDate()
     
     cout << minSunset << std::endl;
     ofLogNotice()<< minSunset;
+    
+    std::cout<<this->getTime() << "- DateManager-> Dusk:  ";
+    ofLogNotice()<<this->getTime() << "- DateManager-> Dusk:  ";
+    int hourDusk = (int) m_dusk;
+    int minDusk =(m_dusk - (double) hourDusk)*60;
+    
+    if (hourDusk < 10) cout << '0';
+    
+    cout << hourDusk << ':';
+    ofLogNotice()<< hourDusk << ':';
+    
+    if (minDusk < 10) cout << '0';
+    
+    cout << minDusk << std::endl;
+    ofLogNotice()<< minDusk;
     
             
 }
@@ -436,10 +454,19 @@ void DateManager::calcSunEqs()
     double daylen = degs * ha / 7.5;
     if (daylen<0.0001) {daylen = 0.0;}
     // arctic winter   //
+
+    
     
     this->calcEST(); //calculate the European Summer Time offset
     m_sunrise = 12.0 - 12.0 * ha/pi + (m_timezone+ m_EST) - m_longitude/15.0 + equation/60.0;
     m_sunset = 12.0 + 12.0 * ha/pi + (m_timezone+ m_EST) - m_longitude/15.0 + equation/60.0;
+    
+    m_dawn = m_sunrise - twx;     // morning twilight begin
+    m_dusk = m_sunset + twx;     // evening twilight end
+    
+    if (m_sunrise > 24.0) m_sunrise-= 24.0;
+    if (m_sunset > 24.0) m_sunset-= 24.0;
+    
 }
 
 

@@ -69,17 +69,20 @@ AppManager::~AppManager()
 
 void AppManager::setup()
 {
-    ofLogToFile("HearingView.log", true);
+    std::string fileName = "HearingView_" + m_dateManager->getDate() + ".log";  
+    ofSetLogLevel(OF_LOG_NOTICE);
+    ofLogToFile(fileName, true);
     
     m_eventManager->setup();
     m_viewManager->setup();
     m_soundManager->setup();
     m_guiManager->setup();
     m_weatherManager->setup();
-    m_dateManager->setup();
     m_stateManager->setup();
-    m_sensorManager->setup();
-    m_weatherStationManager->setup();
+    //m_sensorManager->setup();
+    //m_weatherStationManager->setup();
+    m_dateManager->setup();
+    
 }
 
 void AppManager::update(double dt)
@@ -92,8 +95,8 @@ void AppManager::update(double dt)
     m_guiManager->update(dt);
     m_viewManager->update(dt);
     m_weatherManager->update(dt);
-    m_weatherStationManager->update(dt);
-    m_sensorManager->update(dt);
+    //m_weatherStationManager->update(dt);
+    //m_sensorManager->update(dt);
 
 }
 
