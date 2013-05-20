@@ -8,6 +8,16 @@
 
 #include "SoundObject.h"
 #include "Visuals.h"
+#include "AppManager.h"
+#include "VisualEffectsManager.h"
+
+
+Visual::~Visual()
+{
+   AppManager::getInstance().getVisualEffectsManager().removeAllVisualEffects(*this);
+    
+}
+
 
 TextVisual::~TextVisual()
 {

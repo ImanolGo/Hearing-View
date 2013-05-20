@@ -103,8 +103,7 @@ private:
     bool                             m_playSamples;       ///< it tells wether the sampler hast to play or not
     
     std::string                      m_season;            ///< saves the current season
-    std::string                      m_conditions;        ///< saves the current weather conditions
-    std::string                      m_dayTime;           ///< saves if it is day or night
+    std::string                      m_category;          ///< saves the current sample category
     std::vector<int>                 m_indexList;         ////< list with the current sample list indexes
     
     DateManager*	  m_dateManager;	///< pointer to the date manager

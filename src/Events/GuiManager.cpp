@@ -161,21 +161,21 @@ void GuiManager::setup()
     y = 7*margin;
     m_gui->addWidget(new ofxUIToggle(x,y,buttom, buttom, false,"SENSOR"));
     
-    vector<string> vnames; vnames.push_back("Day"); vnames.push_back("Night");
+    vector<string> vnames; vnames.push_back("DAY"); vnames.push_back("NIG");
     x = 6*margin + w;
     y = 5*margin;
     ofxUIRadio* radio = new  ofxUIRadio(x,y, buttom, buttom, "DAILY CYCLE", vnames, OFX_UI_ORIENTATION_VERTICAL);
     m_gui->addWidget(radio);
-    radio->activateToggle("Day");
+    radio->activateToggle("DAY");
     
     vnames.clear();
-    vnames.push_back("Summer"); vnames.push_back("Autumn"); vnames.push_back("Winter");
-    vnames.push_back("Spring");
+    vnames.push_back("SUM"); vnames.push_back("FAL"); vnames.push_back("WIN");
+    vnames.push_back("SPR");
     
     x = 8*margin + 2*w;
     radio = new  ofxUIRadio(x,y, buttom, buttom, "SEASONS", vnames, OFX_UI_ORIENTATION_VERTICAL);
     m_gui->addWidget(radio);
-    radio->activateToggle("Summer");
+    radio->activateToggle("SUM");
     
     vnames.clear();
     vnames; vnames.push_back("Dry"); vnames.push_back("Rain");
@@ -226,14 +226,14 @@ void GuiManager::handleEvent(const Event& event)
         }
     }
     
-    else if(name == "Winter" || name == "Summer" || name == "Spring" || name == "Autumn")
+    else if(name == "WIN" || name == "SUM" || name == "SPR" || name == "FAL")
 	{
         widget = m_gui->getWidget("SEASONS");
         ofxUIRadio *radio = (ofxUIRadio *) widget;
         radio->activateToggle(name);
     }
     
-    else if(name == "Day" || name == "Night")
+    else if(name == "DAY" || name == "NIG")
 	{
         widget = m_gui->getWidget("DAILY CYCLE");
         ofxUIRadio *radio = (ofxUIRadio *) widget;
@@ -253,7 +253,7 @@ void GuiManager::guiEvent(ofxUIEventArgs &e)
 {
     string name = e.widget->getName(); 
 	int kind = e.widget->getKind(); 
-	cout << "got event from: " << name << endl; 
+	//cout << "got event from: " << name << endl; 
     
     if(name =="SENSOR")
     {

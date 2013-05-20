@@ -33,7 +33,7 @@ public:
     Visual(ofPoint pos, float width, float height, bool centred = false): m_position(pos), m_width(width), m_height(height), m_centred(centred){}
     
     //! Destructor
-    virtual ~Visual() {}
+    virtual ~Visual();
     
 	//! Draws the visual
 	virtual void draw() const = 0;

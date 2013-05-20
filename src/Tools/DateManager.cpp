@@ -55,9 +55,16 @@ DateManager::~DateManager()
 void DateManager::setup()
 {
     //location: Linz
-    m_latitude = 48.303056;
-    m_longitude = 14.290556;
+    //m_latitude = 48.303056;
+    //m_longitude = 14.290556;
+    //m_timezone = 1;
+    
+    //location: Rheinau psychiatric clinic
+    m_latitude = 47.635572;
+    m_longitude = 8.607203;
     m_timezone = 1;
+    
+    m_location = "Rheinau Psychiatric Clinic";
     
     m_day = m_Date->getDay();
     m_month = m_Date->getMonth();
@@ -128,18 +135,18 @@ void DateManager::calcDayTime()
     
     string dayTime;
     if (time>=m_dawn&&time<m_sunrise) {
-        dayTime = "Dawn";
+        dayTime = "DWN";
     }
     
     else if(time>=m_sunrise&&time<m_sunset) {
-        dayTime = "Day";
+        dayTime = "DAY";
     }
     
     else if(time>=m_sunset&&time<m_dusk) {
-        dayTime = "Dusk";
+        dayTime = "DSK";
     }
     else{
-         dayTime = "Night";
+         dayTime = "NIG";
     }
     
     if(m_dayTime!=dayTime)
@@ -156,51 +163,51 @@ void DateManager::calcSeason()
     string season;
     if(1 <= m_month && m_month <=3)
     {
-        season = "Winter";
+        season = "WIN";
     }
     
     else if (4 <= m_month && m_month <=6)
     {
-        season = "Spring";
+        season = "SPR";
     }
     
     else if (7 <=m_month && m_month <=9)
     {
-        season = "Summer";
+        season = "SUM";
     }
     
     else if (10 <= m_month && m_month <= 12)
     {
-        season = "Autumn";
+        season = "FAL";
     }
     
     
     if ( (m_month % 3 == 0) && (m_day >= 21))
     {
-        if (season=="Winter")
+        if (season=="WIN")
         {
-            season = "Spring";
+            season = "SPR";
             
         }
         
-        else if (season=="Spring")
+        else if (season=="SPR")
         {
-            season = "Summer";
+            season = "SUM";
         }
         
-        else if (season=="Summer")
+        else if (season=="SUM")
         {
-            season = "Autumn";
+            season = "FAL";
         }
         
-        else if (season=="Autumn")
+        else if (season=="FAL")
         {
-            season = "Winter";
+            season = "WIN";
         }
         
         else 
         {
-            season = "Winter";
+            season = "WIN";
         }    			
     }
     
@@ -218,7 +225,7 @@ void DateManager::calcSeason()
 void DateManager::handleEvent(const Event& event)
 {
     std::string name = event.getName();
-    if(name=="Winter" || name=="Summer" ||name=="Autumn" ||name=="Spring")
+    if(name=="WIN" || name=="SUM" ||name=="FAL" ||name=="SPR")
     {
         if(m_season!=name)
         {
@@ -230,7 +237,7 @@ void DateManager::handleEvent(const Event& event)
 
     }
     
-    else if(name== "Day" || name=="Night" )
+    else if(name== "DAY" || name=="NIG" || name=="DSK" || name=="DWN" )
     {
         m_dayTime = name;
     }

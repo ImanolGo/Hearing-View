@@ -127,6 +127,7 @@ protected:
     
     std::string             m_season;       ///< saves the current season
     std::string             m_dayTime;      ///< saves the current day time
+    std::string             m_location;     ///< saves the name of the current location
     
     SeasonMap               m_seasonImages;///< map of the season images
     
