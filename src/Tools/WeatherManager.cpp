@@ -144,7 +144,7 @@ bool WeatherManager::parseXML()
         std::string text = "Conditions: " + m_conditionsDesc;
         m_textVisuals["currentConditions"]->setText(text, m_fontSize);
          m_textVisuals["currentConditions"]->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["currentConditions"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["currentConditions"], 255, WeatherManager::FADE_TIME);
     }
     
     float temperature = m_XML.getValue("temp_C", 0.0);
@@ -157,7 +157,7 @@ bool WeatherManager::parseXML()
         
         m_textVisuals["temperature"]->setText(text, m_fontSize);
         m_textVisuals["temperature"]->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["temperature"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["temperature"], 255, WeatherManager::FADE_TIME);
         
     }  
     
@@ -171,7 +171,7 @@ bool WeatherManager::parseXML()
         
         m_textVisuals["humidity"]->setText(text, m_fontSize);
         m_textVisuals["humidity"]->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["humidity"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["humidity"], 255, WeatherManager::FADE_TIME);
         
     }  
     
@@ -185,7 +185,7 @@ bool WeatherManager::parseXML()
         
         m_textVisuals["windSpeed"]->setText(text, m_fontSize);
         m_textVisuals["windSpeed"]->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["windSpeed"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["windSpeed"], 255, WeatherManager::FADE_TIME);
         
     }  
     
@@ -199,7 +199,7 @@ bool WeatherManager::parseXML()
         
         m_textVisuals["precipMM"]->setText(text, m_fontSize);
         m_textVisuals["precipMM"]->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["precipMM"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["precipMM"], 255, WeatherManager::FADE_TIME);
         
     }  
     
@@ -319,11 +319,11 @@ void WeatherManager::readConditionsCode()
         m_currentIcon = m_icons[m_iconName];
         AppManager::getInstance().getViewManager().addVisual(*m_currentIcon);
         m_currentIcon->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(*m_currentIcon, 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+        AppManager::getInstance().getViewManager().fadeVisual(*m_currentIcon, 255, WeatherManager::FADE_TIME);
         std::string text = "Conditions: " + m_conditionsDesc;
         m_textVisuals["currentConditions"]->setText(text, m_fontSize);
         m_textVisuals["currentConditions"]->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["currentConditions"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+        AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["currentConditions"], 255, WeatherManager::FADE_TIME);
     }
     
     if(conditions!=m_conditions)
@@ -375,7 +375,7 @@ void WeatherManager::loadIcons()
     m_currentIcon = m_icons["sunny_Day"];
     AppManager::getInstance().getViewManager().addVisual(*m_currentIcon,1);
     m_currentIcon->setColor(ofColor(255,255,255,0));
-    AppManager::getInstance().getViewManager().fadeVisual(*m_currentIcon, 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_currentIcon, 255, WeatherManager::FADE_TIME);
     
 }
 
@@ -395,7 +395,7 @@ void WeatherManager::loadTextVisuals()
     textVisual->setColor(ofColor(255,255,255,0));
     m_textVisuals["currentConditions"]= textVisual;
     AppManager::getInstance().getViewManager().addVisual(*m_textVisuals["currentConditions"]);
-    AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["currentConditions"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["currentConditions"], 255, WeatherManager::FADE_TIME);
 
     std::string text;
     y = y + 3.0*m_fontSize/2;
@@ -405,7 +405,7 @@ void WeatherManager::loadTextVisuals()
     textVisual->setText(text, m_fontSize);
     m_textVisuals["temperature"]= textVisual;
     AppManager::getInstance().getViewManager().addVisual(*m_textVisuals["temperature"]);
-    AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["temperature"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["temperature"], 255, WeatherManager::FADE_TIME);
     
     y = y + 3.0*m_fontSize/2;
     textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, false);
@@ -414,7 +414,7 @@ void WeatherManager::loadTextVisuals()
     textVisual->setText(text, m_fontSize);
     m_textVisuals["humidity"]= textVisual;
     AppManager::getInstance().getViewManager().addVisual(*m_textVisuals["humidity"]);
-    AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["humidity"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["humidity"], 255, WeatherManager::FADE_TIME);
     
     y = y + 3.0*m_fontSize/2;
     textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, false);
@@ -423,7 +423,7 @@ void WeatherManager::loadTextVisuals()
     textVisual->setText(text, m_fontSize);
     m_textVisuals["windSpeed"]= textVisual;
     AppManager::getInstance().getViewManager().addVisual(*m_textVisuals["windSpeed"]);
-    AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["windSpeed"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["windSpeed"], 255, WeatherManager::FADE_TIME);
     
     y = y + 3.0*m_fontSize/2;
     textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, false);
@@ -432,7 +432,7 @@ void WeatherManager::loadTextVisuals()
     textVisual->setText(text, m_fontSize);
     m_textVisuals["precipMM"]= textVisual;
     AppManager::getInstance().getViewManager().addVisual(*m_textVisuals["precipMM"]);
-    AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["precipMM"], 255, WeatherManager::FADE_TIME,ViewManager::LOGARITHMIC);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["precipMM"], 255, WeatherManager::FADE_TIME);
 }
 
 std::string WeatherManager::getIconName(const std::string& path)

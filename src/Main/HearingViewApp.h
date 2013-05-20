@@ -31,10 +31,6 @@ class HearingViewApp : public ofBaseApp{
     
         void exit();
     
-        void setVolume(float volume) {outputVolume=volume;}
-        void startAudioStream();
-        void stopAudioStream();
-
         AppManager*     m_appManager; //< it manages the whole application
     
     private:

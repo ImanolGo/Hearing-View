@@ -95,45 +95,17 @@ void ViewManager::removeVisual(const Visual& visual)
 }
 
 //! fades an specific visual
-void  ViewManager::fadeVisual(Visual& visual, float alpha, float fadeTime,  FadeType type)
+void  ViewManager::fadeVisual(Visual& visual, float alpha, float fadeTime)
 {
     for(VisualList::iterator it = m_visuals.begin(); it != m_visuals.end();it++ ) {
 		if(it->second == &visual) {
 			AppManager::getInstance().getVisualEffectsManager().removeAllVisualEffects(visual);
-            switch(type)
-            {
-                case LINEAR:
-                {
-                    FadeVisualLinear* fade = new FadeVisualLinear(visual);
-                    fade->setParameters(visual.getAlpha(), alpha, fadeTime);
-                    fade->start();
-                    break;
-                }
-                case EXPONENTIAL:
-                {
-                    FadeVisualExp* fade = new FadeVisualExp(visual);
-                    fade->setParameters(visual.getAlpha(), alpha, fadeTime);
-                    fade->start();
-                    break;
-                }
-                case LOGARITHMIC:
-                {
-                    FadeVisualLog* fade = new FadeVisualLog(visual);
-                    fade->setParameters(visual.getAlpha(), alpha, fadeTime);
-                    fade->start();
-                    break;
-                }
-                default:
-                {
-                    FadeVisualLinear* fade = new FadeVisualLinear(visual);
-                    fade->setParameters(visual.getAlpha(), alpha, fadeTime);
-                    fade->start();
-                    break;
-                }
-            }
+            FadeVisual* fade = new FadeVisual(visual);
+            fade->setParameters(alpha, fadeTime);
+            fade->start();
             
-            std::cout << m_dateManager->getTime() << "- ViewManager-> fade visual to "<<alpha<< " alpha value in "<< fadeTime<<"s"<<std::endl;
-            ofLogNotice() << m_dateManager->getTime() << "- ViewManager-> fade visual to "<<alpha<< " alpha value in "<< fadeTime<<"s";
+            //std::cout << m_dateManager->getTime() << "- ViewManager-> fade visual to "<<alpha<< " alpha value in "<< fadeTime<<"s"<<std::endl;
+            //ofLogNotice() << m_dateManager->getTime() << "- ViewManager-> fade visual to "<<alpha<< " alpha value in "<< fadeTime<<"s";
             break;
 		}
     }

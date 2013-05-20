@@ -222,8 +222,8 @@ void DateManager::handleEvent(const Event& event)
     {
         if(m_season!=name)
         {
-            AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[m_season], 0, DateManager::FADE_TIME,ViewManager::LINEAR);
-            AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[name], 255, DateManager::FADE_TIME,ViewManager::LINEAR);
+            AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[m_season], 0, DateManager::FADE_TIME);
+            AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[name], 255, DateManager::FADE_TIME);
             m_season = name;
             AppManager::getInstance().getEventManager().setEvent(Event(m_season));
         }
@@ -508,7 +508,7 @@ void DateManager::loadSeasons()
         m_seasonImages[seasonName]->setColor(ofColor(255,255,255,0));
     }
     
-    AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[m_season], 255, DateManager::FADE_TIME, ViewManager::LINEAR);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[m_season], 255, DateManager::FADE_TIME);
 
 }
 

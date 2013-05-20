@@ -1,11 +1,12 @@
 #include "HearingViewApp.h"
 #include "AppManager.h"
+#include "SoundManager.h"
 
 //--------------------------------------------------------------
 void HearingViewApp::setup(){
     
     //setup Sou
-    outputVolume = 0.0;
+    outputVolume = 1.0;
     ofSoundStreamListDevices();
 	ofSoundStreamSetup(2,2,this, SAMPLE_RATE, BUFFER_SIZE, 4);
 	audioBuf = new float[BUFFER_SIZE];
@@ -23,6 +24,9 @@ void HearingViewApp::update(){
 
     double dt = ofGetLastFrameTime();
 	m_appManager->update(dt);
+    
+    outputVolume = m_appManager->getSoundManager().getTubeVolume();
+    
 }
 
 //--------------------------------------------------------------
@@ -53,15 +57,6 @@ void HearingViewApp::keyPressed(int key)
     }
 }
 
-void HearingViewApp::startAudioStream()
-{
-    ofSoundStreamStart();
-}
-
-void HearingViewApp::stopAudioStream()
-{
-    ofSoundStreamStop();
-}
 
 //--------------------------------------------------------------
 void HearingViewApp::audioReceived 	(float * input, int bufferSize, int nChannels){

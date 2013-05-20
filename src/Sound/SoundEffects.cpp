@@ -20,14 +20,18 @@
 //==============================================================================
 
 
-SoundEffect::SoundEffect(SoundObject& sound):m_sound(sound),m_elapsedTime(0.0),m_isActive(false)
+SoundEffect::SoundEffect(SoundObject& sound,EasingFunction function, EasingType type): m_sound(sound), m_function(function), m_isActive(false), m_animationTime(1000.0), m_elapsedTime(0.0),	m_elaspedTimeToStart(0.0), m_type(type)
 {
 	// intentionally left empty
 }
 
-void SoundEffect::start()
+void SoundEffect::start(double startTime)
 {
-	m_isActive = true;
+	m_elapsedTime = 0.0;
+	m_elaspedTimeToStart = 0.0;
+	m_isActive = true; 
+	m_startTime = startTime;
+
     AppManager::getInstance().getSoundEffectsManager().addSoundEffect(*this);
     
 }
@@ -39,61 +43,227 @@ void SoundEffect::stop()
 	AppManager::getInstance().getSoundEffectsManager().removeSoundEffect(*this);
 }
 
+double SoundEffect::function(double t, double from, double to, double duration) const 
+{
+	double c = to - from;
+	switch (m_function)
+	{
+		case LINEAR:
+			return  c*(t / duration) + from;
+			break;
+            
+		case EXPONENTIAL:
+			if (m_type== EASE_IN_OUT)
+			{
+				t /= duration/2;
+				if (t < 1) return c/2 * std::pow( 2, 10 * (t - 1) ) + from;
+				t--;
+				return c/2 * ( -std::pow( 2, -10 * t) + 2 ) + from;
+				
+			}
+			else if (m_type==EASE_OUT)
+			{
+				return c * ( -std::pow( 2, -10 * t/duration ) + 1 ) + from;
+			}
+			else
+			{
+				return c * std::pow( 2, 10 * (t/duration - 1) ) + from;
+                
+			}
+			break;
+            
+		case CIRCULAR:
+			if (m_type==EASE_IN_OUT)
+			{
+				t /= duration/2;
+				if (t < 1) return -c/2 * (std::sqrt(1 - t*t) - 1) + from;
+				t -= 2;
+				return c/2 * (std::sqrt(1 - t*t) + 1) + from;
+			}
+			else if (m_type==EASE_OUT)
+			{
+				t /= duration;
+				t--;
+				return c * std::sqrt(1 - t*t) + from;
+			}
+			else
+			{
+				t /= duration;
+				return -c * (std::sqrt(1 - t*t) - 1) + from;
+			}
+			break;
+            
+		case QUADRATIC:
+			if (m_type==EASE_IN_OUT)
+			{
+				t /= duration/2;
+				if (t < 1) return c/2*t*t + from;
+				t--;
+				return -c/2 * (t*(t-2) - 1) + from;
+                
+			}
+			else if (m_type==EASE_OUT)
+			{
+				t /= duration;
+				return -c * t*(t-2) + from;
+				
+			}
+			else
+			{
+				t/=duration;
+				return c*t*t + from;
+			}
+			break;
+            
+		case CUBIC:
+			if (m_type==EASE_IN_OUT)
+			{
+				t /= duration/2;
+				if (t < 1) return c/2*t*t*t + from;
+				t -= 2;
+				return c/2*(t*t*t + 2) + from;
+                
+			}
+			else if (m_type==EASE_OUT)
+			{
+				t /= duration;
+				t--;
+				return c*(t*t*t + 1) + from;
+			}
+			else
+			{
+				t /= duration;
+				return c*t*t*t + from;
+			}
+			break;
+            
+		case QUARTIC:
+			if (m_type==EASE_IN_OUT)
+			{
+				t /= duration/2;
+				if (t < 1) return c/2*t*t*t*t + from;
+				t -= 2;
+				return -c/2 * (t*t*t*t - 2) + from;
+                
+			}
+			else if (m_type==EASE_OUT)
+			{
+				t /= duration;
+				t--;
+				return -c * (t*t*t*t - 1) + from;
+				
+			}
+			else
+			{
+				t /= duration;
+				return c*t*t*t*t + from;
+			}
+			break;
+            
+		case QUINTIC:
+			if (m_type==EASE_IN_OUT)
+			{
+				t /= duration/2;
+				if (t < 1) return c/2*t*t*t*t*t + from;
+				t -= 2;
+				return c/2*(t*t*t*t*t + 2) + from;
+                
+			}
+			else if (m_type==EASE_OUT)
+			{
+				t /= duration;
+				t--;
+				return c*(t*t*t*t*t + 1) + from;
+                
+			}
+			else
+			{
+				t /= duration;
+				return c*t*t*t*t*t + from;
+			}
+			break;
+            
+		case SINUSOIDAL:
+			if (m_type==EASE_IN_OUT)
+			{
+				return -c/2 * (std::cos(PI*t/duration) - 1) + from;
+			}
+			else if (m_type==EASE_OUT)
+			{
+				return c * std::sin(t/duration * (PI/2)) + from;
+                
+			}
+			else
+			{
+				return -c * std::cos(t/duration * (PI/2)) + c + from;
+			}
+			break;
+            
+		default: 
+        {
+            double percent = c*(t/duration) + from;
+            return  c*(t/duration) + from; //linear is the default
+        }
+			
+	}
+}
 
 //==============================================================================
 //================================  FADE SOUND =================================
 //==============================================================================
 
-FadeSound::FadeSound(SoundObject& sound): SoundEffect(sound),
-
-    m_elapsedTime(0),
-    m_from(0),
-    m_to(1),
-    m_fadeTime(1000)
-    
+FadeSound::FadeSound(SoundObject& sound,EasingFunction function, EasingType type): SoundEffect(sound,function,type),
+    m_volume(1.0), m_startVolume(0.0),m_endVolume(1.0)    
 {
 	// intentionally left empty
 }
 
 
-
-void FadeSound::setParameters(float from, float to, float fadeTime)
+void FadeSound::setParameters(double startVolume,double endVolume, double animationTime)
 {
-	m_from = from;
-	m_to = to;
-    m_fadeTime = fadeTime;
+	m_elapsedTime = 0.0;
+	m_sound.setVolume(startVolume);
+	m_startVolume = startVolume;
+	m_endVolume = endVolume;
+	m_animationTime = animationTime;
 }
+
+void FadeSound::setParameters(double endVolume, double animationTime)
+{
+	m_elapsedTime = 0.0;
+	m_startVolume = m_sound.getVolume();
+	m_endVolume = endVolume;
+	m_animationTime = animationTime;
+}
+
 
 void FadeSound::stop(){
 	SoundEffect::stop();
 }
 
-void FadeSound::start(){
-	SoundEffect::start();
+void FadeSound::start(double startTime){
+	SoundEffect::start(startTime);
 }
 
-
-FadeSoundLinear::FadeSoundLinear(SoundObject& sound): FadeSound(sound)
+void FadeSound::update(double dt)
 {
-    
-}
+    if(m_elaspedTimeToStart < m_startTime) {
+        m_elaspedTimeToStart += dt;
+		return;
+	}
 
-void FadeSoundLinear::update(double dt)
-{
-    m_elapsedTime = m_elapsedTime + dt;
+	m_elapsedTime = m_elapsedTime + dt;
     
-    if (m_elapsedTime>=m_fadeTime) {
-        m_sound.setVolume(m_to);
-        this->stop();
-        return;
-        
-    }
-     
-    float pct = 1.0 - (m_elapsedTime / m_fadeTime); 
-    float fadeValue = (pct * (m_from - m_to) + m_to);
-    m_sound.setVolume(fadeValue);
+	if(m_elapsedTime >= m_animationTime) {	
+        m_sound.setVolume(m_endVolume);
+		this->stop();
+		return;
+	}
     
-    Event event("SAMPLE VOLUME",fadeValue);
+	m_volume = this->function(m_elapsedTime,m_startVolume,m_endVolume,m_animationTime);
+	m_sound.setVolume(m_volume);
+    
+    Event event("SAMPLE VOLUME",m_volume);
     if(m_sound.getName()=="tube")
     {
         event.setName("TUBE VOLUME");
@@ -102,67 +272,6 @@ void FadeSoundLinear::update(double dt)
     AppManager::getInstance().getEventManager().setEvent(event);
 }
 
-FadeSoundLog::FadeSoundLog(SoundObject& sound): FadeSound(sound)
-{
-    
-}
-
-void FadeSoundLog::update(double dt)
-{
-    m_elapsedTime = m_elapsedTime + dt;
-    
-    if (m_elapsedTime>=m_fadeTime|| m_sound.getVolume() == m_to) {
-        m_sound.setVolume(m_to);
-        this->stop();
-        return;
-        
-    }
-    
-    float base = 10; //2.71828182845904523536028747135266249775724709369995;  
-    float pct = log10(m_fadeTime/(m_fadeTime + (base-1) * m_elapsedTime)) + 1; 
-    float fadeValue = (pct * (m_from - m_to) + m_to);
-    m_sound.setVolume(fadeValue);
-    
-    Event event("SAMPLE VOLUME",fadeValue);
-    if(m_sound.getName()=="tube")
-    {
-        event.setName("TUBE VOLUME");
-    }
-    
-    AppManager::getInstance().getEventManager().setEvent(event);
-    
-}
-
-FadeSoundExp::FadeSoundExp(SoundObject& sound): FadeSound(sound)
-{
-    
-}
-
-void FadeSoundExp::update(double dt)
-{
-    m_elapsedTime = m_elapsedTime + dt;
-    
-    if (m_elapsedTime>=m_fadeTime) {
-        m_sound.setVolume(m_to);
-        this->stop();
-        return;
-        
-    }
-    
-    float base = 10.0f;
-    float pct = - pow(base,(float)((m_elapsedTime * 1.04 - m_fadeTime)/m_fadeTime)) + 1.09; 
-    float fadeValue = (pct * (m_from - m_to) + m_to);
-    m_sound.setVolume(fadeValue);
-    
-    Event event("SAMPLE VOLUME",fadeValue);
-    if(m_sound.getName()=="tube")
-    {
-        event.setName("TUBE VOLUME");
-    }
-    
-    AppManager::getInstance().getEventManager().setEvent(event);
-    
-}
 
 
 

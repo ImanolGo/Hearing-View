@@ -34,11 +34,6 @@ class SoundManager
 {
 public:
     
-    typedef enum { LINEAR, 
-        EXPONENTIAL, 
-        LOGARITHMIC
-    } FadeType;
-    
     //! Constructor
     SoundManager();
     
@@ -60,16 +55,19 @@ public:
     void stopSamples();
     
     //! fades the tube sound from it current volume level to a specific level
-    void  fadeTube(float volume, float fadeTime, FadeType type);
+    void  fadeTube(float volume, float fadeTime);
     
     //! fades the tube sound from as specific volume level  a specific level
-    void  fadeTube(float fromVolume, float toVolume, float fadeTime, FadeType type);
+    void  fadeTube(float fromVolume, float toVolume, float fadeTime);
     
     //! fades the current sample to a specific level
-    void  fadeSample(float volume,float fadeTime, FadeType type);
+    void  fadeSample(float volume,float fadeTime);
     
     //! fades the sample from as specific volume level  a specific level
-    void  fadeSample(float fromVolume, float toVolume, float fadeTime, FadeType type);
+    void  fadeSample(float fromVolume, float toVolume, float fadeTime);
+    
+     //! Returns the tube's sound object volume
+    float getTubeVolume() const;
     
     
     //! handles the events

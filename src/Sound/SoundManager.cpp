@@ -61,6 +61,13 @@ SoundManager::~SoundManager()
         delete m_sampleText;
         m_sampleText = NULL;
     }
+    
+    if(m_tube)
+    {
+        delete m_tube;
+        m_tube = NULL;
+
+    }
 }
 
 void SoundManager::setup()
@@ -69,7 +76,7 @@ void SoundManager::setup()
     
     m_tube = new SoundObject("tube");
     m_tube->loadSound("sounds/tube.wav");
-    m_tube->setVolume(0.0);
+    m_tube->setVolume(0.0f);
     m_tube->setLoop(true);
     m_tube->play();
     this->loadSamples();
@@ -146,6 +153,15 @@ void SoundManager::loadSamples()
 }
 
 
+float SoundManager::getTubeVolume() const
+{
+    if(m_tube){
+        return m_tube->getVolume();
+    }
+    
+    return 0.0f;
+}
+
 std::string SoundManager::getSampleName(const std::string& path)
 {
     std::vector<std::string> strs = ofSplitString(path, "/");
@@ -192,7 +208,7 @@ void SoundManager::playRandomSample()
     if(m_indexList.empty())
     {
         m_playSamples = false;
-        AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText, 0, 3,ViewManager::LOGARITHMIC);
+        AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText, 0, 3);
         AppManager::getInstance().getEventManager().setEvent(Event("END_SAMPLER"));
     }
     
@@ -202,7 +218,7 @@ void SoundManager::playRandomSample()
         m_currentSample = m_currentSampleList[m_indexList[ind]];
         m_sampleText->setText("\"" + m_currentSample->getName() + "\"", 15);
         m_sampleText->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText, 255, 3,ViewManager::LOGARITHMIC);
+        AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText, 255, 3);
         m_currentSample->play();
         m_indexList.erase(m_indexList.begin()+ind);
         std::cout <<m_dateManager->getTime()<<"- SoundManager-> play sample \""<< m_currentSample->getName() <<"\"" << std::endl;
@@ -236,7 +252,7 @@ void SoundManager::update(double dt)
     
 }
 
-void  SoundManager::fadeTube(float volume, float fadeTime, FadeType type)
+void  SoundManager::fadeTube(float volume, float fadeTime)
 {
     if(!m_tube)
     {
@@ -244,45 +260,15 @@ void  SoundManager::fadeTube(float volume, float fadeTime, FadeType type)
     }
     
     AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_tube);
-    
-    float currentVolume = m_tube->getVolume();
-    switch(type)
-    {
-        case LINEAR:
-        {
-            FadeSoundLinear* fade = new FadeSoundLinear(*m_tube);
-            fade->setParameters(currentVolume, volume, fadeTime);
-            fade->start();
-            break;
-        }
-        case EXPONENTIAL:
-        {
-            FadeSoundExp* fade = new FadeSoundExp(*m_tube);
-            fade->setParameters(currentVolume, volume, fadeTime);
-            fade->start();
-            break;
-        }
-        case LOGARITHMIC:
-        {
-            FadeSoundLog* fade = new FadeSoundLog(*m_tube);
-            fade->setParameters(currentVolume, volume, fadeTime);
-            fade->start();
-            break;
-        }
-        default:
-        {
-            FadeSoundLinear* fade = new FadeSoundLinear(*m_tube);
-            fade->setParameters(currentVolume, volume, fadeTime);
-            fade->start();
-            break;
-        }
-    }
-    
+    FadeSound* fade = new FadeSound(*m_tube);
+    fade->setParameters(volume, fadeTime);
+    fade->start();
+
     std::cout <<m_dateManager->getTime()<<"- SoundManager-> fade tube to "<<volume<< " in "<< fadeTime<<"s"<<std::endl;
-    ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> fade tube to "<<volume<< " in "<< fadeTime<<"s";
+    //ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> fade tube to "<<volume<< " in "<< fadeTime<<"s";
 }
 
-void  SoundManager::fadeTube(float fromVolume, float toVolume, float fadeTime, FadeType type)
+void  SoundManager::fadeTube(float fromVolume, float toVolume, float fadeTime)
 {
     if(!m_tube)
     {
@@ -290,138 +276,54 @@ void  SoundManager::fadeTube(float fromVolume, float toVolume, float fadeTime, F
     }
     
     AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_tube);
+    FadeSound* fade = new FadeSound(*m_tube);
+    fade->setParameters(fromVolume, toVolume, fadeTime);
+    fade->start();
     
-    switch(type)
-    {
-        case LINEAR:
-        {
-            FadeSoundLinear* fade = new FadeSoundLinear(*m_tube);
-            fade->setParameters(fromVolume, toVolume, fadeTime);
-            fade->start();
-            break;
-        }
-        case EXPONENTIAL:
-        {
-            FadeSoundExp* fade = new FadeSoundExp(*m_tube);
-            fade->setParameters(fromVolume, toVolume, fadeTime);
-            fade->start();
-            break;
-        }
-        case LOGARITHMIC:
-        {
-            FadeSoundLog* fade = new FadeSoundLog(*m_tube);
-            fade->setParameters(fromVolume, toVolume, fadeTime);
-            fade->start();
-            break;
-        }
-        default:
-        {
-            FadeSoundLinear* fade = new FadeSoundLinear(*m_tube);
-            fade->setParameters(fromVolume, toVolume, fadeTime);
-            fade->start();
-            break;
-        }
-    }
     
     std::cout <<m_dateManager->getTime()<<"- SoundManager-> fade tube from" << fromVolume <<" to "<<toVolume<<  " in "<< fadeTime<<"s"<<std::endl;
-    ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> fade tube from" << fromVolume << " to "<<toVolume<<  " in "<< fadeTime<<"s";
+    //ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> fade tube from" << fromVolume << " to "<<toVolume<<  " in "<< fadeTime<<"s";
     
 }
 
 
-void  SoundManager::fadeSample(float volume, float fadeTime, FadeType type)
+void  SoundManager::fadeSample(float volume, float fadeTime)
 {
     if(!m_currentSample || !m_currentSample->isPlaying())
     {
         return; 
     }
     
-    AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText,volume*255, 3,ViewManager::LOGARITHMIC);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText,volume*255, 3);
     AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_currentSample);
-    float currentVolume = m_currentSample->getVolume();
     
-    switch(type)
-    {
-        case LINEAR:
-        {
-            FadeSoundLinear* fade = new FadeSoundLinear(*m_currentSample);
-            fade->setParameters(currentVolume, volume, fadeTime);
-            fade->start();
-            break;
-        }
-        case EXPONENTIAL:
-        {
-            FadeSoundExp* fade = new FadeSoundExp(*m_currentSample);
-            fade->setParameters(currentVolume, volume, fadeTime);
-            fade->start();
-            break;
-        }
-        case LOGARITHMIC:
-        {
-            FadeSoundLog* fade = new FadeSoundLog(*m_currentSample);
-            fade->setParameters(currentVolume, volume, fadeTime);
-            fade->start();
-            break;
-        }
-        default:
-        {
-            FadeSoundLinear* fade = new FadeSoundLinear(*m_currentSample);
-            fade->setParameters(currentVolume, volume, fadeTime);
-            fade->start();
-            break;
-        }
-    }
-
+    FadeSound* fade = new FadeSound(*m_currentSample);
+    fade->setParameters(volume, fadeTime);
+    fade->start();
     
     std::cout <<m_dateManager->getTime()<<"- SoundManager-> sample tube to "<<volume<< " in "<< fadeTime<<"s"<<std::endl;
-    ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> sample tube to "<<volume<< " in "<< fadeTime<<"s";
+    //ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> sample tube to "<<volume<< " in "<< fadeTime<<"s";
     
 }
 
-void  SoundManager::fadeSample(float fromVolume, float toVolume, float fadeTime, FadeType type)
+void  SoundManager::fadeSample(float fromVolume, float toVolume, float fadeTime)
 {
     if(!m_currentSample || !m_currentSample->isPlaying())
     {
         return; 
     }
     
-    AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText, toVolume*255, 3,ViewManager::LOGARITHMIC);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText, toVolume*255, 3);
     AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*m_currentSample);
 
-    switch(type)
-    {
-        case LINEAR:
-        {
-            FadeSoundLinear* fade = new FadeSoundLinear(*m_currentSample);
-            fade->setParameters(fromVolume, toVolume, fadeTime);
-            fade->start();
-            break;
-        }
-        case EXPONENTIAL:
-        {
-            FadeSoundExp* fade = new FadeSoundExp(*m_currentSample);
-            fade->setParameters(fromVolume, toVolume, fadeTime);
-            fade->start();
-            break;
-        }
-        case LOGARITHMIC:
-        {
-            FadeSoundLog* fade = new FadeSoundLog(*m_currentSample);
-            fade->setParameters(fromVolume, toVolume, fadeTime);
-            fade->start();
-            break;
-        }
-        default:
-        {
-            FadeSoundLinear* fade = new FadeSoundLinear(*m_currentSample);
-            fade->setParameters(fromVolume, toVolume, fadeTime);
-            fade->start();
-            break;
-        }
-    }
+    FadeSound* fade = new FadeSound(*m_currentSample);
+    fade->setParameters(fromVolume, toVolume, fadeTime);
+    fade->start();
+    
     
     std::cout <<m_dateManager->getTime()<<"- SoundManager-> fade sample from" << fromVolume <<" to "<<toVolume<<  " in "<< fadeTime<<"s"<<std::endl;
-    ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> fade sample from" << fromVolume << " to "<<toVolume<<  " in "<< fadeTime<<"s";}
+    //ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> fade sample from" << fromVolume << " to "<<toVolume<<  " in "<< fadeTime<<"s";}
+}
 
 void SoundManager::handleEvent(const Event& event)
 {

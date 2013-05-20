@@ -16,6 +16,24 @@
 
 class Visual;
 
+typedef enum EasingFunction {
+	LINEAR,
+	EXPONENTIAL,
+	QUADRATIC,
+	CUBIC,
+	SINUSOIDAL,
+	QUARTIC,
+	QUINTIC,
+	CIRCULAR
+};
+
+typedef enum EasingType {
+	EASE_IN,
+	EASE_OUT,
+	EASE_IN_OUT
+};
+
+
 //==============================================================================
 /** \class VisualEffect VisualEffect.h
  *	\brief Base class for all the visual effects.
@@ -29,7 +47,7 @@ class VisualEffect
 public:
     
 	//! Constructor
-	VisualEffect(Visual& visual);
+	VisualEffect(Visual& visual, EasingFunction function = LINEAR, EasingType type = EASE_IN);
     
 	//! Destructor
 	virtual ~VisualEffect(){}
@@ -38,7 +56,7 @@ public:
 	virtual void update(double dt) = 0;
     
 	//! Starts the visual effect
-	virtual void start();
+	virtual void start(double startTime = 0.0);
     
 	//! Stops the visual effect
 	virtual void stop();
@@ -46,11 +64,35 @@ public:
 	//! Returns the image this animation is associated with
 	const Visual& getVisual() { return m_visual; }
     
+    //! Returns the current state of the animation	
+	bool isActive() const { return m_isActive; } 
+    
+	//! Returns the start time of the animation
+	//double getStartTime() const { return m_startTime; }
+    
+	//! Returns the elapsed time before the start of the animation
+	//double getElapsedTimeToStart() const { return m_elaspedTimeToStart; }
+    
+	//! Set the elapsed time before the start of the animation
+	void setElapsedTimeToStart(double time) { m_elaspedTimeToStart = time; }
+    
+    
+protected:
+    
+	//! Returns the update value from the selected function.
+	//! t: current time, from: start value, to: end value, duration: the total animation time
+	double function(double t, double from, double to, double duration) const;
+    
 protected:
     
 	Visual&     m_visual;		///< defines a visual reference
-	double		m_elapsedTime;	///< elapsed time
-    bool        m_isActive;		///< determines whether a sound effect is currently updated or not
+	bool					m_isActive;				///< determines whether an animation is currently updated or not
+	double					m_animationTime;		///< duration of the animation in ms
+	double					m_elapsedTime;			///< elapsed time since the last update
+	EasingFunction			m_function;				///< saves what kind of easing function do you want to use
+	EasingType				m_type;					///< saves what type of easing you want
+	double					m_startTime;			///< start time of the animation
+	double					m_elaspedTimeToStart;	///< elapsed time before the start of the animation
     
 };
 
@@ -68,280 +110,37 @@ class FadeVisual: public VisualEffect
 public:
     
 	//! Constructor
-	FadeVisual(Visual& visual);
+	FadeVisual(Visual& visual, EasingFunction function = LINEAR, EasingType type = EASE_IN);
     
     
     //========================= Fade Interface ================================
     
 	//! updates the fade visual if active
-	virtual void update(double dt) = 0;
+	virtual void update(double dt);
     
 	//! starts the current fade effect
-	virtual void start();
+	virtual void start(double startTime = 0.0);
     
 	//! stops the current fade effect
 	virtual void stop();
     
     
-	//==============================================================================
+    //==============================================================================
     
-	//! sets parameter of the animation
-	virtual void setParameters(float from, float to, float fadeTime);
+    //! Sets the final alpha value and the duration of the animation
+	virtual void setParameters(double endAlpha, double animationTime);
+    
+	//! Sets the starting and final alpha value and the duration of the animation
+	virtual void setParameters(double startAlpha,double endAlpha, double animationTime);
+
     
 protected:
     
-    float	m_elapsedTime;			///< elapsed time (ms)
-    float	m_fadeTime;             ///< fade duration (ms)
-	float	m_from;                 ///< initial value
-    float	m_to;                   ///< final value
+    float	m_alpha;            ///< current alpha value 
+	double	m_startAlpha;		///< start alpha value
+	double	m_endAlpha;         ///< end alpha value
+
     
 };
-
-
-
-//==============================================================================
-/** \class FadeVisualLinear VisualEffect.h
- *	\brief Fades a visual linearly.
- *
- */
-//==============================================================================
-
-class FadeVisualLinear: public FadeVisual
-{
-public:
-    
-	//! Constructor
-	FadeVisualLinear(Visual& visual);
-    
-    
-    //========================= Fade Interface ================================
-    
-	//! updates the linear fade if active
-	virtual void update(double dt);
-    
-};
-
-//==============================================================================
-/** \class FadeVisualLog VisualEffect.h
- *	\brief Fades a visual logaritmicaly.
- *
- */
-//==============================================================================
-
-class FadeVisualLog: public FadeVisual
-{
-public:
-    
-	//! Constructor
-	FadeVisualLog(Visual& visual);
-    
-    
-    //========================= Fade Interface ================================
-    
-	//! updates the linear fade if active
-	virtual void update(double dt);
-    
-};
-
-
-//==============================================================================
-/** \class FadeVisualExp VisualEffect.h
- *	\brief Fades a visual exponentially.
- *
- */
-//==============================================================================
-
-class FadeVisualExp: public FadeVisual
-{
-public:
-    
-	//! Constructor
-	FadeVisualExp(Visual& visual);
-    
-    //========================= Fade Interface ================================
-    
-	//! updates the linear fade if active
-	virtual void update(double dt);
-    
-};
-
-
-//
-////==============================================================================
-///** \class FadeOutAnimation Animatons.h
-// *	\brief Fade out animation class for sprites.
-// *	\details Provides basic member attributes and methods
-// *			 to provide animations fading out.
-// */
-////==============================================================================
-//
-//class FadeOutAnimation: public Animation
-//{
-//public:
-//    
-//	//! Constructor
-//	FadeOutAnimation(Sprite& sprite, Scene& scene);
-//    
-//    
-//	//========================= Animation Interface ================================
-//	
-//	//! Renders the visual if visible
-//	virtual void update(double dt);
-//	//! stops the current animation
-//	virtual void stop();
-//    
-//	//==============================================================================
-//    
-//	//! sets parameter of the animation
-//	virtual void setParameters(float maxAlpha, float animationTime);
-//    
-//protected:
-//    
-//	float	m_alpha;			///< current alpha value
-//	float	m_alphaMax;			///< maximum alpha value
-//	float	m_animationTime;	///< duration of the animation in ms 
-//    
-//};
-//
-////==============================================================================
-///** \class FadeInAnimation Animatons.h
-// *	\brief Fade In animation class for sprites.
-// *	\details Provides basic member attributes and methods
-// *			 to provide animations fading in.
-// */
-////==============================================================================
-//
-//class FadeInAnimation: public Animation
-//{
-//public:
-//    
-//	//! Constructor
-//	FadeInAnimation(Sprite& sprite, Scene& scene);
-//    
-//	//========================= Animation Interface ================================
-//    
-//	//! Renders the visual if visible
-//	virtual void update(double dt);
-//	//! stops the current animation
-//	virtual void stop();
-//    
-//	//==============================================================================
-//    
-//	//! sets parameter of the animation
-//	virtual void setParameters(float maxAlpha, float animationTime);
-//    
-//protected:
-//    
-//	float	m_alpha;			///< current alpha value
-//	float	m_alphaMax;			///< maximum alpha value
-//	float	m_animationTime;	///< duration of the animation in ms 
-//    
-//};
-//
-////==============================================================================
-///** \class MovAnimation Animatons.h
-// *	\brief Movement animation class for sprites.
-// *	\details Provides basic member attributes and methods
-// *			 to provide animations changing the position.
-// */
-////==============================================================================
-//
-//class MovAnimation: public Animation
-//{
-//public:
-//    
-//	//! Constructor
-//	MovAnimation(Sprite& sprite, Scene& scene);
-//    
-//	//========================= Animation Interface ================================
-//    
-//	//! Renders the visual if visible
-//	virtual void update(double dt);
-//	//! stops the current animation
-//	virtual void stop();
-//    
-//	//==============================================================================
-//    
-//	//! sets parameter of the animation
-//	virtual void setParameters(const math::Vector2D& pos, float animationTime);
-//    
-//protected:
-//    
-//	math::Vector2D		m_initPos;			///< initial position of the moving sprite
-//	math::Vector2D		m_finalPos;			///< final position of the moving sprite
-//	float				m_fFinalPosRatio;	///< determines the spriteŽs current positions as a ratio of initial and final position
-//	float				m_animationTime;	///< duration of the animation in ms 
-//    
-//};
-//
-////==============================================================================
-///** \class BounceAnimation Animatons.h
-// *	\brief Bounce animation class for sprite.
-// *	\details Provides basic member attributes and methods
-// *			 to provide bouncing animations.
-// */
-////==============================================================================
-//
-//class BounceAnimation: public Animation
-//{
-//public:
-//    
-//	//! Constructor
-//	BounceAnimation(Sprite& sprite, Scene& scene);
-//    
-//	//========================= Animation Interface ================================
-//    
-//	//! Renders the visual if visible
-//	virtual void update(double dt);
-//	//! stops the current animation
-//	virtual void stop();
-//    
-//	//==============================================================================
-//    
-//	virtual void setParameters(int numMaxBounces,float animationTime);
-//    
-//protected:
-//    
-//	int			m_numBounces;		///< counts the number of bounces occurred 
-//	int			m_numMaxBounces;	///< determines the maximum number of bounces
-//	bool		m_forward;			///< determines if the bouncing goes forwards or backwards
-//	float		m_scaleFactor;		///< determines size factor of the visual
-//	float		m_animationTime;	///< duration of the animation in ms 
-//    
-//};
-//
-////==============================================================================
-///** \class FrameAnimation Animatons.h
-// *	\brief Frame animation class for sprite.
-// *	\details Provides basic member attributes and methods
-// *			 to provide frame based animations.
-// */
-////==============================================================================
-//
-//class FrameAnimation: public Animation
-//{
-//public:
-//    
-//	//! Constructor
-//	FrameAnimation(Sprite& sprite, Scene& scene):Animation(sprite, scene), m_animationTime(55){};
-//	
-//	//========================= Animation Interface ================================
-//    
-//	//! Renders the visual if visible
-//	virtual void update(double dt);
-//	//! stops the current animation
-//	virtual void stop();
-//    
-//	//==============================================================================
-//    
-//	virtual void setParameters(float animationTime);
-//    
-//protected:
-//    
-//	float		m_animationTime;	///< duration of the animation in ms 
-//    
-//};
-//
-
 
 #endif

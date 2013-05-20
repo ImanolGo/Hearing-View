@@ -8,6 +8,9 @@
 
 #include "SoundObject.h"
 
+#include "AppManager.h"
+#include "SoundEffectsManager.h"
+
 
 SoundObject::SoundObject(std::string name): m_name(name), m_volume(1.0)
 {
@@ -16,6 +19,7 @@ SoundObject::SoundObject(std::string name): m_name(name), m_volume(1.0)
 
 SoundObject::~SoundObject()
 {
+    AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*this);
     delete m_soundPlayer;
     m_soundPlayer = NULL;
 }
