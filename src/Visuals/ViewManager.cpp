@@ -38,7 +38,6 @@ ViewManager::~ViewManager()
 
 void ViewManager::setup()
 {
-    
      m_dateManager = &AppManager::getInstance().getDateManager();
      m_frameRateFont.loadFont("fonts/frabk.ttf", 14, true, true);
      

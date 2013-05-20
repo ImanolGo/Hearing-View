@@ -58,10 +58,10 @@ AppManager::~AppManager()
     delete m_guiManager;
     delete m_weatherManager;
     delete m_dateManager;
-    delete m_soundEffectsManager;
-    delete m_visualEffectsManager;
     delete m_soundManager;
     delete m_viewManager;
+    delete m_soundEffectsManager;
+    delete m_visualEffectsManager;
     delete m_weatherStationManager;
     delete m_sensorManager;
 }

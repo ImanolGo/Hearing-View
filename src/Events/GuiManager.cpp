@@ -35,157 +35,133 @@ void GuiManager::setup()
     float H = (float)ofGetHeight();
     float W  = (float)ofGetWidth();
     float margin = H/70;
+    float x = 0.0f;
+    float y = 0.0f;
+    
+    //BACKGROUND
+    x = 0.0f;
+    y = 0.0f;
+    ImageVisual* imageVisual = new ImageVisual(ofPoint(x,y),W,H);
+    imageVisual->setImage("images/GUI/background.png");
+    AppManager::getInstance().getViewManager().addVisual(*imageVisual,20);
     
     //TITLE
-    float x = 2*margin;
-    float y = margin/2;
+    x = 2*margin;
+    y = margin/2;
     m_gui->addWidget(new ofxUILabel(x,y, "HEARING VIEW", OFX_UI_FONT_LARGE));
     
-    //VOLUMES
-    float widthVolumes = (1-0.25)*(W - 4*margin); 
-    float heightVolumes = H/3.0 - 4*margin;
-    x = 2*margin + widthVolumes/8;
-    y = 4*margin + heightVolumes ;
-    
-    RectangleVisual* rectVisual = new RectangleVisual(ofPoint(x,y),widthVolumes,heightVolumes);
-    rectVisual->setColor(ofColor(45,72,2,100));
-    AppManager::getInstance().getViewManager().addVisual(*rectVisual,10);
-    
-    float w = widthVolumes/2 - 2*margin;
-    float h = heightVolumes - 4*margin;
-    y = 6*margin + heightVolumes;
-    for(int i = 0; i< 2; i++)
-    {
-        x = 3*margin + widthVolumes/8 + 2*margin*i + w*i;
-        rectVisual = new RectangleVisual(ofPoint(x,y),w,h);
-        rectVisual->setColor(ofColor(46,85,18,100));
-        AppManager::getInstance().getViewManager().addVisual(*rectVisual,5);
-        
-    }
-
-    //TUBE
-    x = 4*margin + widthVolumes/8;
-    y = 5*margin + heightVolumes - margin/2;
-    m_gui->addWidget(new ofxUILabel(x,y, "TUBE", OFX_UI_FONT_MEDIUM));
-    w = widthVolumes/2 - 8*margin;
-    h = heightVolumes/8;
-    x = 6*margin + widthVolumes/8;
-    y =  6*margin + heightVolumes + heightVolumes/3;
-    m_gui->addWidget(new ofxUISlider(x,y,w,h,0.0,1.0,0.0, "TUBE VOLUME"));
-    
-    //SAMPLER
-    x = 4*margin + widthVolumes/2 + widthVolumes/8;
-    y = 5*margin + heightVolumes - margin/2;
-    m_gui->addWidget(new ofxUILabel(x,y, "SAMPLER", OFX_UI_FONT_MEDIUM));
-    x =  6*margin + widthVolumes/2 + widthVolumes/8;
-    y =  6*margin + heightVolumes + heightVolumes/3;
-    m_gui->addWidget(new ofxUISlider(x,y,w,h,0.0,1.0,0.0, "SAMPLE VOLUME"));
-    
-    //VISUALS
-    float widthVisuals = W - 4*margin; 
-    float heightVisuals = H/3.0 - 4*margin;
-    x = 2*margin;
-    y = 6*margin + 2*heightVisuals;
-    
-    rectVisual = new RectangleVisual(ofPoint(x,y),widthVisuals,heightVisuals);
-    rectVisual->setColor(ofColor(45,72,2,100));
-    AppManager::getInstance().getViewManager().addVisual(*rectVisual,10);
-    
-    //STATES
-    w = 2*widthVisuals/5 - 2*margin;
-    h = heightVisuals - 4*margin;
-    x = 3*margin + margin/2;
-    y = 6*margin + margin/2 + 2*heightVisuals;
-    m_gui->addWidget(new ofxUILabel(x,y, "STATES", OFX_UI_FONT_MEDIUM));
-    
-    x = 3*margin;
-    y = 8*margin + 2*heightVisuals;
-    rectVisual = new RectangleVisual(ofPoint(x,y),w,h);
-    rectVisual->setColor(ofColor(46,85,18,100));
-    AppManager::getInstance().getViewManager().addVisual(*rectVisual,5);
-    
-    
-    //WEATHER CONDITIONS
-    w = 2*widthVisuals/5 - 2*margin;
-    h = heightVisuals - 4*margin;
-    x = 3*margin + 2*widthVisuals/5 + margin/2;
-    y = 6*margin + margin/2 + 2*heightVisuals;
-    m_gui->addWidget(new ofxUILabel(x,y, "WEATHER CONDITIONS", OFX_UI_FONT_MEDIUM));
-    
-    x = 3*margin + 2*widthVisuals/5;
-    y = 8*margin + 2*heightVisuals;
-    rectVisual = new RectangleVisual(ofPoint(x,y),w,h);
-    rectVisual->setColor(ofColor(46,85,18,100));
-    AppManager::getInstance().getViewManager().addVisual(*rectVisual,5);
-        
-    //SEASONS
-    
-    w = 1*widthVisuals/5 - 2*margin;
-    h = heightVisuals - 4*margin;
-    x = 3*margin + 4*widthVisuals/5 +  margin/2;
-    y = 6*margin + margin/2 + 2*heightVisuals;
-    m_gui->addWidget(new ofxUILabel(x,y, "SEASONS", OFX_UI_FONT_MEDIUM));
-    
-    x = 3*margin + 4*widthVisuals/5;
-    y = 8*margin + 2*heightVisuals;
-    rectVisual = new RectangleVisual(ofPoint(x,y),w,h);
-    rectVisual->setColor(ofColor(46,85,18,100));
-    AppManager::getInstance().getViewManager().addVisual(*rectVisual,5);
-        
-    //GUI
+    //UPPER Frame
     float widthGUI = W - 4*margin; 
     float heightGUI = H/3.0 - 4*margin;
+    float w = widthGUI;
+    float h = heightGUI;
     x = 2*margin;
     y = 2*margin;
     
-    rectVisual = new RectangleVisual(ofPoint(x,y),widthGUI,heightGUI);
-    rectVisual->setColor(ofColor(45,72,2,100));
+    RectangleVisual* rectVisual = new RectangleVisual(ofPoint(x,y),w,h);
+    rectVisual->setColor(ofColor(85,126,227,100));
     AppManager::getInstance().getViewManager().addVisual(*rectVisual,10);
     
+    //Status
     w = widthGUI/4 - 2*margin;
     h = heightGUI - 4*margin;
     y = 4*margin;
     for(int i = 0; i< 4; i++)
     {
         x = 3*margin + 2*margin*i + w*i;
-        rectVisual = new RectangleVisual(ofPoint(x,y),w,h);
-        rectVisual->setColor(ofColor(46,85,18,100));
-        AppManager::getInstance().getViewManager().addVisual(*rectVisual,5);
+        imageVisual = new ImageVisual(ofPoint(x,y),w,h);
+        imageVisual->setImage("images/GUI/blue_bck.jpg");
+        AppManager::getInstance().getViewManager().addVisual(*imageVisual,5);
         
     }
     
     float buttom = h/8;
     x = 4*margin;
     y = 5*margin;
-    m_gui->addWidget(new ofxUILabel(x,y, "CONTROL", OFX_UI_FONT_MEDIUM));
+    m_gui->addWidget(new ofxUILabel(x,y, "STATUS", OFX_UI_FONT_MEDIUM));
     y = 7*margin;
     m_gui->addWidget(new ofxUIToggle(x,y,buttom, buttom, false,"SENSOR"));
     
-    vector<string> vnames; vnames.push_back("DAY"); vnames.push_back("NIG");
+    //Weather Conditions
     x = 6*margin + w;
     y = 5*margin;
-    ofxUIRadio* radio = new  ofxUIRadio(x,y, buttom, buttom, "DAILY CYCLE", vnames, OFX_UI_ORIENTATION_VERTICAL);
-    m_gui->addWidget(radio);
-    radio->activateToggle("DAY");
+    m_gui->addWidget(new ofxUILabel(x,y, "WEATHER CONDITIONS", OFX_UI_FONT_MEDIUM));
     
-    vnames.clear();
-    vnames.push_back("SUM"); vnames.push_back("FAL"); vnames.push_back("WIN");
-    vnames.push_back("SPR");
-    
+    // Volume Tube
     x = 8*margin + 2*w;
-    radio = new  ofxUIRadio(x,y, buttom, buttom, "SEASONS", vnames, OFX_UI_ORIENTATION_VERTICAL);
-    m_gui->addWidget(radio);
-    radio->activateToggle("SUM");
+    y = 5*margin;
+    m_gui->addWidget(new ofxUILabel(x,y, "TUBE", OFX_UI_FONT_MEDIUM));
+    y = 2*margin + heightGUI*0.5;
+    m_gui->addWidget(new ofxUISlider(x,y,w-2*margin,h*0.1,0.0,1.0,0.7, "TUBE VOLUME"));
     
-    vnames.clear();
-    vnames; vnames.push_back("Dry"); vnames.push_back("Rain");
+    // Volume Sample
     x = 10*margin + 3*w;
-    radio = new  ofxUIRadio(x,y, buttom, buttom, "WEATHER CONDITIONS", vnames, OFX_UI_ORIENTATION_VERTICAL);
-    m_gui->addWidget(radio);
-    radio->activateToggle("Dry"); 
-    vnames.clear();
-
+    y = 5*margin;
+    m_gui->addWidget(new ofxUILabel(x,y, "SAMPLE", OFX_UI_FONT_MEDIUM));
+    y = 2*margin + heightGUI*0.5;
+    m_gui->addWidget(new ofxUISlider(x,y,w-2*margin,h*0.1,0.0,1.0,0.0, "SAMPLE VOLUME"));
     
+    
+    //STATES
+    w = widthGUI;
+    h = heightGUI;
+    x = 2*margin;
+    y = 4*margin + h;
+    
+    rectVisual = new RectangleVisual(ofPoint(x,y),w,h);
+    rectVisual->setColor(ofColor(85,126,227,100));
+    AppManager::getInstance().getViewManager().addVisual(*rectVisual,10);
+    
+    x = 3*margin;
+    y = 6*margin + h;
+    m_gui->addWidget(new ofxUILabel(x,y, "STATES", OFX_UI_FONT_MEDIUM));
+    
+    //Volumes GUI
+    w = widthGUI/4;
+    h = heightGUI;
+    x = 2*margin;
+    y = 6*margin + 2*heightGUI;
+
+    rectVisual = new RectangleVisual(ofPoint(x,y),w,h);
+    rectVisual->setColor(ofColor(85,126,227,100));
+    AppManager::getInstance().getViewManager().addVisual(*rectVisual,10);
+    
+    x = 3*margin;
+    y = 7*margin + 2*heightGUI;
+    m_gui->addWidget(new ofxUILabel(x,y, "VOLUMES GUI", OFX_UI_FONT_MEDIUM));
+    
+    w = widthGUI/4 - 2*margin;
+    h = heightGUI - 2*margin;
+    x = 3*margin;
+    y = 8*margin + 2*heightGUI;
+    imageVisual = new ImageVisual(ofPoint(x,y),w,h);
+    imageVisual->setImage("images/GUI/blue_bck.jpg");
+    AppManager::getInstance().getViewManager().addVisual(*imageVisual,5);
+    
+    //Times GUI
+    w = widthGUI/2 - 2*margin;
+    h = heightGUI;
+    x = 4*margin + widthGUI/4;
+    y = 6*margin + 2*heightGUI;
+    
+    rectVisual = new RectangleVisual(ofPoint(x,y),w,h);
+    rectVisual->setColor(ofColor(85,126,227,100));
+    AppManager::getInstance().getViewManager().addVisual(*rectVisual,10);
+    
+    x = 5*margin + widthGUI/4;
+    y = 7*margin + 2*heightGUI;
+    m_gui->addWidget(new ofxUILabel(x,y, "TIMES GUI", OFX_UI_FONT_MEDIUM));
+    
+    w = widthGUI/2 - 4*margin;
+    h = heightGUI - 2*margin;
+    x = 5*margin + widthGUI/4;
+    y = 8*margin + 2*heightGUI;
+    imageVisual = new ImageVisual(ofPoint(x,y),w,h);
+    imageVisual->setImage("images/GUI/blue_bck.jpg");
+    AppManager::getInstance().getViewManager().addVisual(*imageVisual,5);
+    
+    
+    //Add elements to GUI
     ofAddListener(m_gui->newGUIEvent, this, &GuiManager::guiEvent);
     m_eventManager = &AppManager::getInstance().getEventManager();
     
@@ -226,27 +202,6 @@ void GuiManager::handleEvent(const Event& event)
         }
     }
     
-    else if(name == "WIN" || name == "SUM" || name == "SPR" || name == "FAL")
-	{
-        widget = m_gui->getWidget("SEASONS");
-        ofxUIRadio *radio = (ofxUIRadio *) widget;
-        radio->activateToggle(name);
-    }
-    
-    else if(name == "DAY" || name == "NIG")
-	{
-        widget = m_gui->getWidget("DAILY CYCLE");
-        ofxUIRadio *radio = (ofxUIRadio *) widget;
-        radio->activateToggle(name);
-    }
-    
-    else if(name == "Dry" || name == "Rain")
-	{
-        widget = m_gui->getWidget("WEATHER CONDITIONS");
-        ofxUIRadio *radio = (ofxUIRadio *) widget;
-        radio->activateToggle(name);
-    }
-
 }
 
 void GuiManager::guiEvent(ofxUIEventArgs &e)

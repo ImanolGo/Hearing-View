@@ -64,8 +64,8 @@ void WeatherManager::setup()
     m_location = "Linz";
     m_url = "http://free.worldweatheronline.com/feed/weather.ashx?q=" + m_location + "&format=xml&num_of_days=3&key=" + WEATHER_API_KEY;
     
-    this->loadIcons();
-    this->loadTextVisuals();
+    //this->loadIcons();
+    //this->loadTextVisuals();
     
     m_conditions = m_conditionsDesc = "Dry";
     
@@ -141,10 +141,10 @@ bool WeatherManager::parseXML()
         std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: the current conditions are \""<<m_conditionsDesc<<"\"" << std::endl;
        ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: the current conditions are \""<<m_conditionsDesc<<"\"";
         
-        std::string text = "Conditions: " + m_conditionsDesc;
-        m_textVisuals["currentConditions"]->setText(text, m_fontSize);
-         m_textVisuals["currentConditions"]->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["currentConditions"], 255, WeatherManager::FADE_TIME);
+        //std::string text = "Conditions: " + m_conditionsDesc;
+        //m_textVisuals["currentConditions"]->setText(text, m_fontSize);
+         //m_textVisuals["currentConditions"]->setColor(ofColor(255,255,255,0));
+        //AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["currentConditions"], 255, WeatherManager::FADE_TIME);
     }
     
     float temperature = m_XML.getValue("temp_C", 0.0);
@@ -155,9 +155,9 @@ bool WeatherManager::parseXML()
         std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         
-        m_textVisuals["temperature"]->setText(text, m_fontSize);
-        m_textVisuals["temperature"]->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["temperature"], 255, WeatherManager::FADE_TIME);
+        //m_textVisuals["temperature"]->setText(text, m_fontSize);
+        //m_textVisuals["temperature"]->setColor(ofColor(255,255,255,0));
+        //AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["temperature"], 255, WeatherManager::FADE_TIME);
         
     }  
     
@@ -169,9 +169,9 @@ bool WeatherManager::parseXML()
         std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         
-        m_textVisuals["humidity"]->setText(text, m_fontSize);
-        m_textVisuals["humidity"]->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["humidity"], 255, WeatherManager::FADE_TIME);
+        //m_textVisuals["humidity"]->setText(text, m_fontSize);
+        //m_textVisuals["humidity"]->setColor(ofColor(255,255,255,0));
+        //AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["humidity"], 255, WeatherManager::FADE_TIME);
         
     }  
     
@@ -183,9 +183,9 @@ bool WeatherManager::parseXML()
         std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         
-        m_textVisuals["windSpeed"]->setText(text, m_fontSize);
-        m_textVisuals["windSpeed"]->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["windSpeed"], 255, WeatherManager::FADE_TIME);
+        //m_textVisuals["windSpeed"]->setText(text, m_fontSize);
+        //m_textVisuals["windSpeed"]->setColor(ofColor(255,255,255,0));
+        //AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["windSpeed"], 255, WeatherManager::FADE_TIME);
         
     }  
     
@@ -197,9 +197,9 @@ bool WeatherManager::parseXML()
         std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         
-        m_textVisuals["precipMM"]->setText(text, m_fontSize);
-        m_textVisuals["precipMM"]->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["precipMM"], 255, WeatherManager::FADE_TIME);
+        //m_textVisuals["precipMM"]->setText(text, m_fontSize);
+        //m_textVisuals["precipMM"]->setColor(ofColor(255,255,255,0));
+        //AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["precipMM"], 255, WeatherManager::FADE_TIME);
         
     }  
     
@@ -315,7 +315,7 @@ void WeatherManager::readConditionsCode()
         m_iconName = iconName;
         std::cout << m_dateManager->getTime() << "- WeatherManager-> readConditionsCode: set image \""<<m_iconName<<".png\"" << std::endl;
          ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> readConditionsCode: set image \""<<m_iconName<<".png\"";
-        AppManager::getInstance().getViewManager().removeVisual(*m_currentIcon);
+        /*AppManager::getInstance().getViewManager().removeVisual(*m_currentIcon);
         m_currentIcon = m_icons[m_iconName];
         AppManager::getInstance().getViewManager().addVisual(*m_currentIcon);
         m_currentIcon->setColor(ofColor(255,255,255,0));
@@ -323,7 +323,7 @@ void WeatherManager::readConditionsCode()
         std::string text = "Conditions: " + m_conditionsDesc;
         m_textVisuals["currentConditions"]->setText(text, m_fontSize);
         m_textVisuals["currentConditions"]->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["currentConditions"], 255, WeatherManager::FADE_TIME);
+        AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["currentConditions"], 255, WeatherManager::FADE_TIME);*/
     }
     
     if(conditions!=m_conditions)
@@ -337,7 +337,7 @@ void WeatherManager::readConditionsCode()
 void WeatherManager::loadIcons()
 {
     //some path, may be absolute or relative to bin/data
-    std::string samplesPath = "pictures/WeatherIcons/";
+    std::string samplesPath = "images/WeatherIcons/";
     std::cout<< m_dateManager->getTime() <<"- WeatherManager-> loadSamples: loading icons from \""<<samplesPath<<"\"..."<<std::endl;
     ofLogNotice()<< m_dateManager->getTime() <<"- WeatherManager-> loadSamples: loading icons from \""<<samplesPath<<"\"...";
     ofDirectory dir(samplesPath);
@@ -368,8 +368,8 @@ void WeatherManager::loadIcons()
         ImageVisual* icon =  new ImageVisual(ofPoint(x,y),w,w,true);
         icon->setImage(dir.getPath(n));
         m_icons[iconName] = icon;
-        std::cout << m_dateManager->getTime() << "- WeatherManager-> loaded sample \""<< iconName <<"\"" << std::endl;
-        ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> loaded sample \""<< iconName <<"\"";
+        std::cout << m_dateManager->getTime() << "- WeatherManager-> loaded icon \""<< iconName <<"\"" << std::endl;
+        ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> loaded icon \""<< iconName <<"\"";
     }
     
     m_currentIcon = m_icons["sunny_Day"];
