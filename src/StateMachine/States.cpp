@@ -8,6 +8,7 @@
 #include "Visuals.h"
 #include "AppManager.h"
 #include "SoundManager.h"
+#include "StateManager.h"
 #include "ViewManager.h"
 #include "Event.h"
 #include "EventManager.h"
@@ -22,8 +23,8 @@ State::State(const std::string& name,const ofPoint& pos):
     m_pos(pos),
     m_circleState(NULL),
     m_textState(NULL),
-    m_dateManager(NULL)
-
+    m_dateManager(NULL),
+    m_stateManager(NULL)
 {
     //Intentionally left empty
 }
@@ -52,6 +53,7 @@ State::~State()
 void State::initialize()
 {
     m_dateManager = &AppManager::getInstance().getDateManager();
+    m_stateManager = &AppManager::getInstance().getStateManager();
 
     m_circleState = new ImageVisual(m_pos,70,70,true);
     m_circleState->setImage("pictures/icons/button.png");
@@ -73,7 +75,7 @@ void IdleState::onEnter()
     ofLogNotice()<<m_dateManager->getTime()<<"- IdleState-> OnEnter.";
     AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
-    AppManager::getInstance().getSoundManager().fadeTube(0.7,State::FADE_TIME);
+    AppManager::getInstance().getSoundManager().fadeTube(m_stateManager->m_V1,m_stateManager->m_t1);
     AppManager::getInstance().getEventManager().removeAllTimedEvents();
     
 }
@@ -86,17 +88,42 @@ void IdleState::onExit()
     AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 100, State::FADE_TIME);
 }
 
-TubeState::TubeState(const std::string& name,const ofPoint& pos): State(name,pos),m_waitingTime(30)
+
+void TransitionState::onEnter()
 {
-    //Intentionally left empty
+    std::cout<<m_dateManager->getTime()<<"- TransitionState-> OnEnter." <<std::endl;
+    ofLogNotice()<<m_dateManager->getTime()<<"- TransitionState-> OnEnter.";
+    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
+    AppManager::getInstance().getEventManager().removeAllTimedEvents();
+    
+    if(AppManager::getInstance().getSoundManager().getTubeVolume()>0.0f){
+        AppManager::getInstance().getSoundManager().fadeTube(0.0f,m_stateManager->m_t4);
+        AppManager::getInstance().getEventManager().setTimedEvent("ENTER_IDLE_STATE",m_stateManager->m_t4 +m_stateManager->m_t5);
+        AppManager::getInstance().getSoundManager().fadeSample(0.0f,m_stateManager->m_t7);
+    }
+    else{
+        AppManager::getInstance().getSoundManager().fadeSample(0.0f,m_stateManager->m_t7);
+        AppManager::getInstance().getEventManager().setTimedEvent("ENTER_IDLE_STATE",m_stateManager->m_t7 +m_stateManager->m_t5);
+        AppManager::getInstance().getSoundManager().fadeTube(0.0f,m_stateManager->m_t4);
+        
+    }
+}
+
+void TransitionState::onExit()
+{
+    std::cout<<m_dateManager->getTime()<<"- TransitionState-> OnExit." <<std::endl;
+    ofLogNotice()<<m_dateManager->getTime()<<"- TransitionState-> OnExit.";
+    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 100, State::FADE_TIME);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 100, State::FADE_TIME);
 }
 
 void TubeState::onEnter()
 {
     std::cout<<m_dateManager->getTime()<<"- TubeState-> OnEnter." <<std::endl;
     ofLogNotice()<<m_dateManager->getTime()<<"- TubeState-> OnEnter.";
-    AppManager::getInstance().getSoundManager().fadeTube(1.0,State::FADE_TIME);
-    AppManager::getInstance().getEventManager().setTimedEvent("END_TUBE_STATE", m_waitingTime); //3 min timed event
+    AppManager::getInstance().getSoundManager().fadeTube(m_stateManager->m_V3,m_stateManager->m_t2);
+    AppManager::getInstance().getEventManager().setTimedEvent("END_TUBE_STATE", m_stateManager->m_t3);
     AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
     
@@ -114,8 +141,9 @@ void SamplerState::onEnter()
 {
     std::cout<<m_dateManager->getTime()<<"- SamplerState-> OnEnter." <<std::endl;
     ofLogNotice()<<m_dateManager->getTime()<<"- SamplerState-> OnEnter.";
-    AppManager::getInstance().getSoundManager().fadeTube(0.0,FADE_TIME);
+    AppManager::getInstance().getSoundManager().fadeTube(0.0,m_stateManager->m_t4);
     AppManager::getInstance().getSoundManager().playSamples();
+    //AppManager::getInstance().getSoundManager().playNextSample(m_stateManager->m_t5,m_stateManager->m_V2);
     AppManager::getInstance().getSoundManager().fadeSample(0.0,1.0, State::FADE_TIME);
     AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
@@ -132,26 +160,22 @@ void SamplerState::onExit()
     
 }
 
-TubeStateShort::TubeStateShort(const std::string& name,const ofPoint& pos): State(name,pos),m_waitingTime(10)
-{
-    //Intentionally left empty
-}
 
-void TubeStateShort::onEnter()
+void ShortTubeState::onEnter()
 {
-    std::cout<<m_dateManager->getTime()<<"- TubeStateShort-> OnEnter." <<std::endl;
-    ofLogNotice()<<m_dateManager->getTime()<<"- TubeStateShort-> OnEnter.";
-    AppManager::getInstance().getSoundManager().fadeTube(1.0,State::FADE_TIME);
-    AppManager::getInstance().getEventManager().setTimedEvent("END_TUBE_STATE_SHORT", m_waitingTime); //3 min timed event
+    std::cout<<m_dateManager->getTime()<<"- ShortTubeState-> OnEnter." <<std::endl;
+    ofLogNotice()<<m_dateManager->getTime()<<"- ShortTubeState-> OnEnter.";
+    AppManager::getInstance().getSoundManager().fadeTube(m_stateManager->m_V3,m_stateManager->m_t2);
+    AppManager::getInstance().getEventManager().setTimedEvent("END_TUBE_STATE_SHORT", m_stateManager->m_t6); //3 min timed event
     AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
     
 }
 
-void TubeStateShort::onExit()
+void ShortTubeState::onExit()
 {
-    std::cout<<m_dateManager->getTime()<<"- TubeStateShort-> OnExit." <<std::endl;
-    ofLogNotice()<<m_dateManager->getTime()<<"- TubeStateShort-> OnExit.";
+    std::cout<<m_dateManager->getTime()<<"- ShortTubeState-> OnExit." <<std::endl;
+    ofLogNotice()<<m_dateManager->getTime()<<"- ShortTubeState-> OnExit.";
     AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 100, State::FADE_TIME);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 100, State::FADE_TIME);
 }

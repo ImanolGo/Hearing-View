@@ -150,7 +150,7 @@ void GuiManager::setup()
     AppManager::getInstance().getViewManager().addVisual(*imageVisual,5);
     
     //Times GUI
-    w = widthGUI/2 - 2*margin;
+    w = widthGUI/3 - 2*margin;
     h = heightGUI + margin;
     x = 4*margin + widthGUI/4;
     y = 6*margin + 2*heightGUI;
@@ -183,9 +183,43 @@ void GuiManager::setup()
     y = 9*margin + 2*heightGUI;
     m_gui->addWidget(new ofxUILabel(x,y, "TIMES GUI", OFX_UI_FONT_MEDIUM));
     
-    w = widthGUI/2 - 4*margin;
+    w = widthGUI/3 - 4*margin;
     h = heightGUI - 2*margin;
     x = 5*margin + widthGUI/4;
+    y = 8*margin + 2*heightGUI;
+    imageVisual = new ImageVisual(ofPoint(x,y),w,h);
+    imageVisual->setImage("images/GUI/blue_bck.jpg");
+    AppManager::getInstance().getViewManager().addVisual(*imageVisual,5);
+    
+    //Weather threshold GUI
+    w = widthGUI/4 - 2*margin;
+    h = heightGUI + margin;
+    x = 4*margin + widthGUI/4 + widthGUI/3;
+    y = 6*margin + 2*heightGUI;
+    
+    rectVisual = new RectangleVisual(ofPoint(x,y),w,h);
+    rectVisual->setColor(ofColor(85,126,227,100));
+    AppManager::getInstance().getViewManager().addVisual(*rectVisual,10);
+    
+    w = margin*5;
+    x = 9*margin + widthGUI/4 + widthGUI/3;
+    y = 11*margin + 2*heightGUI;
+    m_gui->addWidget(new ofxUIRotarySlider(x,y,w, 0, 200, 150, "R (mm)")); 
+    y = 13*margin + 2*heightGUI + w;
+    m_gui->addWidget(new ofxUIRotarySlider(x,y,w,-40, 40, 0, "T (ºC)"));
+    x = 13*margin + widthGUI/4 + w + widthGUI/3;
+    y = 11*margin + 2*heightGUI;
+    m_gui->addWidget(new ofxUIRotarySlider(x,y,w,  0, 120, 50, "W (km/h)"));
+    y = 13*margin + 2*heightGUI + w;
+    m_gui->addWidget(new ofxUIRotarySlider(x,y,w, 0, 1500, 500, "S (W/m2)"));
+    
+    x = 6*margin + widthGUI/4 + widthGUI/3;
+    y = 9*margin + 2*heightGUI;
+    m_gui->addWidget(new ofxUILabel(x,y, "WEATHER GUI", OFX_UI_FONT_MEDIUM));
+    
+    w = widthGUI/4 - 4*margin;
+    h = heightGUI - 2*margin;
+    x = 5*margin + widthGUI/4 + widthGUI/3;
     y = 8*margin + 2*heightGUI;
     imageVisual = new ImageVisual(ofPoint(x,y),w,h);
     imageVisual->setImage("images/GUI/blue_bck.jpg");
@@ -198,12 +232,12 @@ void GuiManager::setup()
     
     m_dateManager = &AppManager::getInstance().getDateManager();
     
+    //Loading settings
     m_gui->loadSettings("settings.xml");
     
     std::cout << m_dateManager->getTime() << "- GuiManager-> initialized "<<std::endl;
     ofLogNotice() << m_dateManager->getTime() << "- GuiManager-> initialized ";
 }
-
 
 void GuiManager::update(double dt)
 {
@@ -271,9 +305,17 @@ void GuiManager::guiEvent(ofxUIEventArgs &e)
     else if(name =="t1 (s)" || name == "t2 (s)" || name == "t3 (s)" || name == "t4 (s)" || name == "t5 (s)" || name == "t6 (s)" || name == "t7 (s)")
     {
 	    ofxUIRotarySlider *rotatorySlider = (ofxUIRotarySlider*) e.widget; 
-        std::cout << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< rotatorySlider->getValue() << std::endl; 
-        ofLogNotice() << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< rotatorySlider->getValue(); 
-        m_eventManager->setEvent(Event(name,rotatorySlider->getValue()));
+        std::cout << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< rotatorySlider->getScaledValue() << std::endl; 
+        ofLogNotice() << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< rotatorySlider->getScaledValue(); 
+        m_eventManager->setEvent(Event(name,rotatorySlider->getScaledValue()));
+    }
+    
+    else if(name =="W (km/h)" || name == "T (ºC)" || name == "S (W/m2)" || name == "R (mm)")
+    {
+	    ofxUIRotarySlider *rotatorySlider = (ofxUIRotarySlider*) e.widget; 
+        std::cout << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< rotatorySlider->getScaledValue() << std::endl; 
+        ofLogNotice() << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< rotatorySlider->getScaledValue(); 
+        m_eventManager->setEvent(Event(name,rotatorySlider->getScaledValue()));
     }
     
     else

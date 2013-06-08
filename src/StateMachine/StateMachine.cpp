@@ -99,8 +99,6 @@ void StateMachine::createTransition(std::string preState, std::string postState,
 	
 }
 
-
-
 void StateMachine::setCurrentState(std::string name)
 {
 	m_currentState = const_cast<State*>(getState(name));

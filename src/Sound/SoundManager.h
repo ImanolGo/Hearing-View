@@ -111,6 +111,11 @@ private:
     
     TextVisual*       m_sampleText;     ///< text visual from th ecurrent sample being played
     
+    float             m_W;              ///< wind speed threshold value used to exlcude samples with this letter
+    float             m_T;              ///< temperature threshold value used to exlcude samples with this letter
+    float             m_R;              ///< wetness threshold value used to exlcude samples with this letter
+    float             m_S;              ///< insolation threshold value used to exlcude samples with this letter
+    
 };
 
 

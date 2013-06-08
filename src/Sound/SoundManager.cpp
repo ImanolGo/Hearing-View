@@ -26,7 +26,8 @@ SoundManager::SoundManager():
     m_soundVisual(NULL),
     m_sampleText(NULL),
     m_season("SUM"),
-    m_category("DAY")
+    m_category("DAY"),
+    m_W(50),m_T(0),m_R(10),m_S(500)
 {
     //Intentionally left empty
 }
@@ -369,6 +370,28 @@ void SoundManager::handleEvent(const Event& event)
             this->setCurrentSamples(m_season+ "_" + m_category);
         }
         
+    }
+    
+    else if(name=="W (km/h)"){
+        m_W = (float) event.getValue();
+        std::cout <<m_dateManager->getTime()<<"- SoundManager-> W = " << m_W <<" Km/h "<<std::endl;
+        ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> W = " << m_W <<" Km/h ";
+
+    }
+    else if(name=="T (ºC)"){
+        m_T= (float) event.getValue();
+        std::cout <<m_dateManager->getTime()<<"- SoundManager-> T = " << m_T <<" ºC"<<std::endl;
+        ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> T = " << m_T <<" ºC ";
+    }
+    else if(name=="R (mm)"){
+        m_R = (float) event.getValue();
+        std::cout <<m_dateManager->getTime()<<"- SoundManager-> R = " << m_R <<" mm"<<std::endl;
+        ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> R = " << m_R <<" mm";
+    }
+    else if(name=="S (W/m2)"){
+        m_S = (float) event.getValue();
+        std::cout <<m_dateManager->getTime()<<"- SoundManager-> S = " << m_S <<" W/m2"<<std::endl;
+        ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> S = " << m_S <<" W/m2";
     }
 
 }

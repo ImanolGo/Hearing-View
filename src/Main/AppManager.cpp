@@ -36,18 +36,17 @@ AppManager& AppManager::getInstance()
 AppManager::AppManager(): m_eventManager(NULL), m_stateManager(NULL), m_viewManager(NULL), m_soundManager(NULL),
 m_dateManager(NULL),m_weatherManager(NULL), m_soundEffectsManager(NULL),m_visualEffectsManager(NULL)
 {
+    m_dateManager = new DateManager();
     m_eventManager = new EventManager();
     m_guiManager = new GuiManager();
     m_stateManager = new StateManager();
     m_viewManager = new ViewManager();
     m_soundManager = new SoundManager();
     m_weatherManager = new WeatherManager();
-    m_dateManager = new DateManager();
     m_soundEffectsManager = new SoundEffectsManager();
     m_visualEffectsManager = new VisualEffectsManager();
     m_weatherStationManager = new WeatherStationManager();
     m_sensorManager = new SensorManager();
-    
 }
 
 
@@ -76,12 +75,13 @@ void AppManager::setup()
     m_eventManager->setup();
     m_viewManager->setup();
     m_soundManager->setup();
+    m_stateManager->setup();
     m_guiManager->setup();
     m_weatherManager->setup();
-    m_stateManager->setup();
     //m_sensorManager->setup();
     //m_weatherStationManager->setup();
     m_dateManager->setup();
+    m_stateManager->start();
     
 }
 
@@ -94,7 +94,7 @@ void AppManager::update(double dt)
     m_dateManager->update(dt);
     m_guiManager->update(dt);
     m_viewManager->update(dt);
-    m_weatherManager->update(dt);
+    //m_weatherManager->update(dt);
     //m_weatherStationManager->update(dt);
     //m_sensorManager->update(dt);
 

@@ -66,7 +66,7 @@ public:
     
 private:
     
-    //! calculates if it is night or day
+    //! calculates if it is night, day, dusk or dawn
     void calcDayTime();
     
     //! calculates the current season

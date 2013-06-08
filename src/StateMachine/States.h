@@ -22,6 +22,7 @@ class ofxUICanvas;
 class ImageVisual;
 class TextVisual;
 class DateManager;
+class StateManager;
 
 //========================== class State =======================================
 //==============================================================================
@@ -56,11 +57,13 @@ protected:
     
     std::string      m_name;  ///< unique identifier of this state
     ofPoint          m_pos;   ///< position of the State
-    ImageVisual*    m_circleState; ///< circle representing the state
+    ImageVisual*     m_circleState; ///< circle representing the state
     TextVisual*      m_textState; ///< text representing the state
     DateManager*     m_dateManager; ///< pointer to the date manager
+    StateManager*    m_stateManager; ///< pointer to the state manager
     
 };
+
 
 
 //========================== class IdleState =======================================
@@ -87,6 +90,30 @@ public:
 };
 
 
+//========================== class TransitionState =======================================
+//==============================================================================
+/** \class TransitionState States.h
+ *	\brief Represents a transition state of a finite state machine. 
+ *	\details It comes whenever the sensor is inactivated and transits to the idle state
+ */
+
+class TransitionState: public State
+{
+public:
+    //! Constructor
+    TransitionState(const std::string& name,const ofPoint& pos): State(name,pos) {}
+    //! Destructor
+    virtual ~TransitionState() {}
+    //! Do the state initialization stuff here
+    //virtual void initialize();
+    //! Called when the state is entered
+    virtual void onEnter();
+    //! Called before the state is left
+    virtual void onExit();
+    
+};
+
+
 
 //========================== class TubeState ====================================
 //==============================================================================
@@ -100,7 +127,7 @@ class TubeState: public State
 {
 public:
     //! Constructor
-    TubeState(const std::string& name,const ofPoint& pos);
+    TubeState(const std::string& name,const ofPoint& pos): State(name,pos){}
     //! Destructor
     virtual ~TubeState() {}
     //! Do the state initialization stuff here
@@ -109,39 +136,31 @@ public:
     virtual void onEnter();
     //! Called before the state is left
     virtual void onExit();
-    
-private:
-    
-    double  m_waitingTime;     //! Represents the waiting time for the tube to change state
    
 };
 
 
-//========================== class TubeStateShort ====================================
+//========================== class ShortTubeState ====================================
 //==============================================================================
-/** \class TubeStateShort States.h
+/** \class ShortTubeState States.h
  *	\brief Represents a the sound ambience state of a finite state machine. 
  *	\details It plays the ambience sound for a certain time, for a short period of time 
  *           bewtween samples.
  */
 
-class TubeStateShort: public State
+class ShortTubeState: public State
 {
 public:
     //! Constructor
-    TubeStateShort(const std::string& name,const ofPoint& pos);
+    ShortTubeState(const std::string& name,const ofPoint& pos): State(name,pos){}
     //! Destructor
-    virtual ~TubeStateShort() {}
+    virtual ~ShortTubeState() {}
     //! Do the state initialization stuff here
     //virtual void initialize();
     //! Called when the state is entered
     virtual void onEnter();
     //! Called before the state is left
     virtual void onExit();
-    
-private:
-    
-    double  m_waitingTime;     //! Represents the waiting time for the tube to change state
     
 };
 
