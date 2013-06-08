@@ -21,6 +21,7 @@ GuiManager::GuiManager(): m_gui(NULL),m_eventManager(NULL), m_dateManager(NULL)
 
 GuiManager::~GuiManager()
 {
+    m_gui->saveSettings("settings.xml");
     delete m_gui;
     m_gui = NULL;
     m_eventManager = NULL;
@@ -118,7 +119,7 @@ void GuiManager::setup()
     
     //Volumes GUI
     w = widthGUI/4;
-    h = heightGUI;
+    h = heightGUI + margin;
     x = 2*margin;
     y = 6*margin + 2*heightGUI;
 
@@ -126,9 +127,19 @@ void GuiManager::setup()
     rectVisual->setColor(ofColor(85,126,227,100));
     AppManager::getInstance().getViewManager().addVisual(*rectVisual,10);
     
-    x = 3*margin;
-    y = 7*margin + 2*heightGUI;
+    x = 4*margin;
+    y = 9*margin + 2*heightGUI;
     m_gui->addWidget(new ofxUILabel(x,y, "VOLUMES GUI", OFX_UI_FONT_MEDIUM));
+    
+    w = widthGUI/4 - 4*margin;
+    h = 2*margin;
+    x = 4*margin;
+    y = 10*margin + 2*heightGUI + h;
+    m_gui->addWidget(new ofxUISlider(x,y,w,h,0,100,0, "V1 (%)"));
+    y = 10*margin + 2*heightGUI + 3*h;
+    m_gui->addWidget(new ofxUISlider(x,y,w,h,0,100,0, "V2 (%)"));
+    y = 10*margin + 2*heightGUI + 5*h;
+    m_gui->addWidget(new ofxUISlider(x,y,w,h,0,100,0, "V3 (%)"));
     
     w = widthGUI/4 - 2*margin;
     h = heightGUI - 2*margin;
@@ -140,7 +151,7 @@ void GuiManager::setup()
     
     //Times GUI
     w = widthGUI/2 - 2*margin;
-    h = heightGUI;
+    h = heightGUI + margin;
     x = 4*margin + widthGUI/4;
     y = 6*margin + 2*heightGUI;
     
@@ -148,8 +159,28 @@ void GuiManager::setup()
     rectVisual->setColor(ofColor(85,126,227,100));
     AppManager::getInstance().getViewManager().addVisual(*rectVisual,10);
     
-    x = 5*margin + widthGUI/4;
-    y = 7*margin + 2*heightGUI;
+    w = margin*5;
+    x = 7*margin + widthGUI/4;
+    y = 11*margin + 2*heightGUI;
+    m_gui->addWidget(new ofxUIRotarySlider(x,y,w, 0, 15, 3, "t1 (s)")); 
+    y = 13*margin + 2*heightGUI + w;
+    m_gui->addWidget(new ofxUIRotarySlider(x,y,w,0, 15, 1, "t5 (s)"));
+    x = 9*margin + widthGUI/4 + w;
+    y = 11*margin + 2*heightGUI;
+    m_gui->addWidget(new ofxUIRotarySlider(x,y,w,  0, 15, 6, "t2 (s)"));
+    y = 13*margin + 2*heightGUI + w;
+    m_gui->addWidget(new ofxUIRotarySlider(x,y,w, 0, 360, 60, "t6 (s)"));
+    x = 11*margin + widthGUI/4 + 2*w;
+    y = 11*margin + 2*heightGUI;
+    m_gui->addWidget(new ofxUIRotarySlider(x,y,w,0, 360, 180, "t3 (s)"));
+    y = 13*margin + 2*heightGUI + w;
+    m_gui->addWidget(new ofxUIRotarySlider(x,y,w,0, 15, 2, "t7 (s)"));
+    x = 13*margin + widthGUI/4 + 3*w;
+    y = 11*margin + 2*heightGUI;
+    m_gui->addWidget(new ofxUIRotarySlider(x,y,w,  0, 15, 8, "t4 (s)"));
+    
+    x = 6*margin + widthGUI/4;
+    y = 9*margin + 2*heightGUI;
     m_gui->addWidget(new ofxUILabel(x,y, "TIMES GUI", OFX_UI_FONT_MEDIUM));
     
     w = widthGUI/2 - 4*margin;
@@ -166,6 +197,8 @@ void GuiManager::setup()
     m_eventManager = &AppManager::getInstance().getEventManager();
     
     m_dateManager = &AppManager::getInstance().getDateManager();
+    
+    m_gui->loadSettings("settings.xml");
     
     std::cout << m_dateManager->getTime() << "- GuiManager-> initialized "<<std::endl;
     ofLogNotice() << m_dateManager->getTime() << "- GuiManager-> initialized ";
@@ -225,6 +258,22 @@ void GuiManager::guiEvent(ofxUIEventArgs &e)
         std::cout << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< slider->getValue() << std::endl; 
         ofLogNotice() << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< slider->getValue(); 
         m_eventManager->setEvent(Event(name,slider->getValue()));
+    }
+    
+    else if(name =="V1 (%)" || name == "V2 (%)" || name == "V3 (%)")
+    {
+	    ofxUISlider *slider = (ofxUISlider*) e.widget; 
+        std::cout << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< slider->getValue() << std::endl; 
+        ofLogNotice() << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< slider->getValue(); 
+        m_eventManager->setEvent(Event(name,slider->getValue()));
+    }
+    
+    else if(name =="t1 (s)" || name == "t2 (s)" || name == "t3 (s)" || name == "t4 (s)" || name == "t5 (s)" || name == "t6 (s)" || name == "t7 (s)")
+    {
+	    ofxUIRotarySlider *rotatorySlider = (ofxUIRotarySlider*) e.widget; 
+        std::cout << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< rotatorySlider->getValue() << std::endl; 
+        ofLogNotice() << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< rotatorySlider->getValue(); 
+        m_eventManager->setEvent(Event(name,rotatorySlider->getValue()));
     }
     
     else

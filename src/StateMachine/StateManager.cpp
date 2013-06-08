@@ -53,15 +53,22 @@ void StateManager::setup()
     samplerState->initialize();
     m_stateMachine->addState(samplerState);
     
-    AmbienceState* ambienceState = new AmbienceState("AmbienceState",ofPoint(x+3*w/4,y+3*h/4));
-    ambienceState->initialize();
-    m_stateMachine->addState(ambienceState);
+    TubeState* tubeState = new TubeState("TubeState",ofPoint(x+3*w/4,y+3*h/4));
+    tubeState->initialize();
+    m_stateMachine->addState(tubeState);
+    
+    TubeStateShort* tubeStateShort = new TubeStateShort("TubeStateShort",ofPoint(x+3*w/4,y+3*h/4));
+    tubeStateShort->initialize();
+    m_stateMachine->addState(tubeStateShort);
    
-    m_stateMachine->createTransition("IdleState", "AmbienceState",Event("SENSOR",1));
-    m_stateMachine->createTransition("AmbienceState", "IdleState",Event("SENSOR",0));
-    m_stateMachine->createTransition("AmbienceState", "SamplerState",Event("TimeOut"));
-    m_stateMachine->createTransition("SamplerState", "AmbienceState", Event("END_SAMPLER"));
+    m_stateMachine->createTransition("IdleState", "TubeState",Event("SENSOR",1));
+    m_stateMachine->createTransition("TubeState", "IdleState",Event("SENSOR",0));
+    m_stateMachine->createTransition("TubeState", "SamplerState",Event("END_TUBE_STATE"));
+    m_stateMachine->createTransition("SamplerState", "TubeStateShort", Event("END_ONE_SAMPLE"));
+    m_stateMachine->createTransition("SamplerState", "TubeState", Event("END_ALL_SAMPLES"));
     m_stateMachine->createTransition("SamplerState", "IdleState", Event("SENSOR",0));
+    m_stateMachine->createTransition("TubeStateShort", "IdleState", Event("SENSOR",0));
+    m_stateMachine->createTransition("TubeStateShort", "SamplerState", Event("END_TUBE_STATE_SHORT"));
     
     std::cout<< m_dateManager->getTime() <<"- StateManager-> initialized "<<std::endl;
     ofLogNotice()<< m_dateManager->getTime() <<"- StateManager-> initialized ";

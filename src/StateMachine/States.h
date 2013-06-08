@@ -88,36 +88,69 @@ public:
 
 
 
-//========================== class AmbienceState =======================================
+//========================== class TubeState ====================================
 //==============================================================================
-/** \class AmbienceState States.h
+/** \class TubeState States.h
  *	\brief Represents a the sound ambience state of a finite state machine. 
- *	\details It plays the ambience sound for a certain time.
+ *	\details It plays the ambience sound for a certain time, after the sensor has been triggered
+ *           or the samples ended.
  */
 
-class AmbienceState: public State
+class TubeState: public State
 {
 public:
     //! Constructor
-    AmbienceState(const std::string& name,const ofPoint& pos): State(name,pos){}
+    TubeState(const std::string& name,const ofPoint& pos);
     //! Destructor
-    virtual ~AmbienceState() {}
+    virtual ~TubeState() {}
     //! Do the state initialization stuff here
     //virtual void initialize();
     //! Called when the state is entered
     virtual void onEnter();
     //! Called before the state is left
     virtual void onExit();
+    
+private:
+    
+    double  m_waitingTime;     //! Represents the waiting time for the tube to change state
    
 };
 
+
+//========================== class TubeStateShort ====================================
+//==============================================================================
+/** \class TubeStateShort States.h
+ *	\brief Represents a the sound ambience state of a finite state machine. 
+ *	\details It plays the ambience sound for a certain time, for a short period of time 
+ *           bewtween samples.
+ */
+
+class TubeStateShort: public State
+{
+public:
+    //! Constructor
+    TubeStateShort(const std::string& name,const ofPoint& pos);
+    //! Destructor
+    virtual ~TubeStateShort() {}
+    //! Do the state initialization stuff here
+    //virtual void initialize();
+    //! Called when the state is entered
+    virtual void onEnter();
+    //! Called before the state is left
+    virtual void onExit();
+    
+private:
+    
+    double  m_waitingTime;     //! Represents the waiting time for the tube to change state
+    
+};
 
 
 //========================== class SamplerState =======================================
 //====================================================================================
 /** \class SamplerState States.h
  *	\brief Represents a the sampler state of a finite state machine. 
- *	\details It plays randomly samples according to 
+ *	\details It plays randomly samples according to date, time of the day and weather conditions
  */
 
 class SamplerState: public State
