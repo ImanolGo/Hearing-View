@@ -9,6 +9,8 @@
 
 #include "DateManager.h"
 #include "SoundManager.h"
+#include "StateManager.h"
+#include "WeatherManager.h"
 #include "SoundObject.h"
 #include "AppManager.h"
 #include "EventManager.h"
@@ -20,14 +22,18 @@
     
 SoundManager::SoundManager(): 
     m_tube(NULL), 
-    m_playSamples(false), 
+    m_playExpert(false),
     m_currentSample(NULL),
     m_dateManager(NULL),
     m_soundVisual(NULL),
     m_sampleText(NULL),
+    m_numPlayedSamples(0),
     m_season("SUM"),
     m_category("DAY"),
-    m_W(50),m_T(0),m_R(10),m_S(500)
+    m_W(50),m_T(0),m_R(10),m_S(500),
+    m_masterSampleVolume(0.0f),
+    m_sampleTimer(0.0),
+    m_elapsedTime(0.0)
 {
     //Intentionally left empty
 }
@@ -74,6 +80,8 @@ SoundManager::~SoundManager()
 void SoundManager::setup()
 {
     m_dateManager = &AppManager::getInstance().getDateManager();
+    m_stateManager = &AppManager::getInstance().getStateManager();
+    m_weatherManager = &AppManager::getInstance().getWeatherManager();
     
     m_tube = new SoundObject("tube");
     m_tube->loadSound("sounds/tube.wav");
@@ -170,64 +178,128 @@ std::string SoundManager::getSampleName(const std::string& path)
 }
 
 
-void SoundManager::setCurrentSamples(std::string sampleListName)
+bool SoundManager::setCurrentSamples(std::string sampleListName)
 {
+    m_numPlayedSamples = 0;
+    m_playExpert = false;
     m_currentSampleList.clear();
     
     if(m_samples.find(sampleListName) == m_samples.end())
     {
         std::cout <<m_dateManager->getTime()<<"- SoundManager-> setSamples: no sample list with name \""<< sampleListName <<"\"" << std::endl;
         ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> setSamples: no sample list with name \""<< sampleListName <<"\"" ;
-        return;
+        return false;
     }
     
     m_currentSampleList = m_samples[sampleListName];
     
-    m_indexList.clear();
-    for(int i = 0; i < m_currentSampleList.size(); i++ )
-    {
-        m_indexList.push_back(i);
-    }
-    
     std::cout <<m_dateManager->getTime()<<"- SoundManager-> setSamples: playing samples from \""<< sampleListName <<"\"" << std::endl;
     ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> setSamples: playing samples from \""<< sampleListName <<"\"" ;
 
+    return true;
 }
 
-void SoundManager::playSamples()
+bool SoundManager::fitsPlayConditions(const SoundObject& sample)
 {
-    m_indexList.clear();
-    for(int i = 0; i < m_currentSampleList.size(); i++ )
+    string conditions = ofSplitString(sample.getName(), "_").back();
+   
+    if(ofIsStringInString(conditions, "W"))
     {
-        m_indexList.push_back(i);
+        if (m_weatherManager->getWindSpeed() >= m_W) {
+            return false;
+        }
     }
     
-    m_playSamples = true;
-    this->playRandomSample();
+    if(ofIsStringInString(conditions, "R"))
+    {
+        if (m_weatherManager->getPrecipMM() >= m_R) {
+            return false;
+        }
+    }
+    
+    if(ofIsStringInString(conditions, "T"))
+    {
+        if (m_weatherManager->getTemperature() <= m_T) {
+            return false;
+        }
+    }
+
+    if(ofIsStringInString(conditions, "S"))
+    {
+        if (m_weatherManager->getInsolation() <= m_S) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+void SoundManager::playNextSample(float time, float volume)
+{
+    m_elapsedTime = 0.0;
+    m_sampleTimer = time;
+    m_masterSampleVolume = volume;
+    
+    if (m_playExpert) {
+        this->playExpertSample();
+        return;
+    }
+    else 
+    {
+        this->playRandomSample();
+        return;
+    }
+
+    
+}
+
+void SoundManager::playExpertSample()
+{
+    string sampleListName = m_season + "_EXP";
+    
+    if(!this->setCurrentSamples(sampleListName)){
+        AppManager::getInstance().getEventManager().setTimedEvent("END_ALL_SAMPLES", m_stateManager->m_t5);
+        m_currentSample = NULL;
+        m_playExpert = false;
+    }
+    
+    int n = 0;
+    int i = (int) ofRandom(m_currentSampleList.size()-1);
+    while (n<m_currentSampleList.size()) {
+        if (fitsPlayConditions(*m_currentSampleList[i])) {
+            m_currentSample = m_currentSampleList[i];
+            m_currentSample->setVolume(m_masterSampleVolume);
+            m_currentSample = m_currentSampleList[i];
+            m_currentSample->setVolume(m_masterSampleVolume);
+            m_currentSampleList.erase(m_currentSampleList.begin()+i);
+            return;
+        }
+        i = (i+1)%m_currentSampleList.size();
+        n++;
+    }
+    
+    this->resetSamples();
+    m_currentSample = NULL;
+    AppManager::getInstance().getEventManager().setTimedEvent("END_ALL_SAMPLES", m_stateManager->m_t5);
+
 }
 
 void SoundManager::playRandomSample()
 {
-    if(m_indexList.empty())
-    {
-        m_playSamples = false;
-        AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText, 0, 3);
-        AppManager::getInstance().getEventManager().setEvent(Event("END_SAMPLER"));
+    int n = 0;
+    int i = (int) ofRandom(m_currentSampleList.size()-1);
+    while (n<m_currentSampleList.size()) {
+        if (fitsPlayConditions(*m_currentSampleList[i])) {
+            m_currentSample = m_currentSampleList[i];
+            m_currentSample->setVolume(m_masterSampleVolume);
+            m_currentSampleList.erase(m_currentSampleList.begin()+i);
+            return;
+        }
+        i = (i+1)%m_currentSampleList.size();
+        n++;
     }
     
-    else
-    {
-        int ind = ofRandom(m_indexList.size());
-        m_currentSample = m_currentSampleList[m_indexList[ind]];
-        m_sampleText->setText("\"" + m_currentSample->getName() + "\"", 15);
-        m_sampleText->setColor(ofColor(255,255,255,0));
-        AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText, 255, 3);
-        m_currentSample->play();
-        m_indexList.erase(m_indexList.begin()+ind);
-        std::cout <<m_dateManager->getTime()<<"- SoundManager-> play sample \""<< m_currentSample->getName() <<"\"" << std::endl;
-        ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> play sample \""<< m_currentSample->getName() <<"\"" ;
-    }
-    
+    this->playExpertSample();
 }
 
 void SoundManager::stopSamples()
@@ -237,22 +309,46 @@ void SoundManager::stopSamples()
     ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> stop sample \""<< m_currentSample->getName() <<"\"";
 }
 
+void SoundManager::resetSamples()
+{
+   this->setCurrentSamples(m_season+ "_" + m_category);
+}
+
 
 //--------------------------------------------------------------
 void SoundManager::update(double dt)
 {
     ofSoundUpdate();
     
-    if(!m_playSamples)
+    if(!m_currentSample)
     {
         return;
     }
-        
+    
+    
     if(!m_currentSample->isPlaying())
     {
-        this->playRandomSample();
+        if(m_elapsedTime< m_sampleTimer){
+            m_elapsedTime += dt;
+             if (m_elapsedTime>= m_sampleTimer) 
+             {
+                 m_currentSample->play();
+                 m_sampleText->setText("\"" + m_currentSample->getName() + "\"", 15);
+                 m_sampleText->setColor(ofColor(255,255,255,0));
+                 AppManager::getInstance().getViewManager().fadeVisual(*m_sampleText, 255, 3);
+                 std::cout <<m_dateManager->getTime()<<"- SoundManager-> play sample \""<< m_currentSample->getName() <<"\"" << std::endl;
+                 ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> play sample \""<< m_currentSample->getName() <<"\"" ;
+                 
+
+             }
+            
+        }
+        else{
+            AppManager::getInstance().getEventManager().setTimedEvent("END_SAMPLE", m_stateManager->m_t5);
+            m_currentSample = NULL;
+        }
     }
-    
+
 }
 
 void  SoundManager::fadeTube(float volume, float fadeTime)
@@ -342,14 +438,7 @@ void SoundManager::handleEvent(const Event& event)
         if(m_currentSample && m_currentSample->isPlaying())
         {
             m_currentSample->setVolume((float) event.getValue());
-        }
-    }
-    
-    else if(name=="SENSOR")
-    {
-        if(event.getValue() == 0.0)
-        {
-            m_playSamples = false;
+            m_masterSampleVolume = m_currentSample->getVolume();
         }
     }
     
@@ -376,7 +465,6 @@ void SoundManager::handleEvent(const Event& event)
         m_W = (float) event.getValue();
         std::cout <<m_dateManager->getTime()<<"- SoundManager-> W = " << m_W <<" Km/h "<<std::endl;
         ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> W = " << m_W <<" Km/h ";
-
     }
     else if(name=="T (ºC)"){
         m_T= (float) event.getValue();

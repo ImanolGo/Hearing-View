@@ -55,6 +55,18 @@ public:
     //! handles the events
     void handleEvent(const Event& event);
     
+    //! get current wind speed
+    float getWindSpeed(){return m_windSpeed;}
+    
+    //! get current Temperature
+    float getTemperature(){return m_temperature;}
+    
+    //! get current precipitation amount
+    float getPrecipMM(){return m_precipMM;}
+    
+    //! get current sun radiation
+    float getInsolation(){return m_insolation;}
+    
 protected:
     
     //! reads and parses the information from Yahoo's weather API
@@ -87,6 +99,7 @@ protected:
     int                   m_humidity;           ///< stores the current relative humidty (%)
     float                 m_windSpeed;          ///< stores the current wind speed in kilometre per hour
     int                   m_precipMM;           ///< stores the precipititation amount in millimeter
+    float                 m_insolation;         ///< stores the  solar radiation energy received on a given surface 
     int                   m_code;               ///< stores the current weather conditions code
     std::string           m_location;			///< stores the name of the location for the weather query	
     std::string           m_iconName;			///< stores the icon name of the location for the weather query	

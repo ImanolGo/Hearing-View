@@ -29,7 +29,8 @@ m_windSpeed(0.0f),
 m_precipMM(0.0f),
 m_humidity(0),
 m_elapsedTime(0.0),
-m_fontSize(13)
+m_fontSize(13),
+m_insolation(1000)
 {
 }
 

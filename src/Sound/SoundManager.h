@@ -20,6 +20,8 @@
 class SoundObject;
 class Event;
 class DateManager;
+class StateManager;
+class WeatherManager;
 class SoundVisual;
 class TextVisual;
 
@@ -32,6 +34,8 @@ class TextVisual;
 
 class SoundManager
 {
+     static const double MAX_SAMPLES;  //defines the maximum number of normal samples to be played
+    
 public:
     
     //! Constructor
@@ -48,10 +52,10 @@ public:
     
     //==========================================================================
     
-    //! plays all samples randomly
-    void playSamples();
+    //! plays the next sample according to the logic
+    void playNextSample(float time, float volume);
     
-    //! stop play samples
+    //! stops the current sample
     void stopSamples();
     
     //! fades the tube sound from it current volume level to a specific level
@@ -69,6 +73,8 @@ public:
      //! Returns the tube's sound object volume
     float getTubeVolume() const;
     
+    //! resets the sample list
+    void resetSamples();
     
     //! handles the events
     void handleEvent(const Event& event);
@@ -78,14 +84,20 @@ private:
     //! plays a random sample
     void playRandomSample();
     
+    //! plays one of the expert samples
+    void playExpertSample();
+    
     //! interface with the GUI events
     void guiEvent(ofxUIEventArgs &e);
     
     //! loads the samples into the list
     void loadSamples();
     
+    //! returns if a given sample can be played or not
+    bool fitsPlayConditions(const SoundObject& sample);
+    
     //! sets the sample list to be played
-    void setCurrentSamples(std::string sampleListName);
+    bool setCurrentSamples(std::string sampleListName);
     
     //! returns the sample name given its path
     std::string getSampleName(const std::string& path);
@@ -96,17 +108,23 @@ private:
     typedef std::vector <SoundObject*>   SamplesList;            ///< defines a list of SoundObjects
     typedef std::map <std::string, SamplesList>   SamplesMap;   ///< defines a map of SamplesList sorted by the category name
     
-    SoundObject*                     m_tube;              ///< tube sound
-    SamplesMap                       m_samples;           ///< list of the sounds to be play
-    SamplesList                      m_currentSampleList; ///< current sample list to be played
-    SoundObject*                     m_currentSample;     ///< current playback sample
-    bool                             m_playSamples;       ///< it tells wether the sampler hast to play or not
+    SoundObject*           m_tube;                  ///< tube sound
+    SamplesMap             m_samples;               ///< list of the sounds to be play
+    SamplesList            m_currentSampleList;     ///< current sample list to be played
+    SoundObject*           m_currentSample;         ///< current playback sample
+    bool                   m_playExpert;            ///< defines if the expert sample will be played
+    int                    m_numPlayedSamples;      ///< stores the number of samples played
+    
+    float                  m_masterSampleVolume;    ///< stores the master sample volume
+    double                 m_sampleTimer;           ///< the amount of time to wait until playing a sample
+    double                 m_elapsedTime;           ///< the elapsed time waiting to play a sample
     
     std::string                      m_season;            ///< saves the current season
     std::string                      m_category;          ///< saves the current sample category
-    std::vector<int>                 m_indexList;         ////< list with the current sample list indexes
-    
+        
     DateManager*	  m_dateManager;	///< pointer to the date manager
+    StateManager*     m_stateManager;   ///< pointer to the state manager
+    WeatherManager*   m_weatherManager; ///< pointer to the weather manager
     SoundVisual*      m_soundVisual;    ///< visualization of th ecurrent sound level
     
     TextVisual*       m_sampleText;     ///< text visual from th ecurrent sample being played

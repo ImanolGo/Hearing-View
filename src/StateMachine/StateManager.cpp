@@ -69,7 +69,7 @@ void StateManager::setup()
     m_stateMachine->createTransition("IdleState", "TubeState",Event("SENSOR",1));
     m_stateMachine->createTransition("TubeState", "TransitionState",Event("SENSOR",0));
     m_stateMachine->createTransition("TubeState", "SamplerState",Event("END_TUBE_STATE"));
-    m_stateMachine->createTransition("SamplerState", "TubeStateShort", Event("END_ONE_SAMPLE"));
+    m_stateMachine->createTransition("SamplerState", "TubeStateShort", Event("END_SAMPLE"));
     m_stateMachine->createTransition("SamplerState", "TubeState", Event("END_ALL_SAMPLES"));
     m_stateMachine->createTransition("SamplerState", "TransitionState", Event("SENSOR",0));
     m_stateMachine->createTransition("TubeStateShort", "TransitionState", Event("SENSOR",0));
