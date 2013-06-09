@@ -17,6 +17,7 @@
 //#include "SoundObject.h"
 
 class SoundObject;
+class DateManager;
 
 //=============================== class Visual ==============================
 //===========================================================================
@@ -30,7 +31,7 @@ class Visual
 public:
     
     //! Constructor
-    Visual(ofPoint pos, float width, float height, bool centred = false): m_position(pos), m_width(width), m_height(height), m_centred(centred){}
+    Visual(ofPoint pos, float width, float height, bool centred = false);
     
     //! Destructor
     virtual ~Visual();
@@ -56,6 +57,7 @@ protected:
 	double			m_height;		///< the height of the visual
     ofColor         m_color;        ///< color of the visual	
     bool            m_centred;      ///< sets of the position reference is the centre
+    DateManager*    m_dateManager; ///< pointer to the date manager
     
 };
 
@@ -81,7 +83,7 @@ public:
 	virtual void draw() const;
     
     //! Sets the text to be drawn
-    void setText(std::string text,int fontSize);
+    void setText(std::string text, std::string fontName, int fontSize );
     
 private:
     

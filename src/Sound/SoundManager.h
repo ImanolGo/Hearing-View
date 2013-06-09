@@ -34,7 +34,7 @@ class TextVisual;
 
 class SoundManager
 {
-     static const double MAX_SAMPLES;  //defines the maximum number of normal samples to be played
+     static const int MAX_NUM_SAMPLES;  //defines the maximum number of normal samples to be played
     
 public:
     
@@ -119,15 +119,17 @@ private:
     double                 m_sampleTimer;           ///< the amount of time to wait until playing a sample
     double                 m_elapsedTime;           ///< the elapsed time waiting to play a sample
     
-    std::string                      m_season;            ///< saves the current season
-    std::string                      m_category;          ///< saves the current sample category
+    std::string            m_season;                ///< saves the current season
+    std::string            m_category;              ///< saves the current sample category
         
     DateManager*	  m_dateManager;	///< pointer to the date manager
     StateManager*     m_stateManager;   ///< pointer to the state manager
     WeatherManager*   m_weatherManager; ///< pointer to the weather manager
     SoundVisual*      m_soundVisual;    ///< visualization of th ecurrent sound level
     
-    TextVisual*       m_sampleText;     ///< text visual from th ecurrent sample being played
+    TextVisual*       m_sampleName;                ///< text visual from the current sample name being played
+    TextVisual*       m_sampleElapsedTimeText;     ///< text visual from the current sample elapsed time
+    TextVisual*       m_sampleRemainTimeText;      ///< text visual from the current sample remaining time
     
     float             m_W;              ///< wind speed threshold value used to exlcude samples with this letter
     float             m_T;              ///< temperature threshold value used to exlcude samples with this letter

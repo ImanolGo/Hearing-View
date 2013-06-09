@@ -56,13 +56,13 @@ void State::initialize()
     m_stateManager = &AppManager::getInstance().getStateManager();
 
     m_circleState = new ImageVisual(m_pos,70,70,true);
-    m_circleState->setImage("pictures/icons/button.png");
+    m_circleState->setImage("images/icons/button_selected.png");
     m_circleState->setColor(ofColor(255,255,255,100));
     m_textState = new TextVisual(m_pos,20,20, true);
     m_textState->setColor(ofColor(240,240,240,100));
-    m_textState->setText(this->getName(),15);
-    AppManager::getInstance().getViewManager().addVisual(*m_textState);
-    AppManager::getInstance().getViewManager().addVisual(*m_circleState,1);
+    m_textState->setText(this->getName(),"Klavika-Bold.otf",15);
+    AppManager::getInstance().getViewManager().addVisual(*m_textState,-1);
+    AppManager::getInstance().getViewManager().addVisual(*m_circleState);
     
     std::cout<<m_dateManager->getTime()<<"- State->" <<m_name<< " initialized." <<std::endl;
     ofLogNotice()<<m_dateManager->getTime()<<"- State->" <<m_name<< " initialized.";

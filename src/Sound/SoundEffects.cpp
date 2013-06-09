@@ -253,8 +253,8 @@ void FadeSound::update(double dt)
 	}
 
 	m_elapsedTime = m_elapsedTime + dt;
-    
-	if(m_elapsedTime >= m_animationTime) {	
+ 
+	if(m_elapsedTime >= m_animationTime || m_sound.getVolume() == m_endVolume) {	
         m_sound.setVolume(m_endVolume);
 		this->stop();
 		return;

@@ -25,8 +25,8 @@ m_currentIcon(NULL),
 m_dateManager(NULL), 
 m_code(0),
 m_temperature(0.0f),
-m_windSpeed(0.0f),
-m_precipMM(0.0f),
+m_windSpeed(-1.0f),
+m_precipMM(-1.0f),
 m_humidity(0),
 m_elapsedTime(0.0),
 m_fontSize(13),
@@ -133,7 +133,12 @@ bool WeatherManager::parseXML()
     m_XML.pushTag("current_condition");
     
     
-    m_code = m_XML.getValue("weatherCode", 0);
+    int code = m_XML.getValue("weatherCode", 0);
+    if(m_code!= code)
+    {
+        m_code = code;
+        this->readConditionsCode();
+    }
     string conditionsDesc = m_XML.getValue("weatherDesc"," ");
     
     if(m_conditionsDesc!= conditionsDesc)
@@ -155,6 +160,8 @@ bool WeatherManager::parseXML()
         std::string text = "Temperature: " + ofToString(temperature) + "°C";
         std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
+        
+        AppManager::getInstance().getEventManager().setEvent(Event("Temperature (T(°C))",m_temperature));
         
         //m_textVisuals["temperature"]->setText(text, m_fontSize);
         //m_textVisuals["temperature"]->setColor(ofColor(255,255,255,0));
@@ -180,9 +187,11 @@ bool WeatherManager::parseXML()
     if(m_windSpeed!= windSpeed)
     {
         m_windSpeed = windSpeed;
-        std::string text = "Wind Speed: " + ofToString(windSpeed) + "Kph";
+        std::string text = "Wind Speed: " + ofToString(m_windSpeed) + "Kph";
         std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
+        
+        AppManager::getInstance().getEventManager().setEvent(Event("Wind Speed (W(Kph))",m_windSpeed));
         
         //m_textVisuals["windSpeed"]->setText(text, m_fontSize);
         //m_textVisuals["windSpeed"]->setColor(ofColor(255,255,255,0));
@@ -197,6 +206,8 @@ bool WeatherManager::parseXML()
         std::string text = "Precipitation: " + ofToString(precipMM) + "mm";
         std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
         ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
+        
+        AppManager::getInstance().getEventManager().setEvent(Event("Precipitation (R(mm))",m_precipMM));
         
         //m_textVisuals["precipMM"]->setText(text, m_fontSize);
         //m_textVisuals["precipMM"]->setColor(ofColor(255,255,255,0));
@@ -235,19 +246,23 @@ void WeatherManager::readConditionsCode()
 	string dayTime = AppManager::getInstance().getDateManager().getDayTime();
     string iconName;
     string conditions;
+    float insolation;
 	if(m_code == 113) {
 		iconName = "sunny_" + dayTime;
         conditions = "Dry";
+        insolation = 1360;
 	}
     
 	else if(m_code==119 ||m_code == 122) {
 		iconName = "cloudy_" + dayTime;
         conditions = "Dry";
+        insolation = 1050;
 	}
     
 	else if(m_code == 116) {
 		iconName = "partly_cloudy_" + dayTime;
         conditions = "Dry";
+        insolation = 1120;
 	}
     
 	
@@ -256,6 +271,7 @@ void WeatherManager::readConditionsCode()
     {
 		iconName = "snow_" + dayTime;
         conditions = "Rain";
+        insolation = 1050;
 	}
     
     else if(m_code ==  392 || m_code ==  368 || m_code ==  332 || m_code ==  230 || m_code ==  227||
@@ -263,52 +279,62 @@ void WeatherManager::readConditionsCode()
     {
 		iconName = "light_snow_" + dayTime;
         conditions = "Rain";
+        insolation = 1050;
 	}
     
 	else if(m_code ==  365 || m_code ==  362 ||  m_code ==  320 || m_code ==  317 || m_code ==  314 || m_code ==  311 
             || m_code ==  284 || m_code ==  381 || m_code ==  185 || m_code ==  182 || m_code ==  179) {
 		iconName = "sleet_" + dayTime;
         conditions = "Rain";
+        insolation = 1050;
 	}
     
 	else if( m_code ==  296 || m_code ==  266 || m_code ==  353) {
 		iconName = "light_rain_" + dayTime;
         conditions = "Rain";
+        insolation = 1050;
 	}
     
 	else if( m_code ==  305 || m_code ==  299 || m_code ==  293 || m_code ==  263|| m_code ==  176) {
 		iconName = "light_rain_" + dayTime;
         conditions = "Rain";
+        insolation = 1050;
 	}
     
 	else if(m_code ==  389 || m_code ==  359 || m_code ==  356 || m_code ==  308 || m_code ==  302) {
 		iconName = "rain_" + dayTime;
         conditions = "Rain";
+        insolation = 1050;
 	}
     
     
 	else if(m_code ==  260|| m_code ==  248) {
 		iconName = "fog_" + dayTime;
         conditions = "Dry";
+        insolation = 1120;
 	}
     
     else if(m_code ==  143) {
 		iconName = "mist_" + dayTime;
         conditions = "Dry";
+        insolation = 1120;
 	}
     
 	else if(m_code ==  386) {
 		iconName = "chance_of_storm_" + dayTime;
         conditions = "Rain";
+        insolation = 1050;
 	}
     
 	else if(m_code ==  200) {
 		iconName = "storm_" + dayTime;
         conditions = "Rain";
+        insolation = 1050;
 	}
     
 	else {
 		iconName = "sunny_" + dayTime;
+        insolation = 1360;
 	}
 
     if(iconName!=m_iconName)
@@ -333,6 +359,22 @@ void WeatherManager::readConditionsCode()
         AppManager::getInstance().getEventManager().setEvent(Event(m_conditions));
         
     }
+    
+    if(m_insolation!= insolation)
+    {
+        m_insolation = insolation;
+        std::string text = "Sun Radiation: " + ofToString(m_insolation) + " W/m2";
+        std::cout << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
+        ofLogNotice() << m_dateManager->getTime() << "- WeatherManager-> parseXML: " + text << std::endl;
+        
+        AppManager::getInstance().getEventManager().setEvent(Event("Insolation (S(W/m2))",m_insolation));
+        
+        //m_textVisuals["precipMM"]->setText(text, m_fontSize);
+        //m_textVisuals["precipMM"]->setColor(ofColor(255,255,255,0));
+        //AppManager::getInstance().getViewManager().fadeVisual(* m_textVisuals["precipMM"], 255, WeatherManager::FADE_TIME);
+        
+    }  
+
 }
 
 void WeatherManager::loadIcons()
@@ -403,7 +445,7 @@ void WeatherManager::loadTextVisuals()
     textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, false);
     textVisual->setColor(ofColor(255,255,255,0));
     text = "Temperature: " + ofToString(m_temperature) + "°C";
-    textVisual->setText(text, m_fontSize);
+    textVisual->setText(text, "Klavika-Regular.otf", m_fontSize);
     m_textVisuals["temperature"]= textVisual;
     AppManager::getInstance().getViewManager().addVisual(*m_textVisuals["temperature"]);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["temperature"], 255, WeatherManager::FADE_TIME);
@@ -412,7 +454,7 @@ void WeatherManager::loadTextVisuals()
     textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, false);
     textVisual->setColor(ofColor(255,255,255,0));
     text = "Humidity: " + ofToString(m_humidity) + "%";
-    textVisual->setText(text, m_fontSize);
+    textVisual->setText(text, "Klavika-Regular.otf", m_fontSize);
     m_textVisuals["humidity"]= textVisual;
     AppManager::getInstance().getViewManager().addVisual(*m_textVisuals["humidity"]);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["humidity"], 255, WeatherManager::FADE_TIME);
@@ -421,7 +463,7 @@ void WeatherManager::loadTextVisuals()
     textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, false);
     textVisual->setColor(ofColor(255,255,255,0));
     text = "Wind Speed: " + ofToString(m_windSpeed) + "Kph";
-    textVisual->setText(text, m_fontSize);
+    textVisual->setText(text, "Klavika-Regular.otf", m_fontSize);
     m_textVisuals["windSpeed"]= textVisual;
     AppManager::getInstance().getViewManager().addVisual(*m_textVisuals["windSpeed"]);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["windSpeed"], 255, WeatherManager::FADE_TIME);
@@ -430,7 +472,7 @@ void WeatherManager::loadTextVisuals()
     textVisual = new TextVisual(ofPoint(x,y),w/2,2*sizeIcon, false);
     textVisual->setColor(ofColor(255,255,255,0));
     text = "Precipitation: " + ofToString(m_precipMM) + "mm";
-    textVisual->setText(text, m_fontSize);
+    textVisual->setText(text, "Klavika-Regular.otf", m_fontSize);
     m_textVisuals["precipMM"]= textVisual;
     AppManager::getInstance().getViewManager().addVisual(*m_textVisuals["precipMM"]);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textVisuals["precipMM"], 255, WeatherManager::FADE_TIME);

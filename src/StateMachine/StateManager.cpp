@@ -39,30 +39,35 @@ void StateManager::setup()
      m_dateManager = &AppManager::getInstance().getDateManager();
     
     float margin = ofGetHeight()/70.0;
-    float widthVisuals = ofGetWidth() - 4*margin; 
-    float heightVisuals = ofGetHeight()/3.0 - 4*margin;
-    float w = 2*widthVisuals/5 - 2*margin;
-    float h = heightVisuals - 4*margin;
-    float x =  3*margin;
-    float y =  8*margin + 2*heightVisuals;
     
-    IdleState* idleState = new IdleState("IdleState",ofPoint(x + w/2,y+h/4));
+    float widthGUI = ofGetWidth() - 4*margin; 
+    float heightGUI = ofGetHeight()/3.0 - 4*margin;
+    float w = widthGUI/5 - 2*margin;
+    float h = heightGUI - 4*margin;
+    float x =  3*margin + 0.5*w;
+    float y =  4*margin + heightGUI + heightGUI*0.5;
+    
+    IdleState* idleState = new IdleState("IdleState",ofPoint(x,y));
     idleState->initialize();
     m_stateMachine->addState(idleState);
     
-    TransitionState* transitionState = new TransitionState("TransitionState",ofPoint(x + w/2,y+h/4));
+    x =  5*margin + 1.5*w;
+    TransitionState* transitionState = new TransitionState("TransitionState",ofPoint(x,y));
     transitionState->initialize();
     m_stateMachine->addState(transitionState);
 
-    SamplerState* samplerState = new SamplerState("SamplerState",ofPoint(x+w/4,y+3*h/4));
-    samplerState->initialize();
-    m_stateMachine->addState(samplerState);
-    
-    TubeState* tubeState = new TubeState("TubeState",ofPoint(x+3*w/4,y+3*h/4));
+    x =  7*margin + 2.5*w;
+    TubeState* tubeState = new TubeState("TubeState",ofPoint(x,y));
     tubeState->initialize();
     m_stateMachine->addState(tubeState);
     
-    ShortTubeState* shortTubeState = new ShortTubeState("TubeStateShort",ofPoint(x+3*w/4,y+3*h/4));
+    x =  9*margin + 3.5*w;
+    SamplerState* samplerState = new SamplerState("SamplerState",ofPoint(x,y));
+    samplerState->initialize();
+    m_stateMachine->addState(samplerState);
+    
+    x =  11*margin + 4.5*w;
+    ShortTubeState* shortTubeState = new ShortTubeState("TubeStateShort",ofPoint(x,y));
     shortTubeState->initialize();
     m_stateMachine->addState(shortTubeState);
    

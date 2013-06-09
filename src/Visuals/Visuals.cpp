@@ -8,14 +8,21 @@
 
 #include "SoundObject.h"
 #include "Visuals.h"
+#include "DateManager.h"
 #include "AppManager.h"
 #include "VisualEffectsManager.h"
+
+Visual::Visual(ofPoint pos, float width, float height, bool centred): m_position(pos), m_width(width), m_height(height), m_centred(centred)
+{
+    m_dateManager = &AppManager::getInstance().getDateManager();
+    
+}
+
 
 
 Visual::~Visual()
 {
    AppManager::getInstance().getVisualEffectsManager().removeAllVisualEffects(*this);
-    
 }
 
 
@@ -26,11 +33,11 @@ TextVisual::~TextVisual()
     
 }
 
-void TextVisual::setText(std::string text, int fontSize)
+void TextVisual::setText(std::string text, std::string fontName, int fontSize)
 {
     m_text = text;
     m_font = new ofTrueTypeFont();
-    m_font->loadFont("fonts/Klavika-Bold.otf",fontSize);
+    m_font->loadFont("fonts/" + fontName,fontSize);
     m_box = m_font->getStringBoundingBox(m_text, m_position.x, m_position.y);
     
 }
@@ -80,8 +87,15 @@ ImageVisual::~ImageVisual()
 void ImageVisual::setImage(std::string path)
 {
     m_color = ofColor(255,255,255);
-    m_image->loadImage(path);
-    m_image->resize(m_width,m_height);
+    if(m_image->loadImage(path)){
+        m_image->resize(m_width,m_height);
+        std::cout << m_dateManager->getTime() << " - ImageVisual-> setImage: "<< path <<std::endl;
+        ofLogNotice() << m_dateManager->getTime() << " - ImageVisual-> setImage: " << path;
+    }
+    else{
+        std::cout << m_dateManager->getTime() << " - ImageVisual-> setImage: Unable to find/load -> "<< path <<std::endl;
+        ofLogNotice() << m_dateManager->getTime() << " - ImageVisual-> setImage: Unable to find/load ->" << path;
+    }
 }
 
 void ImageVisual::draw() const
