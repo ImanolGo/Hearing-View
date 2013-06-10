@@ -24,8 +24,12 @@ typedef enum {
     END_SESSION
 } SERIAL_STATE;
 
+enum { DATE_TIME, PORT_A, PORT_B, PORT_C, PORT_D, PORT_E, PORT_F, HUMIDITY, TEMPERATURE, NO_DATE, WIND_DIRECTION,
+    WIND_GUST, WIND_SPEED, CHECKSUM};
 
 class WeatherThread : public ofThread{
+
+private:
     
     static const double REFRESH_TIME;       ///< defines the refresh time
     static const double WAKING_TIME;       ///< defines the time for the serial to wait for a response
@@ -51,10 +55,18 @@ public:
     
     //! Run threaded function
     void threadedFunction();
+    
+private:
+    
+    //! Run threaded function
+    void mapValues(const std::string& data);
 
 public:
     
-    std::string        m_data; 
+    float            m_T; // stores the temperature (°C) coming from the weather station
+    float            m_W; // stores the wind speed (Kph) coming from the weather station
+    float            m_S; // stores the sun radiation level (W/m2) coming from the weather station
+    float            m_R; // stores the wetness (?) coming from the weather station
     
 private:
     
@@ -64,7 +76,7 @@ private:
     unsigned char		m_bytesDataString[DATA_SIZE +1]; // a string needs a null terminator
     unsigned char		m_bytesHeader[HEADER_SIZE];	// data from serial, we will be trying to read the Ok message
     unsigned char		m_bytesHeaderString[HEADER_SIZE +1]; // a string needs a null terminator
-    int         m_nBytesRead;                             // how much did we read?
+    int                 m_nBytesRead;                             // how much did we read?
     
     ofSerial        m_serial;             ///< a serial object
     SERIAL_STATE    m_serialState;        ///< defines the current state of the serial communication

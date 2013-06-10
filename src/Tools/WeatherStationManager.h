@@ -29,6 +29,7 @@ class DateManager;
 
 class WeatherStationManager
 {
+    static const double REFRESH_TIME;       ///< defines the refresh time
     
 public:
     //! Constructor
@@ -46,11 +47,29 @@ public:
     //! handles the events
     void handleEvent(const Event& event);
     
+    //! get current wind speed
+    float getWindSpeed() const {return m_W;}
     
-protected:
+    //! get current Temperature
+    float getTemperature() const {return m_T;}
     
-    WeatherThread         m_weatherThread;      ///< class reading by serial from the weather station on a separate process
+    //! get current wetness
+    float getWetness() const {return m_R;}
+    
+    //! get current sun radiation
+    float getInsolation() const {return m_S;}
+    
+private:
+    
+    WeatherThread   m_weatherThread;      ///< class reading by serial from the weather station on a separate process
     DateManager*    m_dateManager;        ///< pointer to the date manager
+
+    double          m_elapsedTime;        ///< elapsed time since the last data refresh
+    
+    float            m_T; // stores the temperature (°C) coming from the weather station
+    float            m_W; // stores the wind speed (Kph) coming from the weather station
+    float            m_S; // stores the sun radiation level (W/m2) coming from the weather station
+    float            m_R; // stores the wetness (?) coming from the weather station
 
 };
 

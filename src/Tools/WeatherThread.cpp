@@ -17,7 +17,9 @@ const double WeatherThread::DATA_TIME = 2000; ///< the response time should be l
 const int WeatherThread::WAKING_CHAR_GROUP = 32; ///< "@@...@@@"
 const int WeatherThread::NUM_WAKING_UPS = 30;
 
-WeatherThread::WeatherThread():m_nBytesRead(0),m_bytesRemaining(0),m_wakingUp_num(0)
+WeatherThread::WeatherThread():
+m_nBytesRead(0),m_bytesRemaining(0),m_wakingUp_num(0),
+m_T(0.0f),m_W(0.0f),m_S(0.0f),m_R(0.0f)
 {
     //Intentionaly left empty
 }
@@ -59,6 +61,20 @@ void WeatherThread::start(){
 void WeatherThread::stop(){
     stopThread();
     std::cout << "WeatherThread-> stop " << std::endl;
+}
+
+void WeatherThread::mapValues(const std::string& data)
+{
+     std::vector<std::string> strs = ofSplitString(data, "\t"); //tab character (ASCII = 9)
+     if(strs.size()==14)
+     {
+         std::cout << strs.size()<<std::endl;
+         m_S = ofToFloat(strs[PORT_A]);
+         m_R = ofToFloat(strs[PORT_B]);
+         m_T = ofToFloat(strs[TEMPERATURE]);
+         m_W = ofToFloat(strs[WIND_SPEED]);
+     }
+    
 }
 
 void WeatherThread::threadedFunction(){
@@ -183,6 +199,7 @@ void WeatherThread::threadedFunction(){
                     
                     memcpy(m_bytesDataString, m_bytesData, DATA_SIZE);
                     std::cout<< ofToString(m_bytesDataString) <<std::endl;
+                    this->mapValues(ofToString(m_bytesDataString));
                     m_serialState = END_SESSION;
                 }
                 
