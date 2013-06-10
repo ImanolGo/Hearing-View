@@ -89,16 +89,15 @@ void GuiManager::setup()
     y = 5*margin;
     m_gui->addWidget(new ofxUILabel(x,y, "CURRENT WEATHER CONDITIONS", OFX_UI_FONT_MEDIUM));
     
-    y = 7*margin;
-    m_gui->addWidget(new ofxUISlider(x,y,w*0.5-2*margin,h*0.1,-40,40,0, "Temperature (T(°C))"));
-    y = 9*margin + h*0.2;
-    m_gui->addWidget(new ofxUISlider(x,y,w*0.5-2*margin,h*0.1,0.0,120,50, "Wind Speed (W(Kph))"));
-    
-    x = 8*margin + 1.5*w;
-    y = 7*margin;
-    m_gui->addWidget(new ofxUISlider(x,y,w*0.5-2*margin,h*0.1,0.0,1500,1050, "Insolation (S(W/m2))"));
-    y = 9*margin + h*0.2;
-    m_gui->addWidget(new ofxUISlider(x,y,w*0.5-2*margin,h*0.1,0.0,50,2, "Precipitation (R(mm))"));
+    float h_slider = h*0.05;
+    y = 8*margin;
+    m_gui->addWidget(new ofxUISlider(x,y,w-2*margin,h_slider,-40,40,0, "Temperature (T(°C))"));
+    y = 10*margin + h_slider;
+    m_gui->addWidget(new ofxUISlider(x,y,w-2*margin,h_slider,0.0,120,50, "Wind Speed (W(Kph))"));
+    y = 12*margin + 2*h_slider;
+    m_gui->addWidget(new ofxUISlider(x,y,w-2*margin,h_slider,0.0,1500,1050, "Insolation (S(W/m2))"));
+    y = 14*margin + 3*h_slider;
+    m_gui->addWidget(new ofxUISlider(x,y,w-2*margin,h_slider,0.0,15.0,2, "Precipitation (R(mm))"));
     
     // Volume Tube
     x = 8*margin + 2*w;
@@ -343,9 +342,10 @@ void GuiManager::guiEvent(ofxUIEventArgs &e)
     else if(name =="Temperature (T(°C))" || name == "Wind Speed (W(Kph))" || name == "Insolation (S(W/m2))" || name == "Precipitation (R(mm))")
     {
         ofxUISlider *slider = (ofxUISlider*) e.widget; 
-        std::cout << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< slider->getScaledValue() << std::endl; 
-        ofLogNotice() << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< slider->getScaledValue(); 
-        m_eventManager->setEvent(Event(name,slider->getScaledValue()));
+        std::cout << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< slider->getValue() << std::endl; 
+        ofLogNotice() << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< slider->getValue(); 
+        m_eventManager->setEvent(Event(name,slider->getValue()));
+
     }
     
     else

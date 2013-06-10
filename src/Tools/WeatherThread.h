@@ -51,6 +51,10 @@ public:
     
     //! Run threaded function
     void threadedFunction();
+
+public:
+    
+    std::string        m_data; 
     
 private:
     
@@ -67,7 +71,6 @@ private:
     int             m_maxWaitingLoops;    ///< defines the maximum number of loops
     int             m_bytesRemaining;     ///< the bytes remaining
     int             m_wakingUp_num;    ///< number of waking ups requests
-    
     
 };
 

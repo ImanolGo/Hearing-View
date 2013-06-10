@@ -17,7 +17,7 @@ class Event{
 public:
     
     //! Constructor
-    Event(std::string name, double value= 0.0): m_name(name), m_value(value) { }
+    Event(std::string name, float value= 0.0f): m_name(name), m_value(value) { }
     
     //! Compares two event types by their names
     bool operator==(const Event& rhs) const { return ((m_name == rhs.m_name) && (m_value == rhs.m_value)); }

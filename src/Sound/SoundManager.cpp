@@ -196,7 +196,9 @@ bool SoundManager::setCurrentSamples(std::string sampleListName)
         return false;
     }
     
-    m_currentSampleList = m_samples[sampleListName];
+    
+    //m_currentSampleList = m_samples[sampleListName];
+    m_currentSampleList = m_samples.find(sampleListName)->second;
     
     std::cout <<m_dateManager->getTime()<<"- SoundManager-> setSamples: playing samples from \""<< sampleListName <<"\"" << std::endl;
     ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> setSamples: playing samples from \""<< sampleListName <<"\"" ;
@@ -270,7 +272,7 @@ void SoundManager::playExpertSample()
     }
     
     int n = 0;
-    int i = (int) ofRandom(m_currentSampleList.size()-1);
+    int i = rand()%m_currentSampleList.size();
     while (n<m_currentSampleList.size()) {
         if (fitsPlayConditions(*m_currentSampleList[i])) {
             m_currentSample = m_currentSampleList[i];
@@ -295,16 +297,13 @@ void SoundManager::playRandomSample()
         AppManager::getInstance().getEventManager().setEvent(Event("END_ALL_SAMPLES"));
         return;
     }
-    float iFloat = ofRandom(m_currentSampleList.size()-1);
-    int i = (int) iFloat;
-    std::cout << m_currentSampleList.size() << std::endl;
-    std::cout << iFloat << std::endl;
-    std::cout << i << std::endl;
+    int i = rand()%m_currentSampleList.size();
     while (n<m_currentSampleList.size()) {
         if (fitsPlayConditions(*m_currentSampleList[i])) {
             m_currentSample = m_currentSampleList[i];
             m_currentSampleList.erase(m_currentSampleList.begin()+i);
             if(++m_numPlayedSamples >= MAX_NUM_SAMPLES){m_playExpert = true;}
+            if(m_currentSampleList.empty()){m_playExpert = true;}
             return;
         }
         i = (i+1)%m_currentSampleList.size();
@@ -347,8 +346,8 @@ void SoundManager::update(double dt)
             m_elapsedTime += dt;
              if (m_elapsedTime>= m_sampleTimer) 
              {
-                 AppManager::getInstance().getEventManager().setEvent(Event("SAMPLE VOLUME", m_masterSampleVolume));
                  m_currentSample->play();
+                 AppManager::getInstance().getEventManager().setEvent(Event("SAMPLE VOLUME", m_masterSampleVolume));
                  m_sampleName->setText(m_currentSample->getName(),"Klavika-BoldItalic.otf", 10);
                  m_sampleName->setColor(ofColor(255,255,255,0));
                  AppManager::getInstance().getViewManager().fadeVisual(*m_sampleName, 255, 3);
