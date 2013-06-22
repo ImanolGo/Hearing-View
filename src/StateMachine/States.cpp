@@ -55,12 +55,12 @@ void State::initialize()
     m_dateManager = &AppManager::getInstance().getDateManager();
     m_stateManager = &AppManager::getInstance().getStateManager();
 
-    m_circleState = new ImageVisual(m_pos,70,70,true);
+    m_circleState = new ImageVisual(m_pos,50,50,true);
     m_circleState->setImage("images/icons/button_selected.png");
     m_circleState->setColor(ofColor(255,255,255,100));
     m_textState = new TextVisual(m_pos,20,20, true);
     m_textState->setColor(ofColor(240,240,240,100));
-    m_textState->setText(this->getName(),"Klavika-Bold.otf",15);
+    m_textState->setText(this->getName(),"Klavika-Bold.otf",13);
     AppManager::getInstance().getViewManager().addVisual(*m_textState,-1);
     AppManager::getInstance().getViewManager().addVisual(*m_circleState);
     
@@ -89,14 +89,13 @@ void IdleState::onExit()
 }
 
 
-void TransitionState::onEnter()
+void SensorOffTransitionState::onEnter()
 {
-    std::cout<<m_dateManager->getTime()<<"- TransitionState-> OnEnter." <<std::endl;
-    ofLogNotice()<<m_dateManager->getTime()<<"- TransitionState-> OnEnter.";
+    std::cout<<m_dateManager->getTime()<<"- SensorOffTransitionState-> OnEnter." <<std::endl;
+    ofLogNotice()<<m_dateManager->getTime()<<"- SensorOffTransitionState-> OnEnter.";
     AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
     AppManager::getInstance().getEventManager().removeAllTimedEvents();
-    AppManager::getInstance().getSoundManager().resetSamples();
     
     if(AppManager::getInstance().getSoundManager().getTubeVolume()>0.0f){
         AppManager::getInstance().getSoundManager().fadeTube(0.0f,m_stateManager->m_t4);
@@ -109,15 +108,39 @@ void TransitionState::onEnter()
         AppManager::getInstance().getSoundManager().fadeTube(0.0f,m_stateManager->m_t4);
         
     }
+    
+    AppManager::getInstance().getSoundManager().resetSamples();
 }
 
-void TransitionState::onExit()
+void SensorOffTransitionState::onExit()
 {
     std::cout<<m_dateManager->getTime()<<"- TransitionState-> OnExit." <<std::endl;
     ofLogNotice()<<m_dateManager->getTime()<<"- TransitionState-> OnExit.";
     AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 100, State::FADE_TIME);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 100, State::FADE_TIME);
 }
+
+
+void TubeOffTransitionState::onEnter()
+{
+    std::cout<<m_dateManager->getTime()<<"- TubeOffTransitionState-> OnEnter." <<std::endl;
+    ofLogNotice()<<m_dateManager->getTime()<<"- TubeOffTransitionState-> OnEnter.";
+    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
+    
+    AppManager::getInstance().getSoundManager().fadeTube(0.0f,m_stateManager->m_t4);
+    AppManager::getInstance().getEventManager().setTimedEvent("ENTER_SAMPLER_STATE",m_stateManager->m_t4 +m_stateManager->m_t5);
+    AppManager::getInstance().getSoundManager().fadeSample(0.0f,m_stateManager->m_t7);
+}
+
+void TubeOffTransitionState::onExit()
+{
+    std::cout<<m_dateManager->getTime()<<"- TubeOffTransitionState-> OnExit." <<std::endl;
+    ofLogNotice()<<m_dateManager->getTime()<<"- TubeOffTransitionState-> OnExit.";
+    AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 100, State::FADE_TIME);
+    AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 100, State::FADE_TIME);
+}
+
 
 void TubeState::onEnter()
 {
@@ -142,8 +165,7 @@ void SamplerState::onEnter()
 {
     std::cout<<m_dateManager->getTime()<<"- SamplerState-> OnEnter." <<std::endl;
     ofLogNotice()<<m_dateManager->getTime()<<"- SamplerState-> OnEnter.";
-    AppManager::getInstance().getSoundManager().fadeTube(0.0,m_stateManager->m_t4);
-    AppManager::getInstance().getSoundManager().playNextSample(m_stateManager->m_t4 + m_stateManager->m_t5,m_stateManager->m_V2);
+    AppManager::getInstance().getSoundManager().playNextSample(m_stateManager->m_V2);
     AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
     

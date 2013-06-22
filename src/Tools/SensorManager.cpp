@@ -43,7 +43,7 @@ void SensorManager::setup()
     
 	//m_serial.setup(portNum, BAUD_RATE); //open the first device
 	//serial.setup("COM4"); // windows example
-	m_serial.setup("/dev/tty.usbserial-A700flJG",BAUD_RATE); // mac osx example
+	m_serial.setup("/dev/tty.usbmodem1421",BAUD_RATE); // mac osx example
 	//serial.setup("/dev/ttyUSB0", 9600); //linux example
     
     std::cout << m_dateManager->getTime() << "- SensorManager-> initialized " << std::endl;

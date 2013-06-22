@@ -18,7 +18,7 @@
 #include "DateManager.h"
 
 
-const double DateManager::REFRESH_TIME = 5*60;
+const double DateManager::REFRESH_TIME = 1*60;
 const double DateManager::FADE_TIME = 3;
 
 DateManager::DateManager(): 
@@ -29,8 +29,8 @@ DateManager::DateManager():
     m_sunset(19),
     m_elapsedTime(0.0),
     m_EST(0),
-    m_season("Summer"),
-    m_dayTime("Day")
+    m_season(" "),
+    m_dayTime(" ")
 {
     m_Date = new ofxDate();
     m_day = m_Date->getDay();
@@ -43,13 +43,12 @@ DateManager::~DateManager()
     delete m_Date;
     m_Date = NULL;
     
-    for (SeasonMap::iterator it= m_seasonImages.begin() ; it != m_seasonImages.end(); it++ )
+    for (TextVisualMap::iterator it= m_textVisuals.begin() ; it != m_textVisuals.end(); it++ )
     {
        AppManager::getInstance().getViewManager().removeVisual(*it->second);
        delete it->second;
        it->second = NULL;
     }
-
 }
 
 void DateManager::setup()
@@ -75,11 +74,54 @@ void DateManager::setup()
     this->calcSeason();
     this->calcDayTime();
     this->displayDate();
+    this->initTextVisuals();
+    
     std::cout<<this->getTime()<< "- DateManager-> initialized "<<std::endl;
     ofLogNotice()<<this->getTime()<< "- DateManager-> initialized ";
     
 }
 
+void DateManager::initTextVisuals()
+{
+    float H = (float)ofGetHeight();
+    float W  = (float)ofGetWidth();
+    float margin = H/70;
+    float widthGUI = W - 4*margin;
+    float heightGUI = H/3.0 - 4*margin;
+    float x = 8*margin + 2*widthGUI;
+    float y = 6*margin;
+    int w = widthGUI;
+    int h = 12;
+    
+    TextVisual* textVisual = new TextVisual(ofPoint(x,y),widthGUI,h);
+    textVisual->setText(this->getDate(),"Klavika-Bold.otf", h);
+    textVisual->setColor(ofColor(255,255,255));
+    m_textVisuals["Date"] = textVisual;
+    
+    y = 8*margin + h;
+    textVisual = new TextVisual(ofPoint(x,y),widthGUI,h);
+    textVisual->setText(this->getHour(),"Klavika-Bold.otf", h);
+    textVisual->setColor(ofColor(255,255,255));
+    m_textVisuals["Hour"] = textVisual;
+    
+    y = 10*margin + 2*h;
+    textVisual = new TextVisual(ofPoint(x,y),widthGUI,h);
+    textVisual->setText(m_season,"Klavika-Bold.otf", h);
+    textVisual->setColor(ofColor(255,255,255));
+    m_textVisuals["Season"] = textVisual;
+    
+    y = 12*margin + 3*h;
+    textVisual = new TextVisual(ofPoint(x,y),widthGUI,h);
+    textVisual->setText(m_dayTime,"Klavika-Bold.otf", h);
+    textVisual->setColor(ofColor(255,255,255));
+    m_textVisuals["DayTime"] = textVisual;
+    
+    for (TextVisualMap::iterator it= m_textVisuals.begin() ; it != m_textVisuals.end(); it++ )
+    {
+        AppManager::getInstance().getViewManager().addVisual(*it->second);
+    }
+    
+}  
 void DateManager::update(double dt)
 {
     m_elapsedTime+=dt;
@@ -87,6 +129,7 @@ void DateManager::update(double dt)
     {
         m_elapsedTime = 0;
         this->calcDayTime();
+        m_textVisuals["Hour"]->setText(this->getHour(),"Klavika-Bold.otf", 12);
         
         int day = m_Date->getDay(); // if we change day
         if(m_day != day)
@@ -96,6 +139,7 @@ void DateManager::update(double dt)
             m_year = m_Date->getYear();
             this->calcSunEqs();
             this->calcSeason();
+            this->displayDate();
         }
         
     }
@@ -114,6 +158,18 @@ std::string DateManager::getTime()
 
     return  date;
 
+}
+
+std::string DateManager::getHour()
+{
+    time_t     now = time(0);
+    struct tm  tstruct;
+    char       buf[80];
+    tstruct = *localtime(&now);
+    strftime(buf, sizeof(buf), "%H:%M", &tstruct);
+    
+    return  buf;
+    
 }
 
 std::string DateManager::getDate()
@@ -153,6 +209,8 @@ void DateManager::calcDayTime()
     {
         m_dayTime = dayTime;
         AppManager::getInstance().getEventManager().setEvent(Event(m_dayTime));
+        std::cout<<this->getTime() << "- DateManager-> Status:  "<< m_dayTime<< std::endl;
+        ofLogNotice()<<this->getTime() << "- DateManager-> Status:  "<< m_dayTime;
         
     }
     
@@ -214,8 +272,6 @@ void DateManager::calcSeason()
     
     if(m_season!=season)
     {
-        AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[m_season], 0, DateManager::FADE_TIME);
-        AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[season], 255, DateManager::FADE_TIME);
         m_season = season;
         AppManager::getInstance().getEventManager().setEvent(Event(m_season));
     }
@@ -229,8 +285,6 @@ void DateManager::handleEvent(const Event& event)
     {
         if(m_season!=name)
         {
-            AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[m_season], 0, DateManager::FADE_TIME);
-            AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[name], 255, DateManager::FADE_TIME);
             m_season = name;
             AppManager::getInstance().getEventManager().setEvent(Event(m_season));
         }
@@ -508,15 +562,10 @@ void DateManager::loadSeasons()
         std::string seasonName = this->getSeasonsName(dir.getPath(n));
         ImageVisual* seasonImage =  new ImageVisual(ofPoint(x,y),h,h,true);
         seasonImage->setImage(dir.getPath(n));
-        m_seasonImages[seasonName] = seasonImage;
         std::cout<<this->getTime() << "- DateManager-> loaded sample \""<< seasonName <<"\"" << std::endl;
         ofLogNotice()<<this->getTime() << "- DateManager-> loaded sample \""<< seasonName <<"\"";
         AppManager::getInstance().getViewManager().addVisual(*seasonImage);
-        m_seasonImages[seasonName]->setColor(ofColor(255,255,255,0));
     }
-    
-    AppManager::getInstance().getViewManager().fadeVisual(*m_seasonImages[m_season], 255, DateManager::FADE_TIME);
-
 }
 
 

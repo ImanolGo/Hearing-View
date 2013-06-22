@@ -10,12 +10,12 @@
 #include "WeatherThread.h"
 
 const int WeatherThread::BAUD_RATE = 9600; ///< the baud rate
-const double WeatherThread::REFRESH_TIME = 1*10*1000; ///< the refresh tim, every minute
+const double WeatherThread::REFRESH_TIME = 1*10*1000; ///< the refresh tim, every 10s
 const double WeatherThread::WAKING_TIME = 300; ///< the response time should be less than 300ms
 const double WeatherThread::TERMINATE_TIME = 500; ///< the response time should be less than 500ms
 const double WeatherThread::DATA_TIME = 2000; ///< the response time should be less than 2000ms
 const int WeatherThread::WAKING_CHAR_GROUP = 32; ///< "@@...@@@"
-const int WeatherThread::NUM_WAKING_UPS = 30;
+const int WeatherThread::NUM_WAKING_UPS = 1;
 
 WeatherThread::WeatherThread():
 m_nBytesRead(0),m_bytesRemaining(0),m_wakingUp_num(0),
@@ -68,11 +68,11 @@ void WeatherThread::mapValues(const std::string& data)
      std::vector<std::string> strs = ofSplitString(data, "\t"); //tab character (ASCII = 9)
      if(strs.size()==14)
      {
-         std::cout << strs.size()<<std::endl;
-         m_S = ofToFloat(strs[PORT_A]);
-         m_R = ofToFloat(strs[PORT_B]);
+         m_S = ofToFloat(strs[PORT_B]);
+         m_R = ofToFloat(strs[PORT_A]);
          m_T = ofToFloat(strs[TEMPERATURE]);
          m_W = ofToFloat(strs[WIND_SPEED]);
+         
      }
     
 }
@@ -86,9 +86,9 @@ void WeatherThread::threadedFunction(){
             //std::cout<< "llalalala" << std::endl;
             if ( m_serial.available() >= 0 )
             {
-                std::cout<< "serial available" << std::endl;
+                //std::cout<< "serial available" << std::endl;
                 if (m_serialState == IDLE ) {
-                    std::cout<< "idle" << std::endl;
+                    //std::cout<< "idle" << std::endl;
                     m_wakingUp_num = 0;
                     m_serialState = WAKE_UP_STATION;
                 }
@@ -97,7 +97,7 @@ void WeatherThread::threadedFunction(){
                 {
                     //std::cout<< "wake up station" << std::endl;
                     while( m_wakingUp_num < NUM_WAKING_UPS){
-                        std::cout<< "wake up station" << std::endl;
+                        //std::cout<< "wake up station" << std::endl;
                         
                         for (int j = 0; j<WAKING_CHAR_GROUP; j++) {
                             m_serial.writeByte('@'); // write the charachter "@" to serial:
@@ -139,7 +139,7 @@ void WeatherThread::threadedFunction(){
                         memcpy(m_bytesOKString, m_bytesOK, OK_SIZE);
                         string strOK = ofToString(m_bytesOKString);
                         if(strOK == "OK\r\n"){
-                            std::cout<< strOK <<std::endl;
+                            //std::cout<< strOK <<std::endl;
                             m_serialState = READ_DATA;
                             m_wakingUp_num = WAKING_CHAR_GROUP;
                         }
@@ -161,7 +161,7 @@ void WeatherThread::threadedFunction(){
                     m_serial.writeByte('\r'); // write the charachter "cr" () to serial. Carriage return
                     m_serial.writeByte('\n'); // write the charachter "lf" () to serial. Line Feed
                     
-                    std::cout<< "read data from logger" << std::endl;
+                    //std::cout<< "read data from logger" << std::endl;
                     
                     ofSleepMillis(DATA_TIME);
                     //ofSleepMillis(2*WAITING_TIME);
@@ -187,7 +187,7 @@ void WeatherThread::threadedFunction(){
                         }
                         else if ( result == OF_SERIAL_NO_DATA ){
                             // nothing was read, try again
-                            std::cout<< "no conditions data" << std::endl;
+                            ///std::cout<< "no conditions data" << std::endl;
                             break;
                         }
                         else{
@@ -198,7 +198,7 @@ void WeatherThread::threadedFunction(){
                     };
                     
                     memcpy(m_bytesDataString, m_bytesData, DATA_SIZE);
-                    std::cout<< ofToString(m_bytesDataString) <<std::endl;
+                    //std::cout<< ofToString(m_bytesDataString) <<std::endl;
                     this->mapValues(ofToString(m_bytesDataString));
                     m_serialState = END_SESSION;
                 }
@@ -210,7 +210,7 @@ void WeatherThread::threadedFunction(){
                     m_serial.writeByte('\r'); // write the charachter "cr" () to serial. Carriage return
                     m_serial.writeByte('\n'); // write the charachter "lf" () to serial. Line Feed
                     
-                    std::cout<< "terminate session with logger" << std::endl;
+                    //std::cout<< "terminate session with logger" << std::endl;
                     
                     ofSleepMillis(TERMINATE_TIME);
                     memset(m_bytesOKString, 0, OK_SIZE+1);
@@ -235,7 +235,7 @@ void WeatherThread::threadedFunction(){
                         }
                         else if ( result == OF_SERIAL_NO_DATA ){
                             // nothing was read, try again
-                            std::cout<< "no serial data" << std::endl;
+                            //std::cout<< "no serial data" << std::endl;
                             break;
                         }
                         else{
@@ -248,7 +248,7 @@ void WeatherThread::threadedFunction(){
                     memcpy(m_bytesOKString, m_bytesOK, OK_SIZE);
                     string strOK = ofToString(m_bytesOKString);
                     if(strOK == "OK\r\n"){
-                        std::cout<< strOK <<std::endl;
+                        //std::cout<< strOK <<std::endl;
                     }
                     
                     m_serialState = IDLE;

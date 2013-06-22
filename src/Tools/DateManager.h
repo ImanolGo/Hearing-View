@@ -18,7 +18,7 @@
 class ofxXmlSettings;
 class ofxDate;
 class Event;
-class ImageVisual;
+class TextVisual;
 
 //========================== class DateManager =======================================
 //==============================================================================
@@ -47,6 +47,9 @@ public:
     //! returns the current time
     std::string getTime();
     
+    //! returns the current time without seconds
+    std::string getHour();
+    
     //! returns the current Date
     std::string getDate();
     
@@ -65,6 +68,9 @@ public:
 
     
 private:
+    
+    //! initializes all the text visuals
+    void initTextVisuals();
     
     //! calculates if it is night, day, dusk or dawn
     void calcDayTime();
@@ -106,7 +112,7 @@ protected:
         
 protected:
     
-    typedef std::map <std::string, ImageVisual*>  SeasonMap;   ///< defines a map of seasons images sorted by the category name 
+    typedef std::map <std::string, TextVisual*>  TextVisualMap;   ///< defines a map of seasons text visuals sorted by the category name
     
     ofxDate*                m_Date;         ///< current date and time
         
@@ -129,7 +135,7 @@ protected:
     std::string             m_dayTime;      ///< saves the current day time
     std::string             m_location;     ///< saves the name of the current location
     
-    SeasonMap               m_seasonImages;///< map of the season images
+    TextVisualMap                 m_textVisuals;        ///< map of the text visuals
     
 };
 

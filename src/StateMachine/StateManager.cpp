@@ -10,6 +10,7 @@
 #include "States.h"
 #include "StateManager.h"
 #include "DateManager.h"
+#include "SoundManager.h"
 #include "AppManager.h"
 #include "ofxUI.h"
 #include "Event.h"
@@ -42,45 +43,53 @@ void StateManager::setup()
     
     float widthGUI = ofGetWidth() - 4*margin; 
     float heightGUI = ofGetHeight()/3.0 - 4*margin;
-    float w = widthGUI/5 - 2*margin;
+    float w = widthGUI/6 - 2*margin;
     float h = heightGUI - 4*margin;
     float x =  3*margin + 0.5*w;
-    float y =  4*margin + heightGUI + heightGUI*0.5;
+    float y =  4*margin + heightGUI + heightGUI/3;
     
     IdleState* idleState = new IdleState("IdleState",ofPoint(x,y));
     idleState->initialize();
     m_stateMachine->addState(idleState);
     
     x =  5*margin + 1.5*w;
-    TransitionState* transitionState = new TransitionState("TransitionState",ofPoint(x,y));
-    transitionState->initialize();
-    m_stateMachine->addState(transitionState);
-
-    x =  7*margin + 2.5*w;
     TubeState* tubeState = new TubeState("TubeState",ofPoint(x,y));
     tubeState->initialize();
     m_stateMachine->addState(tubeState);
     
-    x =  9*margin + 3.5*w;
+    x =  7*margin + 2.5*w;
     SamplerState* samplerState = new SamplerState("SamplerState",ofPoint(x,y));
     samplerState->initialize();
     m_stateMachine->addState(samplerState);
     
-    x =  11*margin + 4.5*w;
+    y =  4*margin + heightGUI + 2*heightGUI/3;
+    x =  3*margin + 0.5*w;
+    SensorOffTransitionState* sensorOffTransitionState = new SensorOffTransitionState("SensorOffTransitionState",ofPoint(x,y));
+    sensorOffTransitionState->initialize();
+    m_stateMachine->addState(sensorOffTransitionState);
+    
+    x =  5*margin + 1.5*w;
+    TubeOffTransitionState* tubeOffTransitionState = new TubeOffTransitionState("TubeOffTransitionState",ofPoint(x,y));
+    tubeOffTransitionState->initialize();
+    m_stateMachine->addState(tubeOffTransitionState);
+    
+    x =  7*margin + 2.5*w;
     ShortTubeState* shortTubeState = new ShortTubeState("TubeStateShort",ofPoint(x,y));
     shortTubeState->initialize();
     m_stateMachine->addState(shortTubeState);
    
     m_stateMachine->createTransition("IdleState", "TubeState",Event("SENSOR",1));
-    m_stateMachine->createTransition("TubeState", "TransitionState",Event("SENSOR",0));
-    m_stateMachine->createTransition("TubeState", "SamplerState",Event("END_TUBE_STATE"));
+    m_stateMachine->createTransition("TubeState", "SensorOffTransitionState",Event("SENSOR",0));
+    m_stateMachine->createTransition("TubeState", "TubeOffTransitionState",Event("END_TUBE_STATE"));
     m_stateMachine->createTransition("SamplerState", "TubeStateShort", Event("END_SAMPLE"));
     m_stateMachine->createTransition("SamplerState", "TubeState", Event("END_ALL_SAMPLES"));
-    m_stateMachine->createTransition("SamplerState", "TransitionState", Event("SENSOR",0));
-    m_stateMachine->createTransition("TubeStateShort", "TransitionState", Event("SENSOR",0));
-    m_stateMachine->createTransition("TubeStateShort", "SamplerState", Event("END_TUBE_STATE_SHORT"));
-    m_stateMachine->createTransition("TransitionState", "TubeState",Event("SENSOR",1));
-     m_stateMachine->createTransition("TransitionState", "IdleState",Event("ENTER_IDLE_STATE"));
+    m_stateMachine->createTransition("SamplerState", "SensorOffTransitionState", Event("SENSOR",0));
+    m_stateMachine->createTransition("TubeStateShort", "SensorOffTransitionState", Event("SENSOR",0));
+    m_stateMachine->createTransition("TubeStateShort", "TubeOffTransitionState", Event("END_TUBE_STATE_SHORT"));
+    m_stateMachine->createTransition("SensorOffTransitionState", "TubeState",Event("SENSOR",1));
+    m_stateMachine->createTransition("SensorOffTransitionState", "IdleState",Event("ENTER_IDLE_STATE"));
+    m_stateMachine->createTransition("TubeOffTransitionState", "SamplerState",Event("ENTER_SAMPLER_STATE"));
+    m_stateMachine->createTransition("TubeOffTransitionState", "SensorOffTransitionState",Event("SENSOR",0));
     
     std::cout<< m_dateManager->getTime() <<"- StateManager-> initialized "<<std::endl;
     ofLogNotice()<< m_dateManager->getTime() <<"- StateManager-> initialized ";

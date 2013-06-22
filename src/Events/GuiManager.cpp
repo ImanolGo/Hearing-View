@@ -64,11 +64,11 @@ void GuiManager::setup()
     rectVisual->setColor(frameColor);
     AppManager::getInstance().getViewManager().addVisual(*rectVisual,10);
     
-    //Status
+    //Sensor Status
     w = widthGUI/4 - 2*margin;
     h = heightGUI - 4*margin;
     y = 4*margin;
-    for(int i = 0; i< 4; i++)
+    for(int i = 0; i< 3; i++)
     {
         x = 3*margin + 2*margin*i + w*i;
         imageVisual = new ImageVisual(ofPoint(x,y),w,h);
@@ -77,12 +77,13 @@ void GuiManager::setup()
         
     }
     
-    float buttom = h/8;
+    float button = h/4;
     x = 4*margin;
     y = 5*margin;
-    m_gui->addWidget(new ofxUILabel(x,y, "STATUS", OFX_UI_FONT_MEDIUM));
-    y = 7*margin;
-    m_gui->addWidget(new ofxUIToggle(x,y,buttom, buttom, false,"SENSOR"));
+    m_gui->addWidget(new ofxUILabel(x,y, "SENSOR STATUS", OFX_UI_FONT_MEDIUM));
+    x = 12*margin;
+    y = heightGUI*0.5;
+    m_gui->addWidget(new ofxUIToggle(x,y,button, button, false,"SENSOR"));
     
     //Weather Conditions
     x = 6*margin + w;
@@ -95,22 +96,38 @@ void GuiManager::setup()
     y = 10*margin + h_slider;
     m_gui->addWidget(new ofxUISlider(x,y,w-2*margin,h_slider,0.0,120,50, "Wind Speed (W(Kph))"));
     y = 12*margin + 2*h_slider;
-    m_gui->addWidget(new ofxUISlider(x,y,w-2*margin,h_slider,0.0,1500,1050, "Insolation (S(W/m2))"));
+    m_gui->addWidget(new ofxUISlider(x,y,w-2*margin,h_slider,0.0,200,0.0, "Insolation (S(W/m2))"));
     y = 14*margin + 3*h_slider;
-    m_gui->addWidget(new ofxUISlider(x,y,w-2*margin,h_slider,0.0,15.0,2, "Precipitation (R(mm))"));
+    m_gui->addWidget(new ofxUISlider(x,y,w-2*margin,h_slider,0.0,1.0,0.4, "Leaf Wetness (R(.))"));
+    
+    //Time/Date Status 
+    x = 8*margin + 2*w;
+    y = 5*margin;
+    m_gui->addWidget(new ofxUILabel(x,y, "DATE/TIME STATUS", OFX_UI_FONT_MEDIUM));
+    
+    //// VOLUMES STATUS
+    y = 6*margin + heightGUI;
+    for(int i = 2; i< 4; i++)
+    {
+        x = 3*margin + 2*margin*i + w*i;
+        imageVisual = new ImageVisual(ofPoint(x,y),w,h);
+        imageVisual->setImage("images/GUI/blue_bck.jpg");
+        AppManager::getInstance().getViewManager().addVisual(*imageVisual,5);
+        
+    }
     
     // Volume Tube
     x = 8*margin + 2*w;
-    y = 5*margin;
+    y = 7*margin + heightGUI;
     m_gui->addWidget(new ofxUILabel(x,y, "TUBE", OFX_UI_FONT_MEDIUM));
-    y = 2*margin + heightGUI*0.5;
-    m_gui->addWidget(new ofxUISlider(x,y,w-2*margin,h*0.1,0.0,1.0,0.7, "TUBE VOLUME"));
+    y = 5*margin + heightGUI + heightGUI*0.2;
+    m_gui->addWidget(new ofxUISlider(x,y,w-2*margin,h*0.1,0.0,1.0,0.0, "TUBE VOLUME"));
     
     // Volume Sample
     x = 10*margin + 3*w;
-    y = 5*margin;
+    y = 7*margin + heightGUI;
     m_gui->addWidget(new ofxUILabel(x,y, "SAMPLE", OFX_UI_FONT_MEDIUM));
-    y = 2*margin + heightGUI*0.5;
+    y = 5*margin + heightGUI + heightGUI*0.2;
     m_gui->addWidget(new ofxUISlider(x,y,w-2*margin,h*0.1,0.0,1.0,0.0, "SAMPLE VOLUME"));
     
     
@@ -215,14 +232,14 @@ void GuiManager::setup()
     w = margin*5;
     x = 9*margin + widthGUI/4 + widthGUI/3;
     y = 11*margin + 2*heightGUI;
-    m_gui->addWidget(new ofxUIRotarySlider(x,y,w, 0, 20, 1, "R (mm)")); 
+    m_gui->addWidget(new ofxUIRotarySlider(x,y,w, 0.0, 1.0, 0.4, "R (.)"));
     y = 13*margin + 2*heightGUI + w;
     m_gui->addWidget(new ofxUIRotarySlider(x,y,w,-40, 40, 0, "T (°C)"));
     x = 13*margin + widthGUI/4 + w + widthGUI/3;
     y = 11*margin + 2*heightGUI;
     m_gui->addWidget(new ofxUIRotarySlider(x,y,w,  0, 120, 50, "W (Km/h)"));
     y = 13*margin + 2*heightGUI + w;
-    m_gui->addWidget(new ofxUIRotarySlider(x,y,w, 0, 1500, 500, "S (W/m2)"));
+    m_gui->addWidget(new ofxUIRotarySlider(x,y,w, 0, 200, 20, "S (W/m2)"));
     
     x = 6*margin + widthGUI/4 + widthGUI/3;
     y = 9*margin + 2*heightGUI;
@@ -280,7 +297,7 @@ void GuiManager::handleEvent(const Event& event)
         }
     }
     
-    else if(name =="Temperature (T(°C))" || name == "Wind Speed (W(Kph))" || name == "Insolation (S(W/m2))" || name == "Precipitation (R(mm))")
+    else if(name =="Temperature (T(°C))" || name == "Wind Speed (W(Kph))" || name == "Insolation (S(W/m2))" || name == "Leaf Wetness (R(.))")
     {
         widget = m_gui->getWidget(name);
         ofxUISlider *slider = (ofxUISlider *) widget;
@@ -331,7 +348,7 @@ void GuiManager::guiEvent(ofxUIEventArgs &e)
         m_eventManager->setEvent(Event(name,rotatorySlider->getScaledValue()));
     }
     
-    else if(name =="W (Km/h)" || name == "T (°C)" || name == "S (W/m2)" || name == "R (mm)")
+    else if(name =="W (Km/h)" || name == "T (°C)" || name == "S (W/m2)" || name == "R (.)")
     {
 	    ofxUIRotarySlider *rotatorySlider = (ofxUIRotarySlider*) e.widget; 
         std::cout << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< rotatorySlider->getScaledValue() << std::endl; 
@@ -339,7 +356,7 @@ void GuiManager::guiEvent(ofxUIEventArgs &e)
         m_eventManager->setEvent(Event(name,rotatorySlider->getScaledValue()));
     }
     
-    else if(name =="Temperature (T(°C))" || name == "Wind Speed (W(Kph))" || name == "Insolation (S(W/m2))" || name == "Precipitation (R(mm))")
+    else if(name =="Temperature (T(°C))" || name == "Wind Speed (W(Kph))" || name == "Insolation (S(W/m2))" || name == "Leaf Wetness (R(.))")
     {
         ofxUISlider *slider = (ofxUISlider*) e.widget; 
         std::cout << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< slider->getValue() << std::endl; 

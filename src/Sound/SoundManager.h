@@ -21,7 +21,7 @@ class SoundObject;
 class Event;
 class DateManager;
 class StateManager;
-class WeatherManager;
+class WeatherStationManager;
 class SoundVisual;
 class TextVisual;
 
@@ -52,8 +52,11 @@ public:
     
     //==========================================================================
     
+    //! Initializes all the parameters
+    void start();
+    
     //! plays the next sample according to the logic
-    void playNextSample(float time, float volume);
+    void playNextSample(float volume);
     
     //! stops the current sample
     void stopSamples();
@@ -122,10 +125,10 @@ private:
     std::string            m_season;                ///< saves the current season
     std::string            m_category;              ///< saves the current sample category
         
-    DateManager*	  m_dateManager;	///< pointer to the date manager
-    StateManager*     m_stateManager;   ///< pointer to the state manager
-    WeatherManager*   m_weatherManager; ///< pointer to the weather manager
-    SoundVisual*      m_soundVisual;    ///< visualization of th ecurrent sound level
+    DateManager*                m_dateManager;              ///< pointer to the date manager
+    StateManager*               m_stateManager;         ///< pointer to the state manager
+    WeatherStationManager*      m_weatherStationManager; ///< pointer to the weather station manager
+    SoundVisual*                m_soundVisual;              ///< visualization of th ecurrent sound level
     
     TextVisual*       m_sampleName;                ///< text visual from the current sample name being played
     TextVisual*       m_sampleElapsedTimeText;     ///< text visual from the current sample elapsed time

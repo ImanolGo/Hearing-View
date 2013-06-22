@@ -90,20 +90,20 @@ public:
 };
 
 
-//========================== class TransitionState =======================================
+//========================== class SensorOffTransitionState =======================================
 //==============================================================================
-/** \class TransitionState States.h
- *	\brief Represents a transition state of a finite state machine. 
+/** \class SensorOffTransitionState States.h
+ *	\brief Represents a sensor off transition state of a finite state machine. 
  *	\details It comes whenever the sensor is inactivated and transits to the idle state
  */
 
-class TransitionState: public State
+class SensorOffTransitionState: public State
 {
 public:
     //! Constructor
-    TransitionState(const std::string& name,const ofPoint& pos): State(name,pos) {}
+    SensorOffTransitionState(const std::string& name,const ofPoint& pos): State(name,pos) {}
     //! Destructor
-    virtual ~TransitionState() {}
+    virtual ~SensorOffTransitionState() {}
     //! Do the state initialization stuff here
     //virtual void initialize();
     //! Called when the state is entered
@@ -112,6 +112,30 @@ public:
     virtual void onExit();
     
 };
+
+//========================== class TubeOffTransitionState =======================================
+//==============================================================================
+/** \class TubeOffTransitionState States.h
+ *	\brief Represents a tube off transition state of a finite state machine.
+ *	\details It comes whenever the tube is inactivated and transits to the sampler state
+ */
+
+class TubeOffTransitionState: public State
+{
+public:
+    //! Constructor
+    TubeOffTransitionState(const std::string& name,const ofPoint& pos): State(name,pos) {}
+    //! Destructor
+    virtual ~TubeOffTransitionState() {}
+    //! Do the state initialization stuff here
+    //virtual void initialize();
+    //! Called when the state is entered
+    virtual void onEnter();
+    //! Called before the state is left
+    virtual void onExit();
+    
+};
+
 
 
 
