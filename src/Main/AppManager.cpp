@@ -68,7 +68,7 @@ AppManager::~AppManager()
 
 void AppManager::setup()
 {
-    std::string fileName = "HearingView_" + m_dateManager->getDate() + ".log";  
+    std::string fileName = "HearingView_" + m_dateManager->getLogDate() + ".log";  
     ofSetLogLevel(OF_LOG_NOTICE);
     ofLogToFile(fileName, true);
     

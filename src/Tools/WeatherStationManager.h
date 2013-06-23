@@ -54,7 +54,10 @@ public:
     float getTemperature() const {return m_T;}
     
     //! get current wetness
-    float getWetness() const {return m_R;}
+    float getWetness() const {return m_wetness;}
+    
+    //! get current rain conditions (<0 raining)
+    float getRainConditions() const {return m_R;}
     
     //! get current sun radiation
     float getInsolation() const {return m_S;}
@@ -69,7 +72,8 @@ private:
     float            m_T; // stores the temperature (°C) coming from the weather station
     float            m_W; // stores the wind speed (Kph) coming from the weather station
     float            m_S; // stores the sun radiation level (W/m2) coming from the weather station
-    float            m_R; // stores the wetness (?) coming from the weather station
+    float            m_R; // stores the rain conditions (Vdiff) coming from the weather station. m_R<0 means raining
+    float            m_wetness; // stores the wetness (V) coming from the weather station
 
 };
 

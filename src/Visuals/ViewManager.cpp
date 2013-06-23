@@ -71,6 +71,7 @@ void ViewManager::deleteVisual(const Visual& visual)
 {
 	for(VisualList::iterator it = m_visuals.begin(); it != m_visuals.end();) {
 		if(it->second == &visual) {
+            AppManager::getInstance().getVisualEffectsManager().removeAllVisualEffects(*(it->second));
             delete it->second;
             it->second = NULL;
 			it = m_visuals.erase(it);
@@ -85,6 +86,7 @@ void ViewManager::removeVisual(const Visual& visual)
 {
 	for(VisualList::iterator it = m_visuals.begin(); it != m_visuals.end();) {
 		if(it->second == &visual) {
+            AppManager::getInstance().getVisualEffectsManager().removeAllVisualEffects(*(it->second));
 			it = m_visuals.erase(it);
 		}
 		else {
@@ -101,6 +103,22 @@ void  ViewManager::fadeVisual(Visual& visual, float alpha, float fadeTime)
 			AppManager::getInstance().getVisualEffectsManager().removeAllVisualEffects(visual);
             FadeVisual* fade = new FadeVisual(visual);
             fade->setParameters(alpha, fadeTime);
+            fade->start();
+            
+            //std::cout << m_dateManager->getTime() << "- ViewManager-> fade visual to "<<alpha<< " alpha value in "<< fadeTime<<"s"<<std::endl;
+            //ofLogNotice() << m_dateManager->getTime() << "- ViewManager-> fade visual to "<<alpha<< " alpha value in "<< fadeTime<<"s";
+            break;
+		}
+    }
+}
+
+void  ViewManager::fadeVisual(Visual& visual, float fromAlpha, float toAlpha, float fadeTime)
+{
+    for(VisualList::iterator it = m_visuals.begin(); it != m_visuals.end();it++ ) {
+		if(it->second == &visual) {
+			AppManager::getInstance().getVisualEffectsManager().removeAllVisualEffects(visual);
+            FadeVisual* fade = new FadeVisual(visual);
+            fade->setParameters(fromAlpha,toAlpha, fadeTime);
             fade->start();
             
             //std::cout << m_dateManager->getTime() << "- ViewManager-> fade visual to "<<alpha<< " alpha value in "<< fadeTime<<"s"<<std::endl;

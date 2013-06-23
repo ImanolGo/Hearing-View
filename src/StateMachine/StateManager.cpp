@@ -81,6 +81,9 @@ void StateManager::setup()
     m_stateMachine->createTransition("IdleState", "TubeState",Event("SENSOR",1));
     m_stateMachine->createTransition("TubeState", "SensorOffTransitionState",Event("SENSOR",0));
     m_stateMachine->createTransition("TubeState", "TubeOffTransitionState",Event("END_TUBE_STATE"));
+    m_stateMachine->createTransition("TubeState", "TubeOffTransitionState",Event("DSK"));
+    m_stateMachine->createTransition("TubeState", "TubeOffTransitionState",Event("DAY"));
+    m_stateMachine->createTransition("TubeState", "TubeOffTransitionState",Event("DWN"));
     m_stateMachine->createTransition("SamplerState", "TubeStateShort", Event("END_SAMPLE"));
     m_stateMachine->createTransition("SamplerState", "TubeState", Event("END_ALL_SAMPLES"));
     m_stateMachine->createTransition("SamplerState", "SensorOffTransitionState", Event("SENSOR",0));

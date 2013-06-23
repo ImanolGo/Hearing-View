@@ -10,12 +10,12 @@
 #include "WeatherThread.h"
 
 const int WeatherThread::BAUD_RATE = 9600; ///< the baud rate
-const double WeatherThread::REFRESH_TIME = 1*10*1000; ///< the refresh tim, every 10s
-const double WeatherThread::WAKING_TIME = 300; ///< the response time should be less than 300ms
+const double WeatherThread::REFRESH_TIME = 1*5*1000; ///< the refresh tim, every 5s
+const double WeatherThread::WAKING_TIME = 100; ///< the response time should be less than 300ms
 const double WeatherThread::TERMINATE_TIME = 500; ///< the response time should be less than 500ms
 const double WeatherThread::DATA_TIME = 2000; ///< the response time should be less than 2000ms
 const int WeatherThread::WAKING_CHAR_GROUP = 32; ///< "@@...@@@"
-const int WeatherThread::NUM_WAKING_UPS = 1;
+const int WeatherThread::NUM_WAKING_UPS = 3;
 
 WeatherThread::WeatherThread():
 m_nBytesRead(0),m_bytesRemaining(0),m_wakingUp_num(0),

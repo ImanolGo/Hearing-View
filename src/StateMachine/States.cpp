@@ -147,9 +147,12 @@ void TubeState::onEnter()
     std::cout<<m_dateManager->getTime()<<"- TubeState-> OnEnter." <<std::endl;
     ofLogNotice()<<m_dateManager->getTime()<<"- TubeState-> OnEnter.";
     AppManager::getInstance().getSoundManager().fadeTube(m_stateManager->m_V3,m_stateManager->m_t2);
-    AppManager::getInstance().getEventManager().setTimedEvent("END_TUBE_STATE",m_stateManager->m_t2 + m_stateManager->m_t3);
     AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
+    
+    if (m_dateManager->getDayTime()!= "NIG") { //not night
+         AppManager::getInstance().getEventManager().setTimedEvent("END_TUBE_STATE",m_stateManager->m_t2 + m_stateManager->m_t3);
+    }
     
 }
 

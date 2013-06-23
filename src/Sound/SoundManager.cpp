@@ -50,6 +50,7 @@ SoundManager::~SoundManager()
         SamplesList sampleList = it->second;
         for (SamplesList::iterator it2=sampleList.begin() ; it2 != sampleList.end(); it2++ )
         {
+            AppManager::getInstance().getSoundEffectsManager().removeAllSoundEffects(*(*it2));
             delete *it2;
             *it2 = NULL;
         }
@@ -225,7 +226,7 @@ bool SoundManager::fitsPlayConditions(const SoundObject& sample)
     
     if(ofIsStringInString(conditions, "R"))
     {
-        if (m_weatherStationManager->getWetness() >= m_R) {
+        if (m_weatherStationManager->getRainConditions() < m_R) {
             return false;
         }
     }
@@ -320,7 +321,6 @@ void SoundManager::playRandomSample()
     int i = rand()%m_currentSampleList.size();
     while (n<m_currentSampleList.size()) {
         if (fitsPlayConditions(*m_currentSampleList[i])) {
-            std::cout << n << std::endl;
             m_currentSample = m_currentSampleList[i];
             m_currentSampleList.erase(m_currentSampleList.begin()+i);
             m_numPlayedSamples++;
@@ -532,7 +532,7 @@ void SoundManager::handleEvent(const Event& event)
         std::cout <<m_dateManager->getTime()<<"- SoundManager-> T = " << m_T <<" °C"<<std::endl;
         ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> T = " << m_T <<" °C ";
     }
-    else if(name=="R (.)"){
+    else if(name=="R (Vdiff)"){
         m_R = (float) event.getValue();
         std::cout <<m_dateManager->getTime()<<"- SoundManager-> R = " << m_R <<" "<<std::endl;
         ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> R = " << m_R <<" ";

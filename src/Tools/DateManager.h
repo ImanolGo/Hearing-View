@@ -31,7 +31,8 @@ class DateManager
 {
     
     static const double   REFRESH_TIME; //determines the time ro refresh the calculations (s)
-    static const double FADE_TIME;          ///< defines the visuals fadeTime
+    static const double   FADE_TIME;          ///< defines the visuals fadeTime
+    static const int      FONT_SIZE;          ///< defines the visuals font size
     
         
 public:
@@ -52,6 +53,9 @@ public:
     
     //! returns the current Date
     std::string getDate();
+    
+    //! returns the current Date for the log file
+    std::string getLogDate();
     
     //! returns the year's seasons
     const std::string& getSeason(){return m_season;}
@@ -104,11 +108,11 @@ private:
     
 protected:
     
-    //! loads the seasons into the icons map
-    void loadSeasons();
-    
     //! returns the icon name given its path
     std::string getSeasonsName(const std::string& path);
+    
+    //! returns the string of a time given as integer 
+    std::string timeToString(double timeInt);
         
 protected:
     

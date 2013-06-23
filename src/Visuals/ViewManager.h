@@ -55,10 +55,12 @@ public:
 	//! \details The scene is responsible for deleting this visual object.
 	void deleteVisual(const Visual& visual);
     
-    //! fades an specific visual
+    //! fades an specific visual to a specific alpha value
     void  fadeVisual(Visual& visual, float alpha, float fadeTime);
-
     
+    //! fades an specific visual from a specific alpha value to a specific alpha value
+    void  fadeVisual(Visual& visual, float fromAlpha, float toAlpha, float fadeTime);
+
     
     //==========================================================================
     

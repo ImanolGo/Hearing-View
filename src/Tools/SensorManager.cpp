@@ -43,9 +43,29 @@ void SensorManager::setup()
     
 	//m_serial.setup(portNum, BAUD_RATE); //open the first device
 	//serial.setup("COM4"); // windows example
-	m_serial.setup("/dev/tty.usbmodem1421",BAUD_RATE); // mac osx example
-	//serial.setup("/dev/ttyUSB0", 9600); //linux example
     
+    bool connected = false;
+    for(int i= 0; i< deviceList.size();i++)
+    {
+        std::cout << deviceList[i].getDeviceName()<< std::endl;
+        if(ofIsStringInString(deviceList[i].getDeviceName(), "tty.usbmodem")) //Arduino
+        {
+            m_serial.setup(deviceList[i].getDevicePath(),BAUD_RATE); // mac osx example
+            //m_serial.setup("/dev/tty.usbmodem1421",BAUD_RATE); // mac osx example
+            //serial.setup("/dev/ttyUSB0", 9600); //linux example
+
+            std::cout << m_dateManager->getTime() << "- SensorManager-> serial connected to "<<deviceList[i].getDevicePath() << std::endl;
+            ofLogNotice() << m_dateManager->getTime() << "- SensorManager-> serial connected to " << deviceList[i].getDevicePath() ;
+            connected = true;
+        }
+    }
+    
+    if(!connected)
+    {
+        std::cout << m_dateManager->getTime() << "- SensorManager-> Unable to connect to Arduino "<< std::endl;
+        ofLogNotice() << m_dateManager->getTime() << "- SensorManager-> serial connected to Arduino " ;
+    }
+	    
     std::cout << m_dateManager->getTime() << "- SensorManager-> initialized " << std::endl;
     ofLogNotice() << m_dateManager->getTime() << "- SensorManager->initialized " ;
 
@@ -64,14 +84,21 @@ void SensorManager::update(double dt)
             
             std::cout << m_dateManager->getTime() << "- SensorManager-> update: Sensor On " << std::endl;
             ofLogNotice() << m_dateManager->getTime() << "- SensorManager->update: Sensor On " ;
+            m_serial.writeByte('1');
         }
         
         else if (m_byteRead == '0') {
             AppManager::getInstance().getEventManager().setEvent(Event("SENSOR",0));
             std::cout << m_dateManager->getTime() << "- SensorManager-> update: Sensor On " << std::endl;
             ofLogNotice() << m_dateManager->getTime() << "- SensorManager->update: Sensor Off " ;
-        }        
-    }
+            if(m_dateManager->getDayTime() != "NIG"){ //if night always on
+                m_serial.writeByte('0');
+                
+            }
+        } 
+        
+        // (1) write the letter "a" to serial:
+		    }
         
 }
 
