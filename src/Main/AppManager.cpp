@@ -73,6 +73,8 @@ void AppManager::setup()
     ofLogToFile(fileName, true);
     
     
+    std::cout << ofToInt("50vol") <<std::endl;
+    
     m_eventManager->setup();
     m_viewManager->setup();
     m_soundManager->setup();

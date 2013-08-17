@@ -99,6 +99,9 @@ private:
     //! returns if a given sample can be played or not
     bool fitsPlayConditions(const SoundObject& sample);
     
+    //! sets the sample volume according to the sample name
+    void setIndividualSampleVolume(const SoundObject& sample);
+    
     //! sets the sample list to be played
     bool setCurrentSamples(std::string sampleListName);
     
@@ -119,6 +122,7 @@ private:
     int                    m_numPlayedSamples;      ///< stores the number of samples played
     
     float                  m_masterSampleVolume;    ///< stores the master sample volume
+    float                  m_individualSampleVolume;///< stores the individual current sample volume
     double                 m_sampleTimer;           ///< the amount of time to wait until playing a sample
     double                 m_elapsedTime;           ///< the elapsed time waiting to play a sample
     

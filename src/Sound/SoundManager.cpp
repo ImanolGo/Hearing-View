@@ -35,6 +35,7 @@ SoundManager::SoundManager():
     m_category(" "),
     m_W(50),m_T(0),m_R(0.5),m_S(500),
     m_masterSampleVolume(0.0f),
+    m_individualSampleVolume(1.0f),
     m_sampleTimer(0.0),
     m_elapsedTime(0.0)
 {
@@ -213,9 +214,29 @@ bool SoundManager::setCurrentSamples(std::string sampleListName)
     return true;
 }
 
+void SoundManager::setIndividualSampleVolume(const SoundObject& sample)
+{
+    vector <string> splitString = ofSplitString(sample.getName(), "_");
+    for (vector <string>::reverse_iterator rit = splitString.rbegin(); rit!=splitString.rend(); ++rit) 
+    {
+        if(ofIsStringInString((*rit), "vol"))
+        {
+            std::cout <<m_dateManager->getTime()<<"- SoundManager-> setSamples: Int: "<< ofToInt((*rit)) << std::endl;
+
+            m_individualSampleVolume = (float)(ofToInt((*rit)))/100.0f;
+            std::cout <<m_dateManager->getTime()<<"- SoundManager-> setSamples: individual volume: "<< m_individualSampleVolume << std::endl;
+
+            return;
+        }
+    }
+    
+    m_individualSampleVolume = m_masterSampleVolume;
+    std::cout <<m_dateManager->getTime()<<"- SoundManager-> setSamples: individual Vvolume: "<< m_individualSampleVolume << std::endl;
+
+}
 bool SoundManager::fitsPlayConditions(const SoundObject& sample)
 {
-    string conditions = ofSplitString(sample.getName(), "_").back();
+    string conditions =  ofSplitString(sample.getName(), "_").back();
    
     if(ofIsStringInString(conditions, "W"))
     {
@@ -279,9 +300,9 @@ void SoundManager::playExpertSample()
     while (n<m_currentSampleList.size()) {
         if (fitsPlayConditions(*m_currentSampleList[i])) {
             m_currentSample = m_currentSampleList[i];
-            
             m_currentSample->play();
-            AppManager::getInstance().getEventManager().setEvent(Event("SAMPLE VOLUME", m_masterSampleVolume));
+            this->setIndividualSampleVolume(*m_currentSample);
+            AppManager::getInstance().getEventManager().setEvent(Event("SAMPLE VOLUME", m_individualSampleVolume));
             std::string sampleText = "Expert Sample:\n" +m_currentSample->getName();
             m_sampleName->setText(sampleText,"Klavika-BoldItalic.otf", 10);
             m_sampleName->setColor(ofColor(255,255,255,255));
@@ -324,9 +345,9 @@ void SoundManager::playRandomSample()
             m_currentSample = m_currentSampleList[i];
             m_currentSampleList.erase(m_currentSampleList.begin()+i);
             m_numPlayedSamples++;
-            
+            this->setIndividualSampleVolume(*m_currentSample);
             m_currentSample->play();
-            AppManager::getInstance().getEventManager().setEvent(Event("SAMPLE VOLUME", m_masterSampleVolume));
+            AppManager::getInstance().getEventManager().setEvent(Event("SAMPLE VOLUME", m_individualSampleVolume));
             std::string sampleText = "Random Sample " + ofToString(m_numPlayedSamples) + ":\n" +m_currentSample->getName();
             m_sampleName->setText(sampleText,"Klavika-BoldItalic.otf", 10);
             m_sampleName->setColor(ofColor(255,255,255,255));
@@ -498,7 +519,6 @@ void SoundManager::handleEvent(const Event& event)
         if(m_currentSample && m_currentSample->isPlaying())
         {
             m_currentSample->setVolume((float) event.getValue());
-            m_masterSampleVolume = m_currentSample->getVolume();
         }
     }
     

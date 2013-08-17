@@ -363,11 +363,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/Main/AppManager.cpp"
-         timestampString = "392411050.318979"
+         timestampString = "398424805.608439"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "80"
-         endingLineNumber = "80"
+         startingLineNumber = "82"
+         endingLineNumber = "82"
          landmarkName = "AppManager::setup()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -426,6 +426,20 @@
          endingLineNumber = "62"
          landmarkName = "class ViewManager"
          landmarkType = "3">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "src/Sound/SoundManager.cpp"
+         timestampString = "398424645.871546"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "227"
+         endingLineNumber = "227"
+         landmarkName = "SoundManager::setIndividualSampleVolume(const SoundObject&amp; sample)"
+         landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

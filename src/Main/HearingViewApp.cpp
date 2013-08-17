@@ -5,7 +5,7 @@
 //--------------------------------------------------------------
 void HearingViewApp::setup(){
     
-    //setup Sou
+    //setup Sound
     outputVolume = 1.0;
     ofSoundStreamListDevices();
 	ofSoundStreamSetup(2,2,this, SAMPLE_RATE, BUFFER_SIZE, 4);
@@ -15,7 +15,6 @@ void HearingViewApp::setup(){
     m_appManager = &AppManager::getInstance();
     m_appManager->setup();
     ofSoundStreamStart();
-    
     
 }
 
