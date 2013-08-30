@@ -221,8 +221,6 @@ void SoundManager::setIndividualSampleVolume(const SoundObject& sample)
     {
         if(ofIsStringInString((*rit), "vol"))
         {
-            std::cout <<m_dateManager->getTime()<<"- SoundManager-> setSamples: Int: "<< ofToInt((*rit)) << std::endl;
-
             m_individualSampleVolume = (float)(ofToInt((*rit)))/100.0f;
             std::cout <<m_dateManager->getTime()<<"- SoundManager-> setSamples: individual volume: "<< m_individualSampleVolume << std::endl;
 
