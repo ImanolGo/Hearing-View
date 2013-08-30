@@ -457,6 +457,7 @@ void  SoundManager::fadeSample(float volume, float fadeTime)
 {
     if(!m_currentSample || !m_currentSample->isPlaying())
     {
+        AppManager::getInstance().getEventManager().setEvent(Event("SAMPLE VOLUME",volume));
         return; 
     }
     
