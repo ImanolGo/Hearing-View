@@ -150,9 +150,9 @@ void TubeState::onEnter()
     AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
     
-    if (m_dateManager->getDayTime()!= "NIG") { //not night
+    //if (m_dateManager->getDayTime()!= "NIG") { //if not night
          AppManager::getInstance().getEventManager().setTimedEvent("END_TUBE_STATE",m_stateManager->m_t2 + m_stateManager->m_t3);
-    }
+    //}
     
 }
 
@@ -189,6 +189,8 @@ void ShortTubeState::onEnter()
     std::cout<<m_dateManager->getTime()<<"- ShortTubeState-> OnEnter." <<std::endl;
     ofLogNotice()<<m_dateManager->getTime()<<"- ShortTubeState-> OnEnter.";
     AppManager::getInstance().getSoundManager().fadeTube(m_stateManager->m_V3,m_stateManager->m_t2);
+    AppManager::getInstance().getEventManager().setEvent(Event("SAMPLE VOLUME",0.0));
+    AppManager::getInstance().getSoundManager().fadeSample(0.0f,m_stateManager->m_t2);
     AppManager::getInstance().getEventManager().setTimedEvent("END_TUBE_STATE_SHORT", m_stateManager->m_t6); //3 min timed event
     AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);

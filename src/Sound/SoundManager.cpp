@@ -229,7 +229,7 @@ void SoundManager::setIndividualSampleVolume(const SoundObject& sample)
     }
     
     m_individualSampleVolume = m_masterSampleVolume;
-    std::cout <<m_dateManager->getTime()<<"- SoundManager-> setSamples: individual Vvolume: "<< m_individualSampleVolume << std::endl;
+    std::cout <<m_dateManager->getTime()<<"- SoundManager-> setSamples: individual volume: "<< m_individualSampleVolume << std::endl;
 
 }
 bool SoundManager::fitsPlayConditions(const SoundObject& sample)
