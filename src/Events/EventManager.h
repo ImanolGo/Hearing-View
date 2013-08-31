@@ -19,6 +19,7 @@ class SoundManager;
 class DateManager;
 class GuiManager;
 class WeatherManager;
+class SensorManager;
 class Event;
 class TimedEvent;
 class Event;
@@ -72,8 +73,9 @@ private:
     DateManager*	  m_dateManager;	///< pointer to the date manager
     WeatherManager*	  m_weatherManager;	///< pointer to the weather manager
     SoundManager*	  m_soundManager;	///< pointer to the sound manager
-    GuiManager*       m_guiManager;     ///< pointer to the sound manager
-    TimedEventList	m_timeEvents;       ///< list of the current time events
+    GuiManager*       m_guiManager;     ///< pointer to the gui manager
+    SensorManager*    m_sensorManager;  ///< pointer to the sensor manager
+    TimedEventList	  m_timeEvents;     ///< list of the current time events
     
 };
 

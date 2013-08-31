@@ -81,30 +81,58 @@ void SensorManager::update(double dt)
         
         if (m_byteRead == '1') {
             AppManager::getInstance().getEventManager().setEvent(Event("SENSOR",1));
-            
             std::cout << m_dateManager->getTime() << "- SensorManager-> update: Sensor On " << std::endl;
             ofLogNotice() << m_dateManager->getTime() << "- SensorManager->update: Sensor On " ;
-            m_serial.writeByte('1');
+            
         }
         
         else if (m_byteRead == '0') {
             AppManager::getInstance().getEventManager().setEvent(Event("SENSOR",0));
-            std::cout << m_dateManager->getTime() << "- SensorManager-> update: Sensor On " << std::endl;
+            std::cout << m_dateManager->getTime() << "- SensorManager-> update: Sensor Off " << std::endl;
             ofLogNotice() << m_dateManager->getTime() << "- SensorManager->update: Sensor Off " ;
-            if(m_dateManager->getDayTime() != "NIG"){ //if night always on
-                m_serial.writeByte('0');
-                
-            }
+           
         } 
         
         // (1) write the letter "a" to serial:
-		    }
+    }
         
 }
 
 void SensorManager::handleEvent(const Event& event)
 {
-   //Intentionaly left empty    
+    std::string name = event.getName();
+    
+    if(name=="SENSOR")
+    {
+        if ((int) event.getValue() == 0)
+        {
+            if(m_dateManager->getDayTime() != "NIG" && m_dateManager->getDayTime() !="DSK"){ //if dusk or night always on
+                AppManager::getInstance().getEventManager().setEvent(Event("LIGHT",0));
+                
+            }
+        }
+        else {
+            AppManager::getInstance().getEventManager().setEvent(Event("LIGHT",1));
+        }
+         
+    }
+    
+    if(name=="LIGHT")
+    {
+        if ((int) event.getValue() == 0)
+        {
+                std::cout << m_dateManager->getTime() << "- SensorManager-> event: Light Off " << std::endl;
+                ofLogNotice() << m_dateManager->getTime() << "- SensorManager->event: Light Off " ;
+                m_serial.writeByte('0');
+        }
+        else {
+            std::cout << m_dateManager->getTime() << "- SensorManager-> event: Light On " << std::endl;
+            ofLogNotice() << m_dateManager->getTime() << "- SensorManager->event: Light On " ;
+            m_serial.writeByte('1');
+        }
+        
+    }
+
 }
 
 

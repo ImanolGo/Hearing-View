@@ -13,7 +13,7 @@ int proximitySensor = 2;
 int led = 13;
 
 // digital pin 3 has digital output to control the chair's light
-int lightControlPin = 3;
+int lightControlPin = 4;
 
 int lastButtonState = -1;
 

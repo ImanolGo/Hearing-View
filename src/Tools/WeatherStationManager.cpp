@@ -16,7 +16,7 @@
 const double WeatherStationManager::REFRESH_TIME = 5; ///< the refresh tim, every 5 seconds
 
 WeatherStationManager::WeatherStationManager(): m_dateManager(NULL),m_elapsedTime(0.0),
-m_T(0.0f),m_W(-1.0f),m_S(-1.0f),m_R(0.0f), m_wetness(0.0f)
+m_T(0.0f),m_W(-1.0f),m_S(-1.0f),m_R(0.0f), m_wetness(0.7f)
 {
     //Intentionaly left empty
 }
@@ -46,6 +46,7 @@ void WeatherStationManager::update(double dt)
     
     if(m_elapsedTime>=REFRESH_TIME)
     {
+        //std::cout << m_dateManager->getTime() << "- WeatherStationManager-> update " << std::endl;
         // lock access to the resources
         m_weatherThread.lock();
         

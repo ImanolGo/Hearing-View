@@ -164,22 +164,22 @@ void StateManager::handleEvent(const Event& event)
     if(name=="V1 (%)")
     {
         m_V1 = (float) event.getValue();
-        std::cout <<m_dateManager->getTime()<<"- StateManager-> V1 = " << m_V1 <<"s"<<std::endl;
-        ofLogNotice() <<m_dateManager->getTime()<<"- StateManager-> V1 = " << m_V1 <<"s";
+        std::cout <<m_dateManager->getTime()<<"- StateManager-> V1 = " << m_V1*100 <<"%"<<std::endl;
+        ofLogNotice() <<m_dateManager->getTime()<<"- StateManager-> V1 = " << m_V1*100 <<"%";
     }
     
     else if(name=="V2 (%)")
     {
         m_V2 = (float) event.getValue();
-        std::cout <<m_dateManager->getTime()<<"- StateManager-> V2 = " << m_V2 <<"s"<<std::endl;
-        ofLogNotice() <<m_dateManager->getTime()<<"- StateManager-> V2 = " <<m_V2 <<"s";
+        std::cout <<m_dateManager->getTime()<<"- StateManager-> V2 = " << m_V2*100 <<"%"<<std::endl;
+        ofLogNotice() <<m_dateManager->getTime()<<"- StateManager-> V2 = " <<m_V2 *100<<"%";
     }
     
     else if(name=="V3 (%)")
     {
         m_V3 = (float) event.getValue();
-        std::cout <<m_dateManager->getTime()<<"- StateManager-> V3 = " << m_V3 <<"s"<<std::endl;
-        ofLogNotice() <<m_dateManager->getTime()<<"- StateManager-> V3 = " << m_V3 <<"s";
+        std::cout <<m_dateManager->getTime()<<"- StateManager-> V3 = " << m_V3*100 <<"%"<<std::endl;
+        ofLogNotice() <<m_dateManager->getTime()<<"- StateManager-> V3 = " << m_V3*100 <<"%";
     }
 }
 

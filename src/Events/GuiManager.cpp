@@ -82,8 +82,11 @@ void GuiManager::setup()
     y = 5*margin;
     m_gui->addWidget(new ofxUILabel(x,y, "SENSOR STATUS", OFX_UI_FONT_MEDIUM));
     x = 12*margin;
-    y = heightGUI*0.5;
+    y = heightGUI*0.5 - button*0.5;
     m_gui->addWidget(new ofxUIToggle(x,y,button, button, false,"SENSOR"));
+    x = 12*margin;
+    y = heightGUI*0.5 + button*0.5 + margin;
+    m_gui->addWidget(new ofxUIToggle(x,y,button, button, false,"LIGHT"));
     
     //Weather Conditions
     x = 6*margin + w;
@@ -299,6 +302,16 @@ void GuiManager::handleEvent(const Event& event)
        
     }
     
+    if(name == "LIGHT")
+	{
+        widget = m_gui->getWidget(name);
+        ofxUIToggle *toggle = (ofxUIToggle *) widget;
+        if(value!=toggle->getValue()){
+            toggle->setValue(value);
+        }
+        
+    }
+    
     else if(name == "TUBE VOLUME" || name == "SAMPLE VOLUME")
 	{
         widget = m_gui->getWidget(name);
@@ -330,6 +343,14 @@ void GuiManager::guiEvent(ofxUIEventArgs &e)
     {
 	    ofxUIToggle *toggle = (ofxUIToggle*) e.widget; 
         std::cout << m_dateManager->getTime() << "-  GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue() << std::endl; 
+        ofLogNotice()  << m_dateManager->getTime() << "-  GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue();
+        m_eventManager->setEvent(Event(name,(double)toggle->getValue()));
+    }
+    
+    if(name =="LIGHT")
+    {
+	    ofxUIToggle *toggle = (ofxUIToggle*) e.widget;
+        std::cout << m_dateManager->getTime() << "-  GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue() << std::endl;
         ofLogNotice()  << m_dateManager->getTime() << "-  GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue();
         m_eventManager->setEvent(Event(name,(double)toggle->getValue()));
     }

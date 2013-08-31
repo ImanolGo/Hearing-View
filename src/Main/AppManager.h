@@ -80,6 +80,9 @@ public:
     //! Returns  a reference to the weather manager
     WeatherManager& getWeatherManager() const { return *m_weatherManager; }
     
+    //! Returns  a reference to the sensor manager
+    SensorManager& getSensorManager() const { return *m_sensorManager; }
+    
     //! Returns  a reference to the weather station manager
     WeatherStationManager& getWeatherStationManager() const { return *m_weatherStationManager; }
     

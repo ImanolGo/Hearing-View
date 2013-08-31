@@ -289,6 +289,12 @@ void DateManager::calcDayTime()
         AppManager::getInstance().getViewManager().fadeVisual(*(m_textVisuals["DayTime"]),0.0,255, FADE_TIME);
         m_textVisuals["DayTime"]->setText("Status: " + m_dayTime,"Klavika-Regular.otf", FONT_SIZE);
         
+        if(m_dayTime=="NIG" || m_dayTime=="DSK"){
+            AppManager::getInstance().getEventManager().setEvent(Event("LIGHT",1));
+            std::cout << this->getTime() << "- DateManager-> Night: Light On " << std::endl;
+            ofLogNotice() << this->getTime() << "- DateManager->Night: Light On " ;
+        }
+        
     }
     
 }
