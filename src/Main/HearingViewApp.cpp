@@ -1,6 +1,8 @@
 #include "HearingViewApp.h"
 #include "AppManager.h"
 #include "SoundManager.h"
+#include "SensorManager.h"
+#include "Event.h"
 
 //--------------------------------------------------------------
 void HearingViewApp::setup(){
@@ -37,6 +39,7 @@ void HearingViewApp::draw(){
 
 void HearingViewApp::exit()
 {
+    m_appManager->getSensorManager().handleEvent(Event("LIGHT",0));
     delete m_appManager; 
     m_appManager = NULL;
 }

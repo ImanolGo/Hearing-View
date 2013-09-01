@@ -102,21 +102,6 @@ void SensorManager::handleEvent(const Event& event)
 {
     std::string name = event.getName();
     
-    if(name=="SENSOR")
-    {
-        if ((int) event.getValue() == 0)
-        {
-            if(m_dateManager->getDayTime() != "NIG" && m_dateManager->getDayTime() !="DSK"){ //if dusk or night always on
-                AppManager::getInstance().getEventManager().setEvent(Event("LIGHT",0));
-                
-            }
-        }
-        else {
-            AppManager::getInstance().getEventManager().setEvent(Event("LIGHT",1));
-        }
-         
-    }
-    
     if(name=="LIGHT")
     {
         if ((int) event.getValue() == 0)
@@ -132,7 +117,27 @@ void SensorManager::handleEvent(const Event& event)
         }
         
     }
-
+    
+    /*
+    else if(name=="SENSOR")
+    {
+        if ((int) event.getValue() == 0)
+        {
+            if(m_dateManager->getDayTime() != "NIG" && m_dateManager->getDayTime() !="DSK"){ //if dusk or night always on
+                AppManager::getInstance().getEventManager().setEvent(Event("LIGHT",0));
+                
+            }
+        }
+        else {
+            
+            if(m_dateManager->getDayTime() != "DAY" && m_dateManager->getDayTime() !="DWN"){ //if dawn or day always off
+                AppManager::getInstance().getEventManager().setEvent(Event("LIGHT",1));
+                
+            }
+        }
+        
+    }*/
+    
 }
 
 

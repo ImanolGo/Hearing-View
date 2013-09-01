@@ -284,7 +284,7 @@ void DateManager::calcDayTime()
         AppManager::getInstance().getEventManager().setEvent(Event(m_dayTime));
         std::cout<<this->getTime() << "- DateManager-> Status:  "<< m_dayTime<< std::endl;
         ofLogNotice()<<this->getTime() << "- DateManager-> Status:  "<< m_dayTime;
-        
+    
         AppManager::getInstance().getVisualEffectsManager().removeAllVisualEffects(*(m_textVisuals["DayTime"]));
         AppManager::getInstance().getViewManager().fadeVisual(*(m_textVisuals["DayTime"]),0.0,255, FADE_TIME);
         m_textVisuals["DayTime"]->setText("Status: " + m_dayTime,"Klavika-Regular.otf", FONT_SIZE);
@@ -293,6 +293,12 @@ void DateManager::calcDayTime()
             AppManager::getInstance().getEventManager().setEvent(Event("LIGHT",1));
             std::cout << this->getTime() << "- DateManager-> Night: Light On " << std::endl;
             ofLogNotice() << this->getTime() << "- DateManager->Night: Light On " ;
+        }
+        
+        if(m_dayTime=="DAY" || m_dayTime=="DWN"){
+            AppManager::getInstance().getEventManager().setEvent(Event("LIGHT",0));
+            std::cout << this->getTime() << "- DateManager-> Day: Light Off " << std::endl;
+            ofLogNotice() << this->getTime() << "- DateManager->Day: Light Off " ;
         }
         
     }
@@ -468,9 +474,9 @@ double DateManager::FNday ()
 
 double DateManager::FNrange (double x) 
 {
-    double b = x / (2*pi);
-    double a = 2*pi * (b - (long)(b));
-    if (a < 0) a = 2*pi + a;
+    double b = x / (2*PI);
+    double a = 2*PI * (b - (long)(b));
+    if (a < 0) a = 2*PI + a;
     return a;
 }
 
@@ -478,7 +484,7 @@ double DateManager::f0(double lat, double declin)
 {    
     double SunDia = 0.53;  // Sunradius degrees
     double AirRefr = 34.0/60.0; // athmospheric refraction degrees 
-    double rads = pi/180.0;
+    double rads = PI/180.0;
     
     double fo,dfo;
     // Correction: different sign at S HS
@@ -486,26 +492,26 @@ double DateManager::f0(double lat, double declin)
     fo = tan(declin + dfo) * tan(lat*rads);
     
     if (fo > 0.99999) fo=1.0; // to avoid overflow //
-    fo = asin(fo) + pi/2.0;
+    fo = asin(fo) + PI/2.0;
     return fo;
 }
 
 double DateManager::f1(double lat, double declin) 
 {
-    double rads = pi/180.0;
+    double rads = PI/180.0;
     double fi,df1;
     // Correction: different sign at S HS
     df1 = rads * 6.0; if (lat < 0.0) df1 = -df1;
     fi = tan(declin + df1) * tan(lat*rads);
     
     if (fi > 0.99999) fi=1.0; // to avoid overflow //
-    fi = asin(fi) + pi/2.0;
+    fi = asin(fi) + PI/2.0;
     return fi;
 }
 
 void DateManager::FNsun (double d,double& L, double& g, double& lambda) {
     
-    double rads = pi/180.0;
+    double rads = PI/180.0;
     // mean longitude of the Sun
     L = FNrange(280.461 * rads + .9856474 * rads * d);
     // mean anomaly of the Sun
@@ -516,8 +522,8 @@ void DateManager::FNsun (double d,double& L, double& g, double& lambda) {
 
 void DateManager::calcSunEqs()
 {
-    double degs = 180.0/pi;
-    double rads = pi/180.0;
+    double degs = 180.0/PI;
+    double rads = PI/180.0;
     double lambda = 0.0; // ecliptic longitude of the Sun
     double L = 0.0; // mean longitude of the Sun
     double g = 0.0; // mean anomaly of the Sun
@@ -541,13 +547,13 @@ void DateManager::calcSunEqs()
     // Correction suggested by David Smith
     
     double LL = L - alpha;
-    if (L < pi) LL += 2*pi;
-    double equation = 1440.0 * (1.0 - LL / (2*pi));
+    if (L < PI) LL += 2*PI;
+    double equation = 1440.0 * (1.0 - LL / (2*PI));
     
     double ha = f0(m_latitude,delta);
     double hb = f1(m_latitude,delta);
     double twx = hb - ha;   // length of twilight in radians
-    twx = 12.0*twx/pi;      // length of twilight in degrees
+    twx = 12.0*twx/PI;      // length of twilight in degrees
     // Conversion of angle to hours and minutes //
     double daylen = degs * ha / 7.5;
     if (daylen<0.0001) {daylen = 0.0;}
@@ -556,8 +562,8 @@ void DateManager::calcSunEqs()
     
     
     this->calcEST(); //calculate the European Summer Time offset
-    m_sunrise = 12.0 - 12.0 * ha/pi + (m_timezone+ m_EST) - m_longitude/15.0 + equation/60.0;
-    m_sunset = 12.0 + 12.0 * ha/pi + (m_timezone+ m_EST) - m_longitude/15.0 + equation/60.0;
+    m_sunrise = 12.0 - 12.0 * ha/PI + (m_timezone+ m_EST) - m_longitude/15.0 + equation/60.0;
+    m_sunset = 12.0 + 12.0 * ha/PI + (m_timezone+ m_EST) - m_longitude/15.0 + equation/60.0;
     
     m_dawn = m_sunrise - twx;     // morning twilight begin
     m_dusk = m_sunset + twx;     // evening twilight end
