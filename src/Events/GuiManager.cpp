@@ -302,7 +302,7 @@ void GuiManager::handleEvent(const Event& event)
        
     }
     
-    if(name == "LIGHT")
+    else if(name == "LIGHT")
 	{
         widget = m_gui->getWidget(name);
         ofxUIToggle *toggle = (ofxUIToggle *) widget;
@@ -347,7 +347,7 @@ void GuiManager::guiEvent(ofxUIEventArgs &e)
         m_eventManager->setEvent(Event(name,(double)toggle->getValue()));
     }
     
-    if(name =="LIGHT")
+    else if(name =="LIGHT")
     {
 	    ofxUIToggle *toggle = (ofxUIToggle*) e.widget;
         std::cout << m_dateManager->getTime() << "-  GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue() << std::endl;
