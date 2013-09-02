@@ -9,7 +9,7 @@
 #include "Event.h"
 #include "EventManager.h"
 #include "StateManager.h"
-#include "WeatherManager.h"
+#include "WeatherStationManager.h"
 #include "DateManager.h"
 #include "SoundManager.h"
 #include "GuiManager.h"
@@ -20,7 +20,7 @@
 
 EventManager::EventManager(): 
 m_stateManager(NULL),
-m_weatherManager(NULL),
+m_weatherStationManager(NULL),
 m_dateManager(NULL),
 m_soundManager(NULL),
 m_guiManager(NULL),
@@ -32,7 +32,7 @@ m_sensorManager(NULL)
 EventManager::~EventManager()
 {
     m_stateManager = NULL;
-    m_weatherManager = NULL;
+    m_weatherStationManager = NULL;
     m_dateManager = NULL;
     m_soundManager = NULL;
     m_guiManager = NULL;
@@ -47,7 +47,7 @@ void EventManager::setup()
     m_guiManager = &AppManager::getInstance().getGuiManager();
     m_soundManager = &AppManager::getInstance().getSoundManager();
     m_dateManager = &AppManager::getInstance().getDateManager();
-    m_weatherManager = &AppManager::getInstance().getWeatherManager();
+    m_weatherStationManager = &AppManager::getInstance().getWeatherStationManager();
     m_sensorManager = &AppManager::getInstance().getSensorManager();
     
     std::cout<< m_dateManager->getTime() <<"- EventManager-> initialized "<<std::endl;
@@ -73,7 +73,7 @@ void EventManager::setEvent(Event event)
      
     m_stateManager->handleEvent(event);
     m_dateManager->handleEvent(event);
-    m_weatherManager->handleEvent(event);
+    m_weatherStationManager->handleEvent(event);
     m_soundManager->handleEvent(event);
     m_guiManager->handleEvent(event);
     m_sensorManager->handleEvent(event);

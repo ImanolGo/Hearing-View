@@ -106,7 +106,11 @@ void GuiManager::setup()
     m_gui->addWidget(new ofxUILabel(x + 7*margin,y, "Insolation: S(W/m2)", OFX_UI_FONT_SMALL));
     y = y + 2*margin + h_slider;
     m_gui->addWidget(new ofxUINumberDialer(x,y,-100,100,0.0,1.0,"Current R",OFX_UI_FONT_MEDIUM));
-    m_gui->addWidget(new ofxUILabel(x + 7*margin,y, "Rain: R(Vdiff)", OFX_UI_FONT_SMALL));
+    m_gui->addWidget(new ofxUILabel(x + 7*margin,y, "Wetness: R(V)", OFX_UI_FONT_SMALL));
+    
+    x = 6*margin + w + w*0.5 + button*0.3 + 2*margin;
+    m_gui->addWidget(new ofxUIToggle(x,y,button*0.6,button*0.6,false,"Rain"));
+    
     
     //Time  Status 
     x = 8*margin + 2*w;
@@ -246,7 +250,7 @@ void GuiManager::setup()
     w = margin*5;
     x = 9*margin + widthGUI/4 + widthGUI/3;
     y = 11*margin + 2*heightGUI;
-    m_gui->addWidget(new ofxUIRotarySlider(x,y,w, 0.0, 1.0, 0.4, "R (Vdiff)"));
+    m_gui->addWidget(new ofxUIRotarySlider(x,y,w, 0.0, 1.0, 0.4, "R (V)"));
     y = 13*margin + 2*heightGUI + w;
     m_gui->addWidget(new ofxUIRotarySlider(x,y,w,-40, 40, 0, "T (°C)"));
     x = 13*margin + widthGUI/4 + w + widthGUI/3;
@@ -292,7 +296,7 @@ void GuiManager::handleEvent(const Event& event)
     double value = event.getValue();
     ofxUIWidget *widget;
     
-    if(name == "SENSOR")
+    if(name == "SENSOR" || name == "LIGHT" || name == "Rain")
 	{
         widget = m_gui->getWidget(name);
         ofxUIToggle *toggle = (ofxUIToggle *) widget;
@@ -300,16 +304,6 @@ void GuiManager::handleEvent(const Event& event)
              toggle->setValue(value);
         }
        
-    }
-    
-    else if(name == "LIGHT")
-	{
-        widget = m_gui->getWidget(name);
-        ofxUIToggle *toggle = (ofxUIToggle *) widget;
-        if(value!=toggle->getValue()){
-            toggle->setValue(value);
-        }
-        
     }
     
     else if(name == "TUBE VOLUME" || name == "SAMPLE VOLUME")
@@ -380,7 +374,7 @@ void GuiManager::guiEvent(ofxUIEventArgs &e)
         m_eventManager->setEvent(Event(name,rotatorySlider->getScaledValue()));
     }
     
-    else if(name =="W (Km/h)" || name == "T (°C)" || name == "S (W/m2)" || name == "R (Vdiff)")
+    else if(name =="W (Km/h)" || name == "T (°C)" || name == "S (W/m2)" || name == "R (V)")
     {
 	    ofxUIRotarySlider *rotatorySlider = (ofxUIRotarySlider*) e.widget; 
         std::cout << m_dateManager->getTime() << "- GuiManager-> guiEvent: "<< name << ", "<< rotatorySlider->getScaledValue() << std::endl; 

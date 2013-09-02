@@ -16,7 +16,7 @@
 const double WeatherStationManager::REFRESH_TIME = 5; ///< the refresh tim, every 5 seconds
 
 WeatherStationManager::WeatherStationManager(): m_dateManager(NULL),m_elapsedTime(0.0),
-m_T(0.0f),m_W(-1.0f),m_S(-1.0f),m_R(0.0f), m_wetness(0.8f)
+m_T(0.0f),m_W(-1.0f),m_S(-1.0f),m_R(0.6f), m_isRaining(false)
 {
     //Intentionaly left empty
 }
@@ -71,14 +71,29 @@ void WeatherStationManager::update(double dt)
             ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->current S =  " <<m_S;
         }
         
-        if(m_wetness!=m_weatherThread.m_R){
-            m_R = m_weatherThread.m_R - m_wetness;
-            m_wetness = m_weatherThread.m_R;
+        if(m_R!=m_weatherThread.m_R){ //if m_weatherThread.m_R> m_wetness it is raining, otherwise it is drying out
+            
+            m_isRaining = false;
+            if(m_R>0.5)
+            {
+                if((m_R - m_weatherThread.m_R)<0.0f){
+                    m_isRaining = true;
+                }
+            }
+
+            m_R = m_weatherThread.m_R; 
             AppManager::getInstance().getEventManager().setEvent(Event("Current R", m_R));
+            if (m_isRaining) {
+                AppManager::getInstance().getEventManager().setEvent(Event("Rain", 1));
+            }
+            else{
+                AppManager::getInstance().getEventManager().setEvent(Event("Rain", 0));
+            }
+            
             std::cout << m_dateManager->getTime() << "- WeatherStationManager->current R = " << m_R << std::endl;
             ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->current R =  " <<m_R;
-            std::cout << m_dateManager->getTime() << "- WeatherStationManager->current wetness = " << m_wetness << std::endl;
-            ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->current wetness =  " <<m_wetness;
+            std::cout << m_dateManager->getTime() << "- WeatherStationManager->rain conditions = " << m_isRaining << std::endl;
+            ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->rain conditions =  " <<m_isRaining;
 
         }
             
@@ -91,7 +106,40 @@ void WeatherStationManager::update(double dt)
 
 void WeatherStationManager::handleEvent(const Event& event)
 {
-   //Intentionaly left empty    
+    std::string name = event.getName();
+    float value = (float) event.getValue();
+    
+    if(name=="Rain")
+    {
+        if(value >0.0f){
+            m_isRaining = true;
+        }
+        else{
+            m_isRaining = false;
+        }
+    }
+    
+    else if(name=="Current R")
+    {
+        m_isRaining = false;
+        if(value>0.5)
+        {
+            if((m_R - value)<0.0f){
+                m_isRaining = true;
+            }
+        }
+        
+        m_R = value;
+        
+        if (m_isRaining) {
+            AppManager::getInstance().getEventManager().setEvent(Event("Rain", 1));
+        }
+        else{
+            AppManager::getInstance().getEventManager().setEvent(Event("Rain", 0));
+        }
+
+    }
+
 }
 
 

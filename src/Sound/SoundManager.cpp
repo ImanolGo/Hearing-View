@@ -152,7 +152,7 @@ void SoundManager::loadSamples()
             {
                 std::cout <<m_dateManager->getTime()<<"- SoundManager-> No samples found in \""<< samplesPath <<"/\"" << std::endl;
                 ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> No samples found in \""<< samplesPath <<"/\"";
-                break;
+                //break;
             }
             
             SamplesList sampleList;
@@ -245,8 +245,8 @@ bool SoundManager::fitsPlayConditions(const SoundObject& sample)
     
     if(ofIsStringInString(conditions, "R"))
     {
-        if (m_weatherStationManager->getRainConditions() < m_R) {
-            return false;
+        if (m_weatherStationManager->getRainConditions()) {
+           return false;
         }
     }
     
@@ -551,7 +551,7 @@ void SoundManager::handleEvent(const Event& event)
         std::cout <<m_dateManager->getTime()<<"- SoundManager-> T = " << m_T <<" °C"<<std::endl;
         ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> T = " << m_T <<" °C ";
     }
-    else if(name=="R (Vdiff)"){
+    else if(name=="R (V)"){
         m_R = (float) event.getValue();
         std::cout <<m_dateManager->getTime()<<"- SoundManager-> R = " << m_R <<" "<<std::endl;
         ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> R = " << m_R <<" ";

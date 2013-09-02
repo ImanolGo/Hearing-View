@@ -18,7 +18,7 @@ class StateManager;
 class SoundManager;
 class DateManager;
 class GuiManager;
-class WeatherManager;
+class WeatherStationManager;
 class SensorManager;
 class Event;
 class TimedEvent;
@@ -69,13 +69,13 @@ private:
 
 	typedef std::vector<TimedEvent*>	TimedEventList; //< list of time events to be triggered
     
-    StateManager*	  m_stateManager;	///< pointer to the state manager
-    DateManager*	  m_dateManager;	///< pointer to the date manager
-    WeatherManager*	  m_weatherManager;	///< pointer to the weather manager
-    SoundManager*	  m_soundManager;	///< pointer to the sound manager
-    GuiManager*       m_guiManager;     ///< pointer to the gui manager
-    SensorManager*    m_sensorManager;  ///< pointer to the sensor manager
-    TimedEventList	  m_timeEvents;     ///< list of the current time events
+    StateManager*           m_stateManager;             ///< pointer to the state manager
+    DateManager*            m_dateManager;              ///< pointer to the date manager
+    WeatherStationManager*	m_weatherStationManager;	///< pointer to the weather station manager
+    SoundManager*           m_soundManager;             ///< pointer to the sound manager
+    GuiManager*             m_guiManager;               ///< pointer to the gui manager
+    SensorManager*          m_sensorManager;            ///< pointer to the sensor manager
+    TimedEventList          m_timeEvents;               ///< list of the current time events
     
 };
 
