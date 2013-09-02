@@ -5,6 +5,8 @@
     connected and onboard LED
  
  */
+ 
+ #include <Bounce.h>
 
 // digital pin 2 has digital proximity sensor
 int proximitySensor = 2;
@@ -13,11 +15,17 @@ int proximitySensor = 2;
 int led = 13;
 
 // digital pin 3 has digital output to control the chair's light
-int lightControlPin = 4;
+int lightControlPin = 5;
 
-int lastButtonState = -1;
+//it records the last sensor state
+int lastSensorState = -1;
 
 int inByte;// incoming serial byte
+
+const int bounceTime =  5;      // the time to check for debouncing
+const int durationTime = 500;     // the time to check the sensor to be in the same state
+Bounce bouncer = Bounce( proximitySensor, bounceTime );
+
 
 // the setup routine runs once when you press reset:
 void setup() {
@@ -29,11 +37,13 @@ void setup() {
   pinMode(led, OUTPUT); 
   // initialize the digital pin as an output.
   pinMode(lightControlPin, OUTPUT);  
+  
+  lastSensorState = bouncer.read();
 }
 
 // the loop routine runs over and over again forever:
 void loop() {
-  
+ 
    // if we get a valid byte, write to the light ontrol pin:
   if (Serial.available() > 0) {
     // get incoming byte:
@@ -42,35 +52,28 @@ void loop() {
     if(inByte== '0')
     {
       digitalWrite(lightControlPin, LOW);  
+      digitalWrite(led, LOW);  
     } 
    
    
     else if(inByte== '1')
     {
       digitalWrite(lightControlPin, HIGH);  
+      digitalWrite(led,HIGH); 
     }  
   }
   
-  // read the input pin:
-  int buttonState = digitalRead(proximitySensor);
-  // print out the state of the button:
+  bouncer.update();
+    // read the input pin:
+  int sensorState = bouncer.read() ;
   
-  if(lastButtonState != buttonState) {
-    
-    // save the last sensor status
-    lastButtonState = buttonState; 
-   
-   if (buttonState == 1) {     
-      // turn LED on:    
-      digitalWrite(led, HIGH);  
-    } 
-    else {
-      // turn LED off:
-      digitalWrite(led,LOW); 
-    }
+  // has our state changed for more the 1/2 a second?
+  if ( lastSensorState != sensorState && bouncer.duration() > durationTime ) {
 
-    // print out the value you read:
-   Serial.print(buttonState);
-   delay(1);        // delay in between reads for stability
+    lastSensorState = sensorState;
+    
+     // print out the value you read:
+     Serial.print(sensorState);
+     delay(1);        // delay in between reads for stability  
   }
 }
