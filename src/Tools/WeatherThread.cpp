@@ -160,7 +160,7 @@ void WeatherThread::threadedFunction(){
                 {
                     m_serial.writeByte('$'); // write the charachter "$" to serial:
                     m_serial.writeByte('C'); // write the charachter "C" (command) to serial
-                    m_serial.writeByte('C'); // write the charachter "A" (page A) to serial
+                    m_serial.writeByte('C'); // write the charachter "C" (page C) to serial
                     m_serial.writeByte('\r'); // write the charachter "cr" () to serial. Carriage return
                     m_serial.writeByte('\n'); // write the charachter "lf" () to serial. Line Feed
                     

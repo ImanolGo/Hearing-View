@@ -54,21 +54,21 @@ void WeatherStationManager::update(double dt)
             m_T = m_weatherThread.m_T;
             AppManager::getInstance().getEventManager().setEvent(Event("Current T", m_T));
             std::cout << m_dateManager->getTime() << "- WeatherStationManager->current T = " << m_T << std::endl;
-             ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->current T =  " <<m_T;
+             //ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->current T =  " <<m_T;
         }
         
         if(m_W!=m_weatherThread.m_W){
             m_W = m_weatherThread.m_W;
             AppManager::getInstance().getEventManager().setEvent(Event("Current W", m_W));
             std::cout << m_dateManager->getTime() << "- WeatherStationManager->current W = " << m_W << std::endl;
-            ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->current W =  " <<m_W;
+            //ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->current W =  " <<m_W;
         }
         
         if(m_S!=m_weatherThread.m_S){
             m_S = m_weatherThread.m_S;
             AppManager::getInstance().getEventManager().setEvent(Event("Current S", m_S));
             std::cout << m_dateManager->getTime() << "- WeatherStationManager->current S = " << m_S << std::endl;
-            ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->current S =  " <<m_S;
+            //ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->current S =  " <<m_S;
         }
         
         if(m_R!=m_weatherThread.m_R){ //if m_weatherThread.m_R> m_wetness it is raining, otherwise it is drying out
@@ -91,9 +91,9 @@ void WeatherStationManager::update(double dt)
             }
             
             std::cout << m_dateManager->getTime() << "- WeatherStationManager->current R = " << m_R << std::endl;
-            ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->current R =  " <<m_R;
+            //ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->current R =  " <<m_R;
             std::cout << m_dateManager->getTime() << "- WeatherStationManager->rain conditions = " << m_isRaining << std::endl;
-            ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->rain conditions =  " <<m_isRaining;
+            //ofLogNotice() << m_dateManager->getTime() << "- WeatherStationManager->rain conditions =  " <<m_isRaining;
 
         }
             

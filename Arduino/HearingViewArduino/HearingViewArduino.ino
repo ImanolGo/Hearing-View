@@ -23,7 +23,7 @@ int lastSensorState = -1;
 int inByte;// incoming serial byte
 
 const int bounceTime =  5;      // the time to check for debouncing
-const int durationTime = 500;     // the time to check the sensor to be in the same state
+const int durationTime = 1000;     // the time to check the sensor to be in the same state
 Bounce bouncer = Bounce( proximitySensor, bounceTime );
 
 

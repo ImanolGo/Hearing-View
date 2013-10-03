@@ -333,7 +333,7 @@ void GuiManager::guiEvent(ofxUIEventArgs &e)
 	int kind = e.widget->getKind(); 
 	//cout << "got event from: " << name << endl; 
     
-    if(name =="SENSOR")
+    if(name =="SENSOR" || name =="LIGHT" || name =="Rain")
     {
 	    ofxUIToggle *toggle = (ofxUIToggle*) e.widget; 
         std::cout << m_dateManager->getTime() << "-  GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue() << std::endl; 
@@ -341,14 +341,6 @@ void GuiManager::guiEvent(ofxUIEventArgs &e)
         m_eventManager->setEvent(Event(name,(double)toggle->getValue()));
     }
     
-    else if(name =="LIGHT")
-    {
-	    ofxUIToggle *toggle = (ofxUIToggle*) e.widget;
-        std::cout << m_dateManager->getTime() << "-  GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue() << std::endl;
-        ofLogNotice()  << m_dateManager->getTime() << "-  GuiManager-> guiEvent: "<< name << ", "<< toggle->getValue();
-        m_eventManager->setEvent(Event(name,(double)toggle->getValue()));
-    }
-
     
     else if(name =="TUBE VOLUME" || name == "SAMPLE VOLUME")
     {

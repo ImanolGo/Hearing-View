@@ -239,6 +239,9 @@ bool SoundManager::fitsPlayConditions(const SoundObject& sample)
     if(ofIsStringInString(conditions, "W"))
     {
         if (m_weatherStationManager->getWindSpeed() >= m_W) {
+            std::cout <<m_dateManager->getTime()<<"- SoundManager-> fitsPlayConditions: wind speed = "<< m_weatherStationManager->getWindSpeed() << "kph" <<std::endl;
+            
+            ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> fitsPlayConditions: wind speed = "<< m_weatherStationManager->getWindSpeed() <<" kph" ;
             return false;
         }
     }
@@ -246,6 +249,9 @@ bool SoundManager::fitsPlayConditions(const SoundObject& sample)
     if(ofIsStringInString(conditions, "R"))
     {
         if (m_weatherStationManager->getRainConditions()) {
+            std::cout <<m_dateManager->getTime()<<"- SoundManager-> fitsPlayConditions: raining " <<std::endl;
+            
+            ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> fitsPlayConditions: raining ";
            return false;
         }
     }
@@ -253,6 +259,9 @@ bool SoundManager::fitsPlayConditions(const SoundObject& sample)
     if(ofIsStringInString(conditions, "T"))
     {
         if (m_weatherStationManager->getTemperature() <= m_T) {
+            std::cout <<m_dateManager->getTime()<<"- SoundManager-> fitsPlayConditions: wind speed = "<< m_weatherStationManager->getTemperature() << "ºC" <<std::endl;
+            
+            ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> fitsPlayConditions: temperature = "<< m_weatherStationManager->getTemperature() <<"ºC" ;
             return false;
         }
     }
@@ -260,6 +269,9 @@ bool SoundManager::fitsPlayConditions(const SoundObject& sample)
     if(ofIsStringInString(conditions, "S"))
     {
         if (m_weatherStationManager->getInsolation() <= m_S) {
+            std::cout <<m_dateManager->getTime()<<"- SoundManager-> fitsPlayConditions: insolation=: "<< m_weatherStationManager->getInsolation() << "W/m2" <<std::endl;
+            
+            ofLogNotice() <<m_dateManager->getTime()<<"- SoundManager-> fitsPlayConditions: insolation = "<< m_weatherStationManager->getInsolation() <<"W/m2" ;
             return false;
         }
     }
