@@ -122,6 +122,8 @@ void SoundManager::setup()
 void SoundManager::start()
 {
     m_tube->setVolume(0.0f);
+    //m_tube->setVolume(AppManager::getInstance().getStateManager().m_V1);
+    AppManager::getInstance().getEventManager().setEvent(Event("TUBE VOLUME", AppManager::getInstance().getStateManager().m_V1));
 }
 
 void SoundManager::loadSamples()

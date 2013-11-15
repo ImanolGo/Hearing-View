@@ -73,10 +73,11 @@ void IdleState::onEnter()
 {
     std::cout<<m_dateManager->getTime()<<"- IdleState-> OnEnter." <<std::endl;
     ofLogNotice()<<m_dateManager->getTime()<<"- IdleState-> OnEnter.";
+    AppManager::getInstance().getEventManager().removeAllTimedEvents();
     AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
     AppManager::getInstance().getSoundManager().fadeTube(m_stateManager->m_V1,m_stateManager->m_t1);
-    AppManager::getInstance().getEventManager().removeAllTimedEvents();
+    
     
 }
 
@@ -93,9 +94,10 @@ void SensorOffTransitionState::onEnter()
 {
     std::cout<<m_dateManager->getTime()<<"- SensorOffTransitionState-> OnEnter." <<std::endl;
     ofLogNotice()<<m_dateManager->getTime()<<"- SensorOffTransitionState-> OnEnter.";
+    AppManager::getInstance().getEventManager().removeAllTimedEvents();
     AppManager::getInstance().getViewManager().fadeVisual(*m_circleState, 255, State::FADE_TIME);
     AppManager::getInstance().getViewManager().fadeVisual(*m_textState, 255, State::FADE_TIME);
-    AppManager::getInstance().getEventManager().removeAllTimedEvents();
+    
     
     if(AppManager::getInstance().getSoundManager().getTubeVolume()>0.0f){
         AppManager::getInstance().getSoundManager().fadeTube(0.0f,m_stateManager->m_t4);

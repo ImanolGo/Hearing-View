@@ -14,7 +14,7 @@ int proximitySensor = 2;
 // give it a name:
 int led = 13;
 
-// digital pin 3 has digital output to control the chair's light
+// digital pin 5 has digital output to control the chair's light
 int lightControlPin = 5;
 
 //it records the last sensor state
