@@ -66,9 +66,11 @@ void EventManager::setEvent(Event event)
 {
     if(event.getValue()==0.0 || event.getValue()==1.0)
     {
-        
-        std::cout << m_dateManager->getTime() << "- EventManager-> SetEvent: " << event.getName() << ", " << event.getValue()<<std::endl;
-        ofLogNotice() << m_dateManager->getTime() << "- EventManager-> SetEvent: " << event.getName() << ", " << event.getValue();
+        if(!ofIsStringInString(event.getName(), "Current")) //Arduino
+        {
+            std::cout << m_dateManager->getTime() << "- EventManager-> SetEvent: " << event.getName() << ", " << event.getValue()<<std::endl;
+            ofLogNotice() << m_dateManager->getTime() << "- EventManager-> SetEvent: " << event.getName() << ", " << event.getValue();
+        }
     }
      
     m_stateManager->handleEvent(event);
