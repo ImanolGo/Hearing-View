@@ -1,0 +1,30 @@
+<Widget>
+    <Kind>4</Kind>
+    <Name>VOLUME (dB)</Name>
+    <Value>-14.0461</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>SENSOR</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>Day / Dry</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>Night / Dry</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>Day / Rain</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>Night / Rain</Name>
+    <Value>0</Value>
+</Widget>

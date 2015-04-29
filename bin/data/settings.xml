@@ -1,0 +1,115 @@
+<Widget>
+    <Kind>2</Kind>
+    <Name>SENSOR</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>LIGHT</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>8</Kind>
+    <Name>Current T</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>8</Kind>
+    <Name>Current W</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>8</Kind>
+    <Name>Current S</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>8</Kind>
+    <Name>Current R</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>Rain</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>TUBE VOLUME</Name>
+    <Value>0.083261520</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>SAMPLE VOLUME</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>V1 (%)</Name>
+    <Value>3.152173281</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>V2 (%)</Name>
+    <Value>5.054347038</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>V3 (%)</Name>
+    <Value>14.945652008</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>t1 (s)</Name>
+    <Value>3.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>t5 (s)</Name>
+    <Value>1.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>t2 (s)</Name>
+    <Value>6.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>t6 (s)</Name>
+    <Value>60.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>t3 (s)</Name>
+    <Value>180.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>t7 (s)</Name>
+    <Value>2.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>t4 (s)</Name>
+    <Value>8.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>R (V)</Name>
+    <Value>0.400000006</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>T (°C)</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>W (Km/h)</Name>
+    <Value>50.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>S (W/m2)</Name>
+    <Value>20.000000000</Value>
+</Widget>

@@ -1,0 +1,29 @@
+<install>
+	<name>ofxDate</name>
+	<version>0.2</version>
+	<author>Patrick Engel</author>
+	<description><![CDATA[Simple Date Class]]></description>
+	
+	<author_website>http://pc-e.org</author_website>
+	<code_url>https://github.com/pce/ofxDate</code_url>
+	<site_url>http://github.com/pce/ofxDate</site_url>
+	<download_url>https://github.com/pce/ofxDate/zipball/master</download_url>
+	<forum_url></forum_url>
+	<supported_os>
+		<win>n</win>
+    		<mac>n</mac>
+    		<linux>y</linux>
+    	</supported_os>
+    <has_example>y</has_example>
+	
+	<add>
+		<include>
+			
+			<path>../../../addons/ofxDate/src/</path>
+			
+		</include>
+	</add>
+</install>
+
+
+
